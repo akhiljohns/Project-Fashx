@@ -1,0 +1,107 @@
+<head>
+    <title>Custom Error Message</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main-wrap">
+        <section class="content-main">
+            <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+                <div class="content-header">
+                    <h2 class="content-title">Add New Product</h2>
+                    <button class="btn btn-outline-success">SUBMIT</button>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <h6>1. General Info</h6>
+                                    <label class="form-label">Product Title</label>
+                                    <input type="text" placeholder="Type Here" class="form-control" maxlength="200"
+                                        name="prodtitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type Here" class="form-control" rows="1" name="proddescr"
+                                        required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Brand Name</label>
+                                    <input type="text" placeholder="Type Here" class="form-control" name="prodbrand"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Stock</label>
+                                    <input type="text" required placeholder="0" class="form-control numinp"
+                                        name="prodstock">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <h6>2. Pricing</h6>
+                                    <label class="form-label">Regular Price</label>
+                                    <input type="text" placeholder="₹" class="form-control numinp" pattern="[0-9]*"
+                                        name="prodrprice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Discount Rate</label>
+                                    <input type="text" placeholder="%" class="form-control numinp" pattern="[0-9]*"
+                                        name="proddiscount" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <h6>3. Category</h6>
+                                    <div class="col-md-6">
+                                        <label for="inputState" class="form-label"></label>
+                                        <select id="inputState" class="form-select" onchange="selectCategory()">
+                                            <option value="" selected>Choose Category</option>
+                                            {{#each category}}
+                                            <option value="{{this._id}}">{{this.name}}</option>
+                                            {{/each}}
+                                        </select>
+                                        <input type="hidden" name="prodcategory" id="categoryId" value="" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <h6>4. Media</h6>
+                                    <label class="form-label">Images</label>
+                                    <input class="form-control" type="file" name="productImage" multiple required>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+
+<script>
+    function selectCategory() {
+        var selectedCategory = document.getElementById("inputState").value;
+        document.getElementById("categoryId").value = selectedCategory;
+    }
+</script>

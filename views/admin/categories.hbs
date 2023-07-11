@@ -1,0 +1,94 @@
+<body>
+    <div class="screen-overlay"></div>
+
+   <main class="main-wrap">
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Categories </h2>
+                    <p>Add, edit or delete a category</p>
+                </div>
+                {{!-- <div>
+                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
+                </div> --}}
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- ADD CATEGORY FORM -->
+                        <div class="col-md-3">
+                            <form action="/admin/addcategory" method="post">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Category</label>
+                                    <input type="text" placeholder="Type here" class="form-control" id="product_name"
+                                        name="name" />
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary">Create category</button>
+                                </div>
+                            </form>
+                            {{#if catext}}
+                           <p id="catgexis" style="color:rgb(255, 0, 0); font-size:90%;">
+                            <b>
+                               Category {{cate}} Already Exists. Cannot Add
+                            </b>
+                        </p>
+                        {{/if}}
+                        </div>
+                        <!-- ADD CATEGORY FORM END-->
+
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"></th>
+                                            <th>ID</th>
+                                            <th>Category</th>
+                                            <th>No Of Products</th>
+                                            <th class="text-end">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Loop through categories -->
+                                        {{#each category}}
+                                        <tr>
+                                            <td class="text-center"></td>
+                                            <th scope="row" class="index"></th>
+                                            <td>{{this.name}}</td>
+                                            <td>5</td>
+                                            <td class="text-end">
+                                                <a href="/admin/category/delete/{{this._id}}">
+                                             <button type="button" class="btn btn-outline-danger">Delete</button>
+                                             </a>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                        <!-- Loop through categories -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!-- .col// -->
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+    </main>
+
+
+
+    <script>
+        let index = document.getElementsByClassName('index');
+
+        for (let i = 0; i < index.length; i++) {
+            index[i].innerHTML = i + 1;
+        }
+    </script>
+
+
+
+
+
+</body>

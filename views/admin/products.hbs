@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <title>FashX Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head> 
+
+<body>
+    <div class="screen-overlay"></div>
+   
+    <main class="main-wrap">
+   <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body ml-5">
+                        <h5 class="card-title">PRODUCTS</h5>
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Option</th>
+                                    {{!-- <th scope="col">List/Unlist</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each products}}
+                                <tr>
+                                    <th scope="row" class="index"></th>
+                                    <td> {{this.productName}} </td>
+
+                                    <td> {{this.category.name}} </td>
+
+                                    <td> {{this.stock}} </td>
+
+                                    <td>
+                                        <a class="btn btn-primary" href="/admin/products/edit/{{this._id}}">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/admin/products/delete/{{this._id}}">Delete</a>
+                                    </td>
+
+                                    {{!-- <td>
+                                        <a class="btn btn-secondary"
+                                            href="/admin/products/unlist/{{this._id}}">Unlist</a>
+                                    </td> --}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section> 
+       
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>
+</body>
+
+</html>

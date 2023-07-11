@@ -1,0 +1,26 @@
+12 week
+User Side: User profile(Show user details, show
+address, show orders, Add address, edit profile,
+cancel orders, change password)
+Catt management(Add to cart, Catt item listing,
+Quantity updation, Item deletion)
+: Proceed to checkout(Add address)
+:Place order with Cash on
+Delivery(Address selection)
+Admin Side: List orders, change order status,
+cancel orders
+
+PAGES:
+USER DETAILS
+ADDRESS
+ORDERS
+ADD ADDRESS
+EDIT PROFILE
+ 
+ CART
+ ADD ADDRESS IN CHECKOUT
+ ORDER PLACEMENT WITH COD
+
+ADMIN SIDE
+LIST ORDERS
+

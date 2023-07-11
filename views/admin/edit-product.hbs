@@ -1,0 +1,119 @@
+  <body>
+    <main class="main-wrap">
+      <section class="content-main">
+        <form action="/admin/products/edit/{{product._id}}" method="post" enctype="multipart/form-data">
+          <div class="content-header">
+            <h2 class="content-title">EDIT PRODUCT</h2>
+            <button  class="btn btn-outline-success">SUBMIT</button>
+
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="form-group">
+                    <h6>1. General Info</h6>
+                    <label class="form-label">Product Title</label>
+                    <input type="text" placeholder="Type Here" class="form-control" maxlength="200" name="prodtitle" required value="{{product.productName}}">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea placeholder="Type Here" class="form-control" rows="1" name="proddescr"  required> {{product.description}}</textarea>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Brand Name</label>
+                    <input type="text" placeholder="Type Here" class="form-control" name="prodbrand" value="{{product.brand}}" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Stock</label>
+                    <input type="text" required placeholder="0" class="form-control" name="prodstock" value="{{product.stock}}" >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="form-group">
+                    <h6>2. Pricing</h6>
+                    <label class="form-label">Regular Price</label>
+                    <input type="text" class="form-control" name="prodrprice"  value="{{product.regularPrice}}" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Discount Rate</label>
+                    <input type="text" placeholder="%" class="form-control" name="prodoprice"  value="{{product.discount}}" required>
+                  </div>
+                </div>
+              </div>
+
+
+            <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {{#each category}}  
+              <a style="cursor: pointer;" id="catList" class="dropdown-item"
+                onclick="select('{{this.name}}', '{{this._id}}')">{{this.name}}</a>
+              {{/each}}
+            </div>
+          </div> <br>
+          
+          <input type="text" class="form-control" id="category" name="prodcategor" readonly value="{{product.category.name}}"
+            required>
+          <input type="hidden" class="form-control" id="categoryId" name="prodcategoryid" readonly
+            value="{{product.category._id}}" required>
+        </div>
+            </div>
+          </div>
+          <div class="form-group">
+          <label for="image1">Image</label>
+
+          <div style="width: 5vw; height: 10vh;" class="mb-3 d-flex">
+            {{#each product.image}}
+              <img src="/images/{{this}}" alt="IMG" style="width: 5vw; height: 10vh;" class="mr-2">
+            {{/each}}
+          </div>
+
+          <div class="custom-file">
+          <input type="file" class="custom-file-input" value="{{product.image}}" id="image" name="productImage" required multiple>
+
+            <label class="custom-file-label" for="image"></label>
+          </div>  
+        </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+
+
+  <script>
+    function select(categoryName, id) {
+      let category = document.getElementById("category");
+      let categoryId = document.getElementById("categoryId");
+      category.value = categoryName;
+      categoryId.value = id;
+      //console.log(categoryName, id)
+    }
+
+
+    function validate() {
+      let name = document.getElementById("name").value.trim();
+      let desc = document.getElementById("description").value.trim();
+      if (name == "" || desc == "") {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  </script>
+
+

@@ -1,0 +1,79 @@
+<body>
+    <div class="screen-overlay"></div>
+
+    <main class="main-wrap">
+
+        <section class="content-main">
+            <div class="content-header">
+                <h2 class="content-title">Users list</h2>
+
+            </div>
+            <div class="card mb-4">
+                <header class="card-header">
+                    <div class="row gx-3">
+                  
+
+                        
+                    </div>
+                </header> <!-- card-header end// -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Number</th>
+                                    <th>Status</th>
+                                    <th style="padding-left: 90px;">Action</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {{#each customers}}
+                                <tr>
+                                    <th scope="row" class="index"></th>
+                                    <td>{{this.email}}</td>
+                                    <td>{{this.username}}</td>
+                                    <td>{{this.number}}</td>
+
+                                    <td>
+                                        {{#if this.blocked}}
+                                        BLOCKED
+                                        {{else}}
+                                        UNBLOCKED
+                                        {{/if}}
+                                    </td>
+
+                                    <td class="text-end">
+                                        {{#if this.blocked}}
+                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-success">UNBLOCK</a>
+                                        {{else}}
+                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-danger">BLOCK</a> 
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+
+                        </table> <!-- table-responsive.// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+           
+        </section> <!-- content-main end// -->
+
+    </main>
+
+
+    <script>
+        let index = document.getElementsByClassName('index');
+
+        for (let i = 0; i < index.length; i++) {
+            index[i].innerHTML = i + 1;
+        }
+    </script>
+
+</body>

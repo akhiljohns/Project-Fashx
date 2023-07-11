@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Error Message</title>
+  <style>
+    .error-message {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <label for="numberInput">Number:</label>
+    <input type="text" id="numberInput" pattern="[0-9]" required>
+    <div class="error-message" id="errorMessage"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const numberInput = document.getElementById('numberInput');
+    const errorMessage = document.getElementById('errorMessage');
+
+    numberInput.addEventListener('invalid', function(event) {
+      event.preventDefault();
+      errorMessage.textContent = 'Please enter a valid number.';
+    });
+
+    numberInput.addEventListener('input', function(event) {
+      errorMessage.textContent = '';
+    });
+  </script>
+</body>
+</html>
