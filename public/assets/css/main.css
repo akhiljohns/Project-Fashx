@@ -283,12 +283,14 @@ hr {
 }
 
 table {
-    font-size: 13px;
-    color: #495058 !important
+    font-size: 18px;
+    color: #000409 !important;
+    font-weight: 900;
+
 }
 
 table thead {
-    background: #f7f8f9
+    background: #eeeeee
 }
 
 table thead th {
@@ -567,11 +569,12 @@ h6 {
 }
 
 p {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-    margin-bottom: 5px
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 13px;
+    margin-bottom: 6px;
 }
+
 
 p:last-child {
     margin-bottom: 0

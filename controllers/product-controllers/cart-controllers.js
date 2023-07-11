@@ -39,10 +39,20 @@ const cartController = {
       const customer = req.session.user;
       cartHelper.showCart(customer).then(async (cart) => {
         // let products = cart.items
-        let products = cart.items
-        if (products.length) {
+        let products = cart.items, total = [], subtotal = 0;
+        if (products && products.length > 0) {
+                    console.log("cart items__________________________________",cart.items);
+
+                    for (let i=0; i<products.length; i++) {
+                        products[i].amount = products[i].product.regularPrice * products[i].quantity;
+                    }//to find total product price.
+                    for (let i = 0; i < products.length; i++) {
+                        subtotal += products[i].amount;
+                    }
+
+          
           console.log("<=---PRODUCT----=>",products )
-          res.render("user/cart", { products, user: req.session.user ,emptyCart:false});
+          res.render("user/cart", { products, user: req.session.user , subtotal ,emptyCart:false});
         } else {
           res.render("user/cart", { products, user: req.session.user ,emptyCart:true });
         }

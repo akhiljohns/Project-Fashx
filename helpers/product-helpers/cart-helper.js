@@ -134,10 +134,10 @@ checkProduct: (userId, productDetails) => {
                 return new Promise(async (resolve, reject) => {
                     let totalAmount =0;
                     const prdct = await product.findOne({_id: productId});
-                    cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': 1, 'items.$.productTotal': prdct.productPrice}}).populate('items.product').then((response)=>{
+                    cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': 1, 'items.$.productTotal': prdct.regularPrice}}).populate('items.product').then((response)=>{
                         cart.findOne({userId: userId}).populate('items.product').then((result) => {
                             for(let i = 0; i < result.items.length; i++){
-                                totalAmount += (result.items[i].product.productPrice * result.items[i].quantity);
+                                totalAmount += (result.items[i].product.regularPrice * result.items[i].quantity);
                             }
                             cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((userCart)=>{
                                 cart.findOne({userId: userId}).populate('items.product').then((productCart)=>{
@@ -163,10 +163,10 @@ checkProduct: (userId, productDetails) => {
                 return new Promise(async (resolve, reject) => {
                     let totalAmount=0;
                     const prdct = await product.findOne({_id: productId});
-                    cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': -1, 'items.$.productTotal': -prdct.productPrice}}).populate('items.product').then((response)=>{
+                    cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': -1, 'items.$.productTotal': -prdct.regularPrice}}).populate('items.product').then((response)=>{
                         cart.findOne({userId: userId}).populate('items.product').then((result) => {
                             for(let i = 0; i < result.items.length; i++){
-                                totalAmount += (result.items[i].product.productPrice * result.items[i].quantity);
+                                totalAmount += (result.items[i].product.regularPrice * result.items[i].quantity);
                             }
                             cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((userCart)=>{
                                 cart.findOne({userId: userId}).populate('items.product').then((productCart)=>{
@@ -174,7 +174,7 @@ checkProduct: (userId, productDetails) => {
                                 })
                             })
                         })
-                        // resolve(response);
+                    
                     }).catch((error)=>{
                         console.log('ther error is : ' + error.message);
                     })

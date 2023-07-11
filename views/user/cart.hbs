@@ -39,7 +39,14 @@
   }
 
 
+#prodname{
+  font-size: 16px;
+    font-weight: 900;
+    line-height: 13px;
+    margin-bottom: 6px;
+    margin-left: 10px;
 
+}
   .card .card-body {
     padding: 30px;
     background-color: transparent;
@@ -84,7 +91,7 @@
                 <div class="media" onclick="showProduct('{{this.product._id}}')">
                   <img src="/images/{{this.product.image.[0]}}" alt="prod image" style="height: 100px;width: 100px;" />
                   <div class="media-body">
-                    <p>{{this.product.productName}}</p>
+                    <p> <span id="prodname">{{this.product.productName}}</span></p>
                   </div>
                 </div>
               </td>
@@ -93,7 +100,7 @@
               </td>
               <td>
                 <div class="product_count">
-                  <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+                  <input type="text" name="qty" id="{{this._id}}" maxlength="12" value="{{this.quantity}}" title="Quantity:"
                     class="input-text qty" />
 
                   <button onclick="add_quantity('{{this._id}}','{{this.product._id}}')"
@@ -109,7 +116,7 @@
                 </div>
               </td>
               <td>
-                <h5>₹{{this.product.regularPrice}}</h5>
+                <h5 class="totalPrice">₹{{this.productTotal}}</h5>
               </td>
               <td>
                 <button class="btn btn-outline-danger" onclick="removeCartItem('{{this.product._id}}')">Remove
@@ -123,10 +130,12 @@
               <td></td>
               <td></td>
               <td>
-                <h5>Subtotal</h5>
+                <h4>Subtotal</h4>
               </td>
               <td>
-                <h5>₹{{this.regularPrice}}</h5>
+              <span>
+                                ₹<span id="subtotal">{{subtotal}}</span>
+                            </span>
               </td>
               <td></td>
             </tr>
@@ -137,7 +146,7 @@
               <td>
                 <div class="checkout_btn_inner">
                   <a class="gray_btn" href="/products ">Continue Shopping</a>
-                  <a class="main_btn" href="#">Proceed to checkout</a>
+                  <a class="main_btn" href="/checkout">Proceed to checkout</a>
                 </div>
               </td>
               <td></td>
@@ -228,6 +237,16 @@
 {{!-- script to add and minus quantity --}}
 <script>
 
+  
+    function update() {
+
+        let subtotal = +document.getElementById('subtotal').innerText;
+
+        if (subtotal == 0) {
+            window.location.reload();
+        }
+    }; update();
+
      function manageQuantity(productId) {
         return new Promise((resolve, reject) => {
             let stock;
@@ -244,7 +263,7 @@
         })
     }
 
-     function add_quantity(itemId, productId) {
+    function add_quantity(itemId, productId) {
         let quantity = document.getElementById(itemId).value;
         manageQuantity(productId).then((stock) => {
             if (quantity < stock) {
@@ -256,7 +275,7 @@
     }
 
     function less_quantity(itemId, productId) {
-        let quantity = document.getElementById(itemId).value;
+        let quantity = +document.getElementById(itemId).value;
         if (quantity > 1) {
             minusQuantity(itemId, productId);
             quantity--;
@@ -277,21 +296,21 @@
 
                 let total = document.getElementsByClassName('totalPrice')
                 let item = res.cart.items;
-                console.log(item[0].quantity);
+                
+                console.log("ADD QUANTITY CART QUANTITY ",item[0].quantity);
 
                 for (let i = 0; i < item.length; i++) {
                     console.log(item[i])
-                    total[i].innerHTML = item[i].product.productPrice * item[i].quantity;
-                    subtotal = subtotal + (item[i].product.productPrice * item[i].quantity);
+                    total[i].innerHTML = "₹ "+item[i].product.regularPrice * item[i].quantity;
+                    subtotal = subtotal + (item[i].product.regularPrice * item[i].quantity);
                 }
                 document.getElementById('subtotal').innerHTML = subtotal
                 update();
-                checkCoupon();
-                //console.log(res);
+                
+               
             }
         })
     }
-
 
 
     function minusQuantity(itemId, productId) {
@@ -301,18 +320,18 @@
             method: "POST",
             data: { productId: productId },
             success: function (res) {
+              console.log('fff', res);
                 let total = document.getElementsByClassName('totalPrice')
                 let item = res.cart.items;
                 for (let i = 0; i < item.length; i++) {
                     console.log(item[i])
-                    total[i].innerHTML = item[i].product.productPrice * item[i].quantity;
-                    subtotal += (item[i].product.productPrice * item[i].quantity)
+                    total[i].innerHTML = item[i].product.regularPrice * item[i].quantity;
+                    subtotal += (item[i].product.regularPrice * item[i].quantity)
                 }
                 console.log(subtotal)
                 document.getElementById('subtotal').innerHTML = subtotal;
                 update();
-                checkCoupon();
-                //console.log(res);
+               
             }
         })
     }
