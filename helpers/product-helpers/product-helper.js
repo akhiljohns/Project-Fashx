@@ -145,6 +145,18 @@ console.log("show product err ",err)
       }
     });
   },
+
+  
+  getStock: (productId) => {
+    return new Promise ((resolve, reject) => {
+      product.findOne({_id: productId}).lean().then((product) => {
+        resolve(product.stock);
+      }).catch((error) => {
+        console.log('Search stock failed: ', error);
+        resolve(false);
+      })
+    })
+  }
   
   
 };

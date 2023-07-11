@@ -60,6 +60,11 @@ router.post('/addtocart', cartController.addtoCart);
 router.post('/removeFromCart', cartController.removeItem );
 
 
+router.post('/getQuantity', productManage.getStock);
+
+// Function to ADD and REDUCE to the quantity of the products by one i database.
+router.post('/addQuantity', cartController.addQuantity);
+router.post('/reduceQuantity', cartController.reduceQuantity);
 
 
 // //check if the product with particular varient is inside the cart of the user or not

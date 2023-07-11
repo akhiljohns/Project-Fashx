@@ -4,17 +4,18 @@ const productHelper = require("../../helpers/product-helpers/product-helper");
 
 const cartController = {
   addtoCart: (req, res, next) => {
+
     if(!req.session.user){
       res.status(200).json({user:false});
     }
     // let data = JSON.parse(req.query.data);
     const productId = req.body.productId;
-    
+    const quantity = req.body.quantity;
     const customer = req.session.user;
 
     if (customer) {
       console.log(customer);
-      cartHelper.addtoCart(customer, productId).then((cart) => {
+      cartHelper.addtoCart(customer, productId,quantity).then((cart) => {
         req.session.user.cart = cart;
 
         productHelper.findProductByIdUser(productId).then((product) => {
@@ -29,6 +30,7 @@ const cartController = {
       });
     } else {
       console.log("no user");
+      
     }
   },
 
@@ -60,6 +62,34 @@ const cartController = {
           res.status(200).json({response: response});
       })  
   },
+
+
+  addQuantity: (req, res, next) => {
+  const itemId = req.query.itemId;
+  const userId = req.session.user._id;
+  const productId = req.body.productId;
+  cartHelper.addQuantity(itemId, userId, productId).then((cart) => {
+      console.log('<=-----ADD QUANTITY RESULT-----=>',cart);
+      res.status(200).json({cart});
+  }).catch((err) => {
+      console.log('the error occurred: '+ err);
+  })
+},
+
+
+reduceQuantity: (req, res, next) => {
+  const itemId = req.query.itemId;
+  const userId = req.session.user._id;
+  const productId = req.body.productId;
+  cartHelper.reduceQuantity(itemId, userId, productId).then((cart) => {
+    console.log('<=-----REDUCE QUANTITY RESULT-----=>',cart);
+
+      res.status(200).json({cart: cart});
+  }).catch((err) => {
+      console.log('the error occurred: '+ err);
+  })
+},
+
 
   // // This is a function which helps to add the quantity of a product in the cart by calling another function addQuantity in cartHelper.
   //     addQuantity: (req, res, next) => {

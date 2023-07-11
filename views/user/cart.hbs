@@ -228,6 +228,22 @@
 {{!-- script to add and minus quantity --}}
 <script>
 
+     function manageQuantity(productId) {
+        return new Promise((resolve, reject) => {
+            let stock;
+            $.ajax({
+                url: '/getQuantity',
+                method: 'POST',
+                data: { productId: productId },
+                success: function (response) {
+                    stock = response.stock;
+                }
+            }).then(() => {
+                resolve(stock)
+            })
+        })
+    }
+
      function add_quantity(itemId, productId) {
         let quantity = document.getElementById(itemId).value;
         manageQuantity(productId).then((stock) => {

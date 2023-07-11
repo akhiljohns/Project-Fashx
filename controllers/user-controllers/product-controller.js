@@ -27,6 +27,15 @@ module.exports = {
                 }
             });
         });
-    }
+    },
+    
+    getStock: (req, res) => {
+        const productId = req.body.productId;
+        productHelper.getStock(productId).then((stock) => {
+          res.status(200).json({stock:stock});
+        }).catch((error)=> {
+          console.log('Error in controller while getting stocks', error);
+        })
+      }
     
 }

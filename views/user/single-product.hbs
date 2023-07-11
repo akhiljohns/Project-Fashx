@@ -64,15 +64,15 @@
             </p>
             <div class="product_count">
               <label for="qty">Quantity:</label>
-              <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                class="input-text qty" />
+              <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
+                class="input-text qty " />
               <button
-                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                onclick="var result = document.getElementById('quantity'); var quantity = result.value; if( !isNaN( quantity )) result.value++;return false;"
                 class="increase items-count" type="button">
                 <i class="lnr lnr-chevron-up"></i>
               </button>
               <button
-                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                onclick="var result = document.getElementById('quantity'); var quantity = result.value; if( !isNaN( quantity ) &amp;&amp; quantity > 0 ) result.value--;return false;"
                 class="reduced items-count" type="button">
                 <i class="lnr lnr-chevron-down"></i>
               </button>
@@ -519,11 +519,14 @@
 
 <script>
   function addtocart(productId) {
+			let quantity = document.getElementById('quantity').value;
+
     $.ajax({
       url: '/addtocart',
       method: 'POST',
       data: {
-        productId: productId
+        productId: productId,
+        quantity: quantity
       },
       success: function (response) {
         if (response.user === false) {
