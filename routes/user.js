@@ -103,6 +103,7 @@ router.post('/updatePassword', passwordController.changePassword)
 router.get('/orders', access.check, access.checkBlockedStatus, orderController.getOrders )
 router.get('/order/details', access.check, access.checkBlockedStatus, orderController.getOrderdetails )
 router.post('/payment', access.check, access.checkBlockedStatus, paymentController.doPayment)
+router.post('/cancelorder', access.check, access.checkBlockedStatus, orderController.postCancelOrder)
 
 router.get('/confirm', access.check, access.checkBlockedStatus, (req, res)=> {
     res.render('user/confirmation', {order: req.session.lastOrder, customer: req.session.user, user: req.session.user});

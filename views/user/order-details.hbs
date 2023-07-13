@@ -124,9 +124,17 @@
                             <td>Payment:</td>
                             <td>{{order.paymentMethod}}</td>
                         </tr>
+{{!-- <tr>
+    <td>Status</td>
+    {{#if (eq order.status 'cancelled') }}
+    <td style="color:red">Cancelled</td>
+   
+    {{/if}}
+</tr> --}}
+                        
                         <tr>
                             <td>Status:</td>
-                            <td>{{order.status}}</td>
+                            <td style="color: red;">{{order.status}}</td>
                         </tr>
                     </table>
                 </div>
@@ -235,10 +243,71 @@
                 </table>
             </div>
         </div>
+    
+        <button onclick="cancelOrder('{{order._id}}')" class="btn btn-outline-danger mt-5" style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
     </div>
 </section>
 <!--================End Order Details Area =================-->
 
+
+<!-- Popup Dialog Box HTML -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Cancel Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are You Sure You Want To Cancel This Order?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="cancel(true)">Cancel Order</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+          onclick="cancel(false)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Popup Dialog Box HTML END -->
+
+
+<!-- Popup Dialog Box Script -->
+<script>
+  let currentItem;
+
+  function cancelOrder(orderId) {
+    currentItem = orderId;
+    showConfirmationModal();
+  }
+
+  function showConfirmationModal() {
+    $('#confirmationModal').modal('show');
+  }
+    
+</script>
+<script>
+  function cancel(cancel) {
+    if (cancel) {
+alert(currentItem);
+      $.ajax({
+        url: '/cancelorder?itemId=' + currentItem,
+        method: 'POST',
+        success: function (response) {
+          window.location.reload();
+
+          currentItem = null;
+        }
+      });
+    }
+    currentItem = null;
+  }
+  
+</script>
+<!-- Popup Dialog Box Script END -->
 <script>
     let subtotal = 0;
     let total = document.getElementsByClassName('productTotal');
