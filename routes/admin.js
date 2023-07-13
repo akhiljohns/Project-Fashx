@@ -35,6 +35,7 @@ router.get('/products/edit/:id', access.logStatus, productManage.getEditProduct 
 router.post('/products/edit/:id', upload.array('productImage'), productManage.postEditProduct );
 
 router.get("/products/delete/:id", access.logStatus, productManage.softDeleteProduct);
+router.get("/products/delete/image/:id", access.logStatus, productManage.softDeleteProduct);
 
 
 

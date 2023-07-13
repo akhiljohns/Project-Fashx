@@ -7,78 +7,96 @@
           <h3>Billing Details</h3>
 
           <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-         
-                           {{#if address}}
-                            <div class="col-md-12 form-group p_star">
-                                <select class="country_select" id="address-list" onchange="updateAddress()">
-                                    <option value="1">Choose Address</option>
-                                    {{#each address}}
-                                    <option value="{{this._id}}">{{this.fname}},{{this.lname}}, {{this.houseName}}, {{this.city}},
-                                        {{this.pincode}}</option>
-                                    {{/each}}
-                                </select>
-                            </div>
-                            {{/if}}
-                       
 
-            <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="first" name="fname" />
-              <span class="placeholder" data-placeholder="First name"></span>
+            {{#if address}}
+            <div class="col-md-12 form-group  ">
+              <select class="country_select" id="address-list" onchange="updateAddress()">
+                <option value="1">Choose Address</option>
+                {{#each address}}
+                <option value="{{this._id}}">{{this.fname}} {{this.lname}}, {{this.houseName}}, {{this.city}},
+                  {{this.pincode}}</option>
+                {{/each}}
+              </select>
             </div>
-            <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="last" name="lname" />
+            {{/if}}
+
+
+            <div class="col-md-6 form-group  ">
+              <label for="fname">First Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" />
+              <span class="placeholder" data-placeholder="First Name"></span>
+            </div>
+            <div class="col-md-6 form-group  ">
+              <label for="lname">Last Name</label>
+              <input type="text" class="form-control" id="lname" name="lname" />
               <span class="placeholder" data-placeholder="Last name"></span>
             </div>
-         
-            
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="phonenum" name="phone" />
+
+
+            <div class="col-md-12 form-group  ">
+              <label for="phone">Phone Number</label>
+              <input type="text" class="form-control" id="phone" name="phone" />
               <span class="placeholder" data-placeholder="Phone Number"></span>
             </div>
 
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="address" name="address" />
+            <div class="col-md-12 form-group  ">
+              <label for="houseName">House No/Building Name</label>
+              <input type="text" class="form-control" id="houseName" name="houseName" />
               <span class="placeholder" data-placeholder="House No/Building Name"></span>
             </div>
-          
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="city" name="city" />
-              <span class="placeholder" data-placeholder="Town/City"></span>
-            </div>
-            <div class="col-md-12 form-group p_star">
+
+            <div class="col-md-12 form-group  ">
+              <label for="landmark">Landmark</label>
               <input type="text" class="form-control" id="landmark" name="landmark" />
               <span class="placeholder" data-placeholder="Landmark"></span>
             </div>
-           
-            <div class="col-md-12 form-group p_star">
+            <div class="col-md-12 form-group  ">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" name="city" />
+              <span class="placeholder" data-placeholder="Town/City"></span>
+            </div>
+            <div class="col-md-12 form-group  ">
+              <label for="district">District</label>
               <input type="text" class="form-control" id="district" name="district" />
               <span class="placeholder" data-placeholder="District"></span>
             </div>
-           
-            <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="zip" name="zip"/>
-               <span class="placeholder" data-placeholder="Postal Code"></span>
+
+            <div class="col-md-12 form-group  ">
+              <label for="pincode">Pincode</label>
+              <input type="text" class="form-control" id="pincode" name="pincode" />
+              <span class="placeholder" data-placeholder="Postal Code"></span>
+            </div>
+            <div class="col-md-12 form-group  ">
+              <label for="state">State</label>
+              <input type="text" class="form-control" id="state" name="state" />
+              <span class="placeholder" data-placeholder="State"></span>
+            </div>
+            <div class="col-md-12 form-group  ">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" id="country" name="country" />
+              <span class="placeholder" data-placeholder="Country"></span>
             </div>
 
-         
+
+
           </form>
         </div>
         <div class="col-lg-4">
           <div class="order_box">
-            
-            
+
+
             <ul class="list list_2">
-            
-              
+
+
               <li>
                 <a href="#">Subtotal
                   <span>₹<span id="carttotal">{{totalAmount}}</span></span>
                 </a>
               </li>
-              
+
               <li>
                 <a href="#">Shipping
-                 <span>₹<span id="shipping">50</span></span>
+                  <span>₹<span id="shipping">50</span></span>
                 </a>
               </li>
               <li>
@@ -89,18 +107,20 @@
 
             </ul>
 
-            
+
             <div class="payment_item active">
               <div class="radion_btn">
-                <input type="radio" id="f-option6" name="selector" />
+                <input type="radio" id="f-option6" value="cod" name="selector" />
                 <label for="f-option6">Cash On Delivery</label>
-             
+
                 <div class="check"></div>
               </div>
-              
+
             </div>
-            
-            <a class="main_btn" href="#">Confirm Order</a>
+
+            <a class="main_btn" onclick="payment()">Place Order</a>
+                      <span id="addErr" style="color: #ff0000;margin: 15.3rem 8.7rem;font-size: x-large;"></span>
+
           </div>
         </div>
       </div>
@@ -115,9 +135,95 @@
 
 
 <script>
-    const cartTotal= +document.getElementById('carttotal').innerText;
-    const shipping = +document.getElementById('shipping').innerText;
+  const cartTotal = +document.getElementById('carttotal').innerText;
+  const shipping = +document.getElementById('shipping').innerText;
+
+  const total = (cartTotal + shipping);
+  document.getElementById('total').innerText = total;
+</script>
+
+
+<script>
+  function updateAddress() {
+    let addressId = document.getElementById('address-list').value;
+    $.ajax({
+      url: '/getAnAddress',
+      method: 'POST',
+      data: {
+        addressId: addressId
+      },
+      success: (address) => {
+
+
+        document.getElementById('fname').value = address.fname
+        document.getElementById('lname').value = address.lname
+        document.getElementById('phone').value = address.phone;
+        document.getElementById('houseName').value = address.houseName;
+        document.getElementById('landmark').value = address.landmark;
+        document.getElementById('city').value = address.city;
+        document.getElementById('district').value = address.district;
+        document.getElementById('pincode').value = address.pincode;
+        document.getElementById('state').value = address.state;
+        document.getElementById('country').value = address.country;
+      }
+    })
+  }
+</script>
+
+<script>
+   function payment() {
+
+         fname = document.getElementById("fname").value.trim();
+    lname = document.getElementById("lname").value.trim();
+    phone = document.getElementById("phone").value.trim();
+    houseName = document.getElementById("houseName").value.trim();
+    landmark = document.getElementById("landmark").value.trim();
+    city = document.getElementById("city").value.trim();
+    district = document.getElementById("district").value.trim();
+    pincode = document.getElementById("pincode").value.trim();
+    state = document.getElementById("state").value.trim();
+    country = document.getElementById("country").value.trim();
+
+         if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" ||landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
+
+            document.getElementById('addErr').innerHTML = 'All fields Are Required'
+            return;
+        }
+
+        let address = {
+            fname,
+            lname,
+            phone,
+            houseName,
+            landmark,
+            city,
+            district,
+            pincode,
+            state,
+            country
+        }
+
+        let paymentMethod ;
+        let radioBtn = document.getElementById('f-option6');
+                paymentMethod = radioBtn.value;
+
     
-    const total = (cartTotal + shipping );
-    document.getElementById('total').innerText = total;
+
+        $.ajax({
+            url: '/payment',
+            method: 'POST',
+            data: JSON.stringify({
+                address: address,
+                paymentMethod: paymentMethod
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.codSuccess) {
+                    window.location.href = '/confirm'
+                } 
+            }
+        })
+
+    }
+
 </script>

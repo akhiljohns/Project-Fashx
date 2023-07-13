@@ -1,13 +1,14 @@
 const session = require('express-session')
 const loginHelper = require('../../helpers/user-helpers/login-helper');
 
+
 module.exports ={
 
- getLogin:(req, res, next)=>{
-
-    res.render('user/user-signin',{layout:false,logsta:false,blocked:false});
-
- },
+  getLogin: (req, res, next) => {
+   
+    res.render('user/user-signin', { layout: false, logsta: false, blocked: false });
+  },
+  
 
  postLogin:(req, res)=>{
     loginHelper.doLogin(req.body).then((response) => {

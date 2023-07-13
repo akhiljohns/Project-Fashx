@@ -1,0 +1,139 @@
+<style>
+  .toolEll {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+  }
+
+  .breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb-item {
+    font-size: 14px;
+  }
+
+  .breadcrumb-item a,
+  .breadcrumb-item.active {
+    color: #333;
+    text-decoration: none;
+  }
+
+  .breadcrumb-item.active {
+    font-weight: bold;
+  }
+
+  .card {
+    width: 18rem;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-text span {
+    color: black;
+  }
+
+  .card-text span.color-green {
+    color: green;
+  }
+
+  .card-text span.color-orange {
+    color: rgb(208, 82, 10);
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+    color: #fff;
+  }
+
+  .btn-back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: #555;
+    color: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
+
+<section class="container-fluid pl-5 pr-5 pt-3">
+ 
+  <div class="row">
+    {{#each orders}}
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-header">
+            Order No: {{this.orderNo}}
+          </div>
+          <p class="card-text"><span><h6 class="toolEll">{{#with (lookup this.items 0)}} {{product.productName}} {{/with}}</h6></span> & {{ this.no }} more items</p>
+          <p class="card-text">Amount: ₹ <span>{{this.totalAmount}}</span></p>
+          <p class="card-text">Payment: <span class="color-green">{{this.paymentMethod}}</span></p>
+          <p class="card-text">Status: <span class="color-orange">{{this.status}}</span></p>
+          <a href="/order/details?orderId={{this._id}}" class="btn btn-primary">See details</a>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="text-align: center; justify-content: center;">
+    <h6><a href="/products">Continue Shopping</a></h6>
+  </div>
+</section>
+
+<!-- Back to top -->
+<div class="btn-back-to-top" id="myBtn">
+  <span class="symbol-btn-back-to-top">
+    <i class="zmdi zmdi-chevron-up"></i>
+  </span>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const btnBackToTop = document.getElementById('myBtn');
+    if (document.documentElement.scrollTop > 300) {
+      btnBackToTop.classList.add('show');
+    } else {
+      btnBackToTop.classList.remove('show');
+    }
+  });
+
+  document.getElementById('myBtn').addEventListener('click', () => {
+    document.documentElement.scrollTop = 0;
+  });
+</script>

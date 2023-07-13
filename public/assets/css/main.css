@@ -957,8 +957,8 @@ b {
 
 .form-control,
 .form-select {
-    background-color: #f4f5f9;
-    border: 2px solid #f4f5f9;
+    background-color: #fefefe;
+    border: 2px solid #c3c5d1;
     font-size: 13px;
     -webkit-box-shadow: none;
     box-shadow: none;

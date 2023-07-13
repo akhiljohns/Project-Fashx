@@ -28,46 +28,39 @@ const orderManagement = {
         })
     },
 
-
+// getOrders:(req, res)=> {
+// res.render('user/orders',{user:req.session.user})
+// },
 
     
-    // /* `showOrders` is a method that handles a GET request to display the orders of a logged-in user.
-    // It first gets the user's ID from the session, then uses the `getOrders` method from the
-    // `userHelper` module to retrieve the user's orders. If the user has orders, it adds a `no`
-    // property to each order object, which represents the number of items in the order. Finally, it
-    // renders the `orders` view with the user's orders and customer information. If the user has no
-    // orders, it renders the `orders` view with a message indicating that there are no orders. */
-    // showOrders: (req, res, next) => {
-    //     const customer = user = req.session.user;
-    //     const userId = req.session.user._id;
-    //     userHelper.getOrders(userId).then((response) => {
-    //         if(response){
-    //             const orders = response.order
-    //             for(let i = 0; i < orders.length; i++) {
-    //                 orders[i].no = orders[i].items.length;
-    //             }
-    //             res.render('shop/orders', {orders, customer, user })
-    //         } else {
-    //             res.render('shop/orders', {noOrders: true, customer, user})
-    //         }
-    //     })
-    // },
+
+    getOrders: (req, res) => {
+        const customer = user = req.session.user;
+        const userId = req.session.user._id;
+        userHelper.getOrders(userId).then((response) => {
+            if(response){
+                const orders = response.order
+                for(let i = 0; i < orders.length; i++) {
+                    orders[i].no = orders[i].items.length;
+                }
+                res.render('user/orders', {orders, customer, user })
+            } else {
+                res.render('user/orders', {noOrders: true, customer, user})
+            }
+        })
+    },
 
 
-    // /* `getAnOrder` is a method that handles a GET request to retrieve the details of a specific order.
-    // It first gets the order ID and user ID from the request query and session respectively. It then
-    // uses the `getAnOrder` method from the `orderHelper` module to retrieve the order details. If the
-    // order is found, it renders the `orderDetails` view with the order details and customer
-    // information. */
-    // getAnOrder: (req, res, next) => {
-    //     const orderId = req.query.orderId;
-    //     const userId = req.session.user._id;
-    //     orderHelper.getAnOrder(orderId, userId).then((order) => {
-    //         if(order){
-    //             res.render('shop/orderDetails', {order, customer: req.session.user})
-    //         }
-    //     })
-    // },
+   
+    getOrderdetails: (req, res, next) => {
+        const orderId = req.query.orderId;
+        const userId = req.session.user._id;
+        userHelper.getOrderdetails(orderId, userId).then((order) => {
+            if(order){
+                res.render('user/order-details', {order, customer: req.session.user,user:req.session.user})
+            }
+        })
+    },
 
 
     // /* `cancelOrder` is a method that handles a request to cancel an order. It first gets the order ID

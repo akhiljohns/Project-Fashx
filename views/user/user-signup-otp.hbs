@@ -381,6 +381,9 @@
                         {{#if inValidotp}}
                         <p id="invalidotp" style="color: red;">INVALID OTP</p>
                         {{/if}}
+                        {{#if otptimeout}}
+                        <p id="otptimeout" style="color: red;">OTP LIMIT RATE EXCEEDED. TRY AFTER SOME TIME</p>
+                        {{/if}}
                          <button type="submit" value="submit" style="cursor: pointer;" class="btn btn-primary"> Verify OTP   </button>
                       
 

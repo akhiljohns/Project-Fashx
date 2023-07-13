@@ -430,16 +430,16 @@
   }
   
   function checkPassword() {
-    let oldpassword = document.getElementById("oldassword").value.trim()
-    let newpassword = document.getElementById('newassword').value.trim();
+    let oldpassword = document.getElementById("oldpassword").value.trim()
+    let newpassword = document.getElementById('newpassword').value.trim();
     let confirmpassword = document.getElementById('confirmpassword').value.trim();
     let click;
 
-    if (newpassword == '' || confirmpassword == '' || oldp  assword == '') {
+    if (newpassword == '' || confirmpassword == '' || oldpassword == '') {
       document.getElementById('passwordErr').innerText = 'All Fields Are Mandatory';
       return false;
     } else if (newpassword !== confirmpassword) {
-      document.getElementById('passwordErr').innerText = "Passwords Doesn't Match";
+      document.getElementById('passwordErr').innerText = "New Passwords Doesn't Match";
       return false;
     } else {
       $.ajax({

@@ -4,7 +4,7 @@ const otpController = require('./otp-controller');
 const bcrypt = require('bcrypt');
 
 
-
+let phnumber = null;
 
 module.exports = {
    
@@ -14,12 +14,20 @@ module.exports = {
        
      
     },
-    
+    // resendOtp: (req, res) => {
+    //    console.log("RESEND OTP",phnumber)
+    //    phoneNumber=phnumber
+    //     otpController.sendOtp(phnumber);
+    //     console.log('RESEND OTP userData : '+userData.phone);
+    //     res.render('user/otpform',{layout:false, resmsg1:true,phoneNumber})
+       
+    // },
     
     postForgotPassword: (req, res, next) => {
         const userData = req.body;
         console.log(userData);
         phoneNumber = req.body.phone;
+        phnumber = phoneNumber
         const response = registerHelper.checkUser(phoneNumber);
         if(response){
             otpController.sendOtp(userData);
@@ -61,7 +69,7 @@ module.exports = {
 
     getResetPassword:(req, res)=>{
         console.log("hi",req.session.phone);
-        res.render('user/reset-password',{layout:false,phone:req.session.phone});
+        res.render('user/reset-password',{layout:false,phone:phnumber});
        
      
     },
@@ -71,7 +79,7 @@ module.exports = {
         const oldpassword = req.body.oldpassword;
         const newpassword = req.body.newpassword;
         const user = req.session.user;
-        console.log(req.body.oldpassword);
+        console.log("old password: " + oldpassword+" new password: " + newpassword);
         const response = {};
 
         return new Promise((resolve, reject) => {
@@ -79,8 +87,8 @@ module.exports = {
                 response.samePasswords = true;
             }
 
-            bcrypt.compare(oldPassword, user.password).then((stat)=>{
-                response.oldPasswordCheck = stat;
+            bcrypt.compare(oldpassword, user.password).then((status)=>{
+                response.oldPasswordCheck = status;
                 res.status(200).json(response);
             })
         })

@@ -35,28 +35,25 @@ module.exports = {
       })
   },
 
-//   /* `getAnAddress` is a function that handles a GET request to retrieve a single address from a
-//   user's list of addresses. It takes in the request (`req`), response (`res`), and next middleware
-//   function (`next`) as parameters. */
-//   getAnAddrress: (req, res, next) => {
-//       try{
-//           const addressId = req.body.addressId;
-//           const userId = req.session.user._id;
-//           let address;
-//           userHelper.getAddress(userId).then((response) => {
-//               let addressList = response.address;
-//               console.log(addressList);
-//               for(let i=0; i<addressList.length; i++) {
-//                   if(addressList[i]._id == addressId) {
-//                       address = addressList[i];
-//                       break;
-//                   }
-//               }
-//               console.log('single adddress::', address);
-//               res.status(200).json(address);
-//           })
-//       } catch (err) {
-//           console.log('Error getting single address ::', err);
-//       }
-//   }
+  getAnAddrress: (req, res, next) => {
+      try{
+          const addressId = req.body.addressId;
+          const userId = req.session.user._id;
+          let address;
+          userHelper.getAddress(userId).then((response) => {
+              let addressList = response.address;
+              console.log(addressList);
+              for(let i=0; i<addressList.length; i++) {
+                  if(addressList[i]._id == addressId) {
+                      address = addressList[i];
+                      break;
+                  }
+              }
+              console.log('single adddress::', address);
+              res.status(200).json(address);
+          })
+      } catch (err) {
+          console.log('Error getting single address ::', err);
+      }
+  }
 };

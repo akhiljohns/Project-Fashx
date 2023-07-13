@@ -9,7 +9,7 @@ let regUser = false;
 let phoneNumber = null;
 let otpValid = false;
 let inValidotp = false;
-
+let otptimeout = false;
 module.exports = {
 
   getSignup: (req, res) => {
@@ -29,7 +29,7 @@ module.exports = {
 
   getSignupotp: (req, res) => {
     if (otpsent) {
-      res.render("user/user-signup-otp", { layout: false, phoneNumber,inValidotp });
+      res.render("user/user-signup-otp", { layout: false, phoneNumber,inValidotp,otptimeout });
     } else {
       res.redirect('/signup')
       
@@ -118,10 +118,14 @@ module.exports = {
         res.redirect('/signup')
       
       } else {
+      
+       
+      
         otpValid = false;
         inValidotp = true;
         phoneNumber = phone;
         res.redirect("/signup/otpform");
+      
       }
     });
   },

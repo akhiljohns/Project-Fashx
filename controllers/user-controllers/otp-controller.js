@@ -10,13 +10,6 @@ const countryCode = '+91';
 module.exports ={
 
     
-    resendOtp: (req, res) => {
-        userData = req.query;
-        otpMethods.sendOtp(userData);
-        console.log('userData : '+userData.phone);
-        res.json({status: true})
-       
-    },
 
     sendOtp: (userData) => {
         return new Promise((resolve, reject) => {
@@ -24,9 +17,9 @@ module.exports ={
                 .verifications
                 .create({to: countryCode+userData.phone, channel: 'sms'})
                 .then((verification) => {
-                    console.log(verification.status);
+                    console.log("SEND OTP STATUS:",verification.status);
                     resolve(verification.status);
-                    console.log(countryCode+userData.phone)
+                    console.log("SEND OTP DATA:",countryCode+userData.phone)
                 }).catch((error) => {
                     console.log(error.message);
                 })
@@ -40,10 +33,10 @@ module.exports ={
             .create({ to: countryCode+userData.phone, code: userData.otp })
             .then((verification_check) =>{ 
                 console.log(userData.otp);
-                console.log(verification_check.status);
+                console.log("twilio verification status",verification_check.status);
                 resolve(verification_check.valid)
             }).catch((error) => {
-                console.log(error.message);
+                console.log("twilio verify error",error.message);
             });
         })
     },

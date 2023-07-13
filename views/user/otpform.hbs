@@ -57,12 +57,15 @@
       <h2>OTP Verification</h2>
 
       {{!-- PHONE NUMBER FORM --}}
+        
+      
       <form action="/checkphone" method="post">
+          
           {{#if phoneNumber}}
         <div class="form-group">
           <label for="phone">Phone Number:</label>
           <input type="text" id="phone" name="phone" value="{{phoneNumber}}" minlength="10" maxlength="10"
-            required>
+            readonly>
         </div>
         {{else}}
         <div class="form-group">
@@ -85,7 +88,11 @@
        </p>
        </div>
         {{/if}}
+        {{#if phoneNumber}}
+        <button>RESEND OTP</button>
+        {{else}}
         <button>Send OTP</button>
+{{/if}}
 
         {{!-- OTP VALUE FORM --}}
       </form>

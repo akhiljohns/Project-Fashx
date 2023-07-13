@@ -12,7 +12,7 @@ const productManage = require('../controllers/user-controllers/product-controlle
 const cartController = require('../controllers/product-controllers/cart-controllers');
 const orderController = require('../controllers/user-controllers/order-controller');
 const profileManager = require('../controllers/user-controllers/profile-manager');
-
+const paymentController = require('../controllers/user-controllers/payment-controller');
 // importing middlewares
 const access = require('../middlewares/loginCheck');
 
@@ -90,12 +90,23 @@ router.post('/updateProfile', access.check, access.checkBlockedStatus, profileMa
 // ADDRESS 
 router.post('/addAddress', access.check, access.checkBlockedStatus, profileManager.addAddress);
 router.get('/deleteAddress/:id', access.check, access.checkBlockedStatus, profileManager.deleteAddress);
+router.post('/getAnAddress',access.check, access.checkBlockedStatus, profileManager.getAnAddrress);
 
 // PASSWORD 
 
 router.post('/check-password', passwordController.checkPassword )
 
 router.post('/updatePassword', passwordController.changePassword)
+
+// ORDER 
+
+router.get('/orders', access.check, access.checkBlockedStatus, orderController.getOrders )
+router.get('/order/details', access.check, access.checkBlockedStatus, orderController.getOrderdetails )
+router.post('/payment', access.check, access.checkBlockedStatus, paymentController.doPayment)
+
+router.get('/confirm', access.check, access.checkBlockedStatus, (req, res)=> {
+    res.render('user/confirmation', {order: req.session.lastOrder, customer: req.session.user, user: req.session.user});
+})
 
 module.exports = router;
 

@@ -26,7 +26,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label">Stock</label>
-                    <input type="text" required placeholder="0" class="form-control" name="prodstock" value="{{product.stock}}" >
+                    <input type="text" required  pattern="[0-9]*" title="Stock Count Should Not Be Less Than 0" placeholder="0" class="form-control" name="prodstock" value="{{product.stock}}" >
                   </div>
                 </div>
               </div>
@@ -38,11 +38,11 @@
                   <div class="form-group">
                     <h6>2. Pricing</h6>
                     <label class="form-label">Regular Price</label>
-                    <input type="text" class="form-control" name="prodrprice"  value="{{product.regularPrice}}" required>
+                    <input type="text" class="form-control" name="prodrprice" pattern="[0-9]*" title="Price Should Not Be Less Than 0"  value="{{product.regularPrice}}" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label">Discount Rate</label>
-                    <input type="text" placeholder="%" class="form-control" name="prodoprice"  value="{{product.discount}}" required>
+                    <input type="text" placeholder="%" class="form-control" name="prodprice" title="Discount Percentage Should Not Be Less Than 0" pattern="[0-9]*" value="{{product.discount}}" required>
                   </div>
                 </div>
               </div>
@@ -74,23 +74,21 @@
 
           <div style="width: 10vw; height: 10vh;" class="mb-4 d-flex">
             {{#each product.image}}
-              <img src="/images/{{this}}" alt="IMG" style="width: 5vw; height: 10vh;" class="mr-5">
+
+              <img src="/images/{{this}}" alt="IMG"  class="mr-5">
+              
+              <button class="btn btn-outline-danger mr-5" style="height: 30px;">Delete</button>
             {{/each}}
           </div>
 
-          <div class="img-edit mb-5 " style="width: 100px;height: 100px; background-color: black;">
+          
 
-          </div>
-          <div class="img-edit" style="width: 100px;height: 100px; background-color: black;">
-
-          </div>
-
+        </div>
           <div class="custom-file">
           <input type="file" class="custom-file-input" value="{{product.image}}" id="image" name="productImage" required multiple>
 
             <label class="custom-file-label" for="image"></label>
           </div>  
-        </div>
 
                 </div>
               </div>

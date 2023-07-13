@@ -7,7 +7,7 @@ module.exports ={
 
 
     getHome:(req, res, next) =>{
-
+       
         res.render('user/index', {user: req.session.user});
 
     },

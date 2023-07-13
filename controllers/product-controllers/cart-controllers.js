@@ -39,8 +39,8 @@ const cartController = {
       const customer = req.session.user;
       cartHelper.showCart(customer).then(async (cart) => {
         // let products = cart.items
-        let products = cart.items, total = [], subtotal = 0;
-        if (products && products.length > 0) {
+        if (cart && cart.items.length > 0) {
+          let products = cart.items, total = [], subtotal = 0;
                     console.log("cart items__________________________________",cart.items);
 
                     for (let i=0; i<products.length; i++) {
@@ -54,6 +54,7 @@ const cartController = {
           console.log("<=---PRODUCT----=>",products )
           res.render("user/cart", { products, user: req.session.user , subtotal ,emptyCart:false});
         } else {
+          let products = null
           res.render("user/cart", { products, user: req.session.user ,emptyCart:true });
         }
       });
