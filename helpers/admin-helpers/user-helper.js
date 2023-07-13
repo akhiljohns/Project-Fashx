@@ -2,6 +2,9 @@ var db = require('../../config/connection');
 var user = require("../../models/user-model");
 const loginHelper = require('../../helpers/user-helpers/login-helper')
 const user_address = require('../../models/address-model');
+const cart = require('../../models/cart-model');
+const customerCollection = require('../../models/user-model');
+const { ObjectId } = require('mongodb');
 
 
 module.exports = {
@@ -55,7 +58,7 @@ checkBlockStatus: async (id) => {
 getAddress: (userId) => {
   try{
       return new Promise((resolve, reject) => {
-          user_address.fin=dOne({userId: userId}).lean().then((userAddress) => {
+          user_address.findOne({userId: userId}).lean().then((userAddress) => {
               cart.findOne({userId: userId}).then((cart) => {
                   resolve(userAddress, cart);
               }).catch((err) => {
@@ -68,6 +71,18 @@ getAddress: (userId) => {
   } catch(err){
       console.log('Error while getting address: ' + err);
   }
+},
+
+findUserById: (id) => {
+    try{
+        return new Promise((resolve, reject) => {
+            customerCollection.findOne({ _id: new ObjectId(id) }).lean().then((result) => {
+                resolve(result);
+            })
+        })
+    } catch(err){
+        console.log('Error while fetching user by Id: '+ err);
+    }
 },
 
 

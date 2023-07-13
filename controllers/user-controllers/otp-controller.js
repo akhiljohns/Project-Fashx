@@ -3,7 +3,7 @@ dotenv.config()
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
-
+const serviceid = process.env.TWILIO_SERVICE_ID;
 
 const countryCode = '+91';
 
@@ -20,7 +20,7 @@ module.exports ={
 
     sendOtp: (userData) => {
         return new Promise((resolve, reject) => {
-            client.verify.v2.services('VA825724b557de87f782c63744121118de')
+            client.verify.v2.services(serviceid)
                 .verifications
                 .create({to: countryCode+userData.phone, channel: 'sms'})
                 .then((verification) => {
@@ -35,7 +35,7 @@ module.exports ={
 
     verifyOtp: (userData) => {
         return new Promise((resolve, reject) => {
-            client.verify.v2.services('VA825724b557de87f782c63744121118de')
+            client.verify.v2.services(serviceid)
             .verificationChecks
             .create({ to: countryCode+userData.phone, code: userData.otp })
             .then((verification_check) =>{ 

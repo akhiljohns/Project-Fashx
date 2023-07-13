@@ -12,23 +12,29 @@ const addressSchema = new mongoose.Schema({
     },
 
     address: [{
-        name: String,
+        fname: String,
+
+        lname: String,
 
         phone: String,
 
         houseName: String,
+        
+        landmark : String,
 
         city: String,
 
-        state: String,
-
-        area: String,
+        district: String,
 
         pincode: String,
+            
+        state: String,
+        
+        country: String,
         
     }]
     
-},{collection: 'user_address'});
+},{collection: 'address'});
 
 
 const address = mongoose.model('address', addressSchema);

@@ -2013,7 +2013,7 @@ progress {
 }
 
 .table > :not(caption) > * > * {
-  padding: 1.5rem 4.4rem;
+  padding: 0.5rem 1.4rem;
   background-color: var(--bs-table-bg);
   background-image: -webkit-gradient(linear, left top, left bottom, from(var(--bs-table-accent-bg)), to(var(--bs-table-accent-bg)));
   background-image: linear-gradient(var(--bs-table-accent-bg), var(--bs-table-accent-bg));

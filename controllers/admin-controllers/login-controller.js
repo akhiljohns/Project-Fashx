@@ -21,4 +21,13 @@ module.exports = {
     req.session.adminlog = false;
     res.redirect("/admin/signin");
   },
+  getUserEdit: (req, res) => {
+   res.render("admin/user-edit");
+  },
+  getUserDetails: (req, res) => {
+   res.render("admin/user-details");
+  },
+  getOrders: (req, res) => {
+   res.render("admin/orders", {admin:true});
+  },
 };

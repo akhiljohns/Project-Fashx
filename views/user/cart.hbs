@@ -301,7 +301,7 @@
 
                 for (let i = 0; i < item.length; i++) {
                     console.log(item[i])
-                    total[i].innerHTML = "₹ "+item[i].product.regularPrice * item[i].quantity;
+                    total[i].innerHTML = "₹"+item[i].product.regularPrice * item[i].quantity;
                     subtotal = subtotal + (item[i].product.regularPrice * item[i].quantity);
                 }
                 document.getElementById('subtotal').innerHTML = subtotal
@@ -325,7 +325,7 @@
                 let item = res.cart.items;
                 for (let i = 0; i < item.length; i++) {
                     console.log(item[i])
-                    total[i].innerHTML = item[i].product.regularPrice * item[i].quantity;
+                    total[i].innerHTML ="₹"+item[i].product.regularPrice * item[i].quantity;
                     subtotal += (item[i].product.regularPrice * item[i].quantity)
                 }
                 console.log(subtotal)

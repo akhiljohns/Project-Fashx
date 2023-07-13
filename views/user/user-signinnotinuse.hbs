@@ -357,9 +357,9 @@
 
 {{!-- ENDING OF CSS --}}
 <div id="container" class="container">
- 
+    <!-- FORM SECTION -->
     <div class="row">
-        <!-- START SIGN UP -->
+        <!-- SIGN UP -->
         <div class="col align-items-center flex-col sign-up">
             <div class="form-wrapper align-items-center">
 
@@ -449,15 +449,13 @@
                         </p>
                         {{/if}}
                     
-                        <p class="msg" style="color:black;text-decoration:none;">
+                        <p class="msg" style="color:black">
                             <span>
                                 Don't have an account?
                             </span>
-                            <a href="/signup" style="color: #50a988;">
-                            <b class="pointer">
+                            <b onclick="toggle()" class="pointer">
                                 Sign up here
                             </b>
-                            </a>
                         </p>
                     </div>
             </div>
@@ -479,7 +477,7 @@
         <div class="col align-items-center flex-col">
             <div class="text sign-in">
                 <h2 style="display: block;">
-                    WELCOME
+                    Welcome
                 </h2>
 
             </div>
@@ -495,7 +493,7 @@
             </div>
             <div class="text sign-up">
                 <h2>
-                    Join With us
+                    Join with us
                 </h2>
 
             </div>
@@ -504,7 +502,15 @@
     </div>
     <!-- END CONTENT SECTION -->
 </div>
+{{/if}}
+<script>
+  // Get the container element
+  let container = document.getElementById('container');
 
+  // Toggle the signup details by default
+  container.classList.toggle('sign-in');
+  container.classList.toggle('sign-up');
+</script>
 
 
 <script>

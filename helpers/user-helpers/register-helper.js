@@ -5,16 +5,17 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
 
-    checkUser: async(userData) => {
+    checkUser: async(number) => {
         try{
-            const customer = await user.findOne({number: userData.phone});
+            const customer = await user.findOne({number:number});
+            console.log("in checkuser funct",customer)
             if(customer) {
                 return true;
             } else {
                 return false;
             }
         } catch (err) {
-            console.log('Error while checking user'+err);
+            console.log('Error while checking user number'+err);
         }
     },
 
@@ -23,7 +24,7 @@ module.exports = {
             return new Promise(async (resolve, reject) => {
                 const password = await bcrypt.hash(userData.password, 10);
                 user.updateOne({number: userData.phone}, {$set:{password: password}}).then((response) => {
-                    console.log('User updated')    
+                    console.log('User Password Updated')    
                     resolve(response);
                 })
             })
@@ -32,8 +33,6 @@ module.exports = {
         }
     },
 
-
-    
 
 
 }

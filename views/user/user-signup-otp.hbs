@@ -357,46 +357,42 @@
 
 {{!-- ENDING OF CSS --}}
 <div id="container" class="container">
- 
+    <!-- FORM SECTION -->
     <div class="row">
-        <!-- START SIGN UP -->
+        <!-- SIGN UP -->
         <div class="col align-items-center flex-col sign-up">
             <div class="form-wrapper align-items-center">
 
                 <div>
                     <div class="form sign-up">
                         <div class="input-group">
-                            <i class='bx bxs-user'></i>
-                            <input type="text" placeholder="Username" name="username" id="username" required>
-                        </div>
+                        <form action="/verifySignotp" method="post" id="contactForm">
+                
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="email" placeholder="Email" name="email" id="email" required>
+                            <input type="text" placeholder="" value="{{phoneNumber}}" name="phone" id="phone"  onfocus="this.placeholder =''" onblur="this.placeholder =''" readonly>
                         </div>
+                         
+
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="text" placeholder="Mobile Number" name="number" id="number" required>
+                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  required>
                         </div>
-                        <div class="input-group">
-                            <i class='bx bxs-lock-alt'></i>
-                            <input type="password" placeholder="Password" name="password" id="password" required>
-                        </div>
-                        <div class="input-group">
-                            <i class='bx bxs-lock-alt'></i>
-                            <input type="password" placeholder="Confirm password" name="password2" id="password2"
-                                required>
-                        </div>
-                        <span id="errmsg" style="color: red;"></span>
-                        <button onclick="validate()" style="cursor: pointer;" class="btn btn-primary" type="submit">
-                            Sign up
-                        </button>
+                        {{#if inValidotp}}
+                        <p id="invalidotp" style="color: red;">INVALID OTP</p>
+                        {{/if}}
+                         <button type="submit" value="submit" style="cursor: pointer;" class="btn btn-primary"> Verify OTP   </button>
+                      
+
                         <p>
                             <span>
                                 Already have an account?
                             </span>
-                            <b onclick="toggle()" class="pointer">
-                                Sign in here
-                            </b>
+                            <a href="/signin">
+                                <b class="pointer">
+                                    Sign in here
+                                </b>
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -404,68 +400,6 @@
 
         </div>
         <!-- END SIGN UP -->
-
-
-
-
-        <!-- SIGN IN -->
-   
-
-        <div  class="col align-items-center flex-col sign-in">
-            <div class="form-wrapper align-items-center">
-                <form action="/signin" method="post">
-                    <div class="form sign-in">
-                        <div class="input-group">
-                            <i class='bx bxs-user'></i>
-                            <input type="text" name="email" placeholder="Email">
-                        </div>
-                        <div class="input-group">
-                            <i class='bx bxs-lock-alt'></i>
-                            <input type="password" name="password" placeholder="Password">
-                        </div>
-                        <button>
-                            Sign in
-                        </button>
-
-                        <p class="msg" style="color:rgb(6, 164, 255)">
-                            <a href="/forgotpassword">
-                            <span>
-                                Forgot Password
-                            </span>
-                        </a>
-                        </p>
-                        {{#if blocked}}
-                        <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
-                            <b>
-                                THIS ACCOUNT HAS BEEN BLOCKED
-                            </b>
-                        </p>
-                        {{/if}}
-                        {{#if logsta}}
-                        <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
-                            <b>
-                                Email Or Password Maybe Incorrect
-                            </b>
-                        </p>
-                        {{/if}}
-                    
-                        <p class="msg" style="color:black;text-decoration:none;">
-                            <span>
-                                Don't have an account?
-                            </span>
-                            <a href="/signup" style="color: #50a988;">
-                            <b class="pointer">
-                                Sign up here
-                            </b>
-                            </a>
-                        </p>
-                    </div>
-            </div>
-            <div class="form-wrapper">
-                </form>
-            </div>
-        </div>
-        <!-- END SIGN IN -->
     </div>
     <!-- END FORM SECTION -->
 
@@ -478,8 +412,8 @@
         <!-- SIGN IN CONTENT -->
         <div class="col align-items-center flex-col">
             <div class="text sign-in">
-                <h2 style="display: block;">
-                    WELCOME
+                <h2 style="display: none;">
+                    Welcome
                 </h2>
 
             </div>
@@ -495,7 +429,7 @@
             </div>
             <div class="text sign-up">
                 <h2>
-                    Join With us
+                    Join With Us
                 </h2>
 
             </div>
@@ -504,7 +438,39 @@
     </div>
     <!-- END CONTENT SECTION -->
 </div>
+</div>
 
+<script>
+     function verifyotp() {
+      
+        const phone = document.getElementById('phone').value.trim();
+        const otp = document.getElementById('otp').value.trim();
+          if (otp == '') {
+            numempty.innerHTML = "!! ENTER OTP !!";
+        }else{
+        $.ajax({
+            url: '/verifyotpsignup',
+            method: 'POST',
+            data: {
+               otp:otp,
+               phone:phone
+            },
+            success: function (response) {
+               console.log("CHECKUSER IN SIGNUP")
+                }
+            })
+        }
+        }
+</script>
+
+<script>
+    // Get the container element
+    let container = document.getElementById('container');
+
+    // Toggle the signup details by default
+    container.classList.toggle('sign-in');
+    container.classList.toggle('sign-up');
+</script>
 
 
 <script>
@@ -530,7 +496,7 @@
 {{!-- SIGNUP VALIDATION --}}
 <script>
 
-    async function validate() {                  
+    async function validate() {
 
         let email = document.getElementById('email').value.trim();
         let username = document.getElementById('username').value.trim();
@@ -538,14 +504,14 @@
         let password = document.getElementById('password').value.trim();
         let password2 = document.getElementById('password2').value.trim();
         let errmsg = document.getElementById('errmsg');
-        
+
 
         if (email == '' || number == '' || username == "" || password == '' || password2 == '') {
             errmsg.innerHTML = "ALL FIELDS ARE REQUIRED";
-        }else if (password !== password2) {
+        } else if (password !== password2) {
             errmsg.innerHTML = "Passwords Do Not Match"
         } else {
-            let flag ;
+            let flag;
             await $.ajax({
                 url: '/signupvalidation',
                 method: 'POST',
@@ -555,14 +521,14 @@
                 },
                 success: function (res) {
                     if (res.availability) {
-                         signup();
+                        signup();
                     } else {
-                        if(res.err == 'email'){
+                        if (res.err == 'email') {
                             errmsg.innerHTML = 'Email Already Exists';
                         } else {
                             errmsg.innerHTML = 'Phone Number Already Exists';
                         }
-                        
+
                     }
                 }
             })
@@ -571,7 +537,7 @@
 
     }
 
-    function signup(){
+    function signup() {
         const email = document.getElementById('email').value.trim();
         const username = document.getElementById('username').value.trim();
         const number = document.getElementById('number').value.trim();
@@ -586,12 +552,15 @@
                 number: number,
                 password: password
             },
-            success: function (response){
-                if(response.status){
+            success: function (response) {
+                if (response.status) {
                     window.location.href = '/signin'
                 }
             }
         })
     }
+
+   
+    
 
 </script>

@@ -55,6 +55,13 @@ router.get('/users/block/:id', access.logStatus, userManage.blockUnblockUser );
 
 router.get("/admin-logout", loginController.getLogout);
 
+router.get("/orders", loginController.getOrders);
+
+router.get("/useredit", loginController.getUserEdit);
+router.get("/userdetails", loginController.getUserDetails);
+
+
+
 
 
 

@@ -9,8 +9,15 @@ db.connect();
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 const session = require('express-session');
+const bodyParser = require('body-parser');
+
                         
 var app = express();
+
+// Parse JSON bodies
+app.use(bodyParser.json());
+// Parse URL-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +26,8 @@ app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsD
 
 
 
-// app.use(logger('dev'));
+
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -32,7 +40,10 @@ app.use(
     resave: false,
   })
 );
-       
+
+
+
+
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 

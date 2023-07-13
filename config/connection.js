@@ -1,9 +1,11 @@
-
+const dotenv = require('dotenv');
+dotenv.config()
 const mongoose = require('mongoose');
+const mongoconn = process.env.MONGODB_SERVER
 
 module.exports.connect = function(){
 
-mongoose.connect('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.2', { dbName: 'fashx' })
+mongoose.connect(mongoconn, { dbName: 'fashx' })
   .then(() => {
     console.log('Connected to Database');
   })

@@ -17,7 +17,7 @@ module.exports ={
           if(user.blocked) {    
               console.log("USER IS BLOCKED");
           
-            res.render('user/user-signin',{layout:false,blocked:true});
+            res.render('user/user-signin',{layout:false,blocked:true,signuptog:true});
           }else{  
           req.session.userloggedIn = true;
           req.session.user=response.user;

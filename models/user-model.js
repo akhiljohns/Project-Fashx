@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    image: {
+        type: String,
+        default: null
+    },
     activeStatus: {
         type: Boolean,
         default: false

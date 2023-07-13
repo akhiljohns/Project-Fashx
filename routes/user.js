@@ -1,7 +1,6 @@
 const express = require('express');
-const loginHelper = require('../helpers/user-helpers/login-helper');
 const router = express.Router();
-const session = require('express-session');
+
 
 // importing controllers
 const loginController = require('../controllers/user-controllers/login-controller')
@@ -11,9 +10,16 @@ const registerController = require('../controllers/user-controllers/register-con
 const userController = require('../controllers/user-controllers/user-controller')
 const productManage = require('../controllers/user-controllers/product-controller');
 const cartController = require('../controllers/product-controllers/cart-controllers');
+const orderController = require('../controllers/user-controllers/order-controller');
+const profileManager = require('../controllers/user-controllers/profile-manager');
 
 // importing middlewares
 const access = require('../middlewares/loginCheck');
+
+
+//requiring multer middleware
+const upload = require('../middlewares/multer');
+
 
 // GET PAGES 
 router.get('/', access.check, access.checkBlockedStatus, userController.getHome) 
@@ -26,8 +32,6 @@ router.get('/contact',access.check, access.checkBlockedStatus, pageController.ge
 
 router.get("/products", access.check, access.checkBlockedStatus, productManage.showProducts );
 
-router.get('/checkout', access.check, access.checkBlockedStatus, pageController.getCheckout);
-router.get('/profile', access.check, access.checkBlockedStatus, userController.getProfile);
 
 router.get('/elements', access.check, access.checkBlockedStatus, access.checkBlockedStatus, pageController.getElements);
 
@@ -35,13 +39,20 @@ router.get('/elements', access.check, access.checkBlockedStatus, access.checkBlo
 // PRODUCTS 
 router.get('/single-product/:id', access.check, access.checkBlockedStatus, productManage.getSinPro);
 
-// LOGIN
+// router.get('/signin', access.logStatus, pageController.getSignin)
+
+// SIGNIN
 router.get('/signin', access.logStatus, loginController.getLogin)
 router.post('/signin', loginController.postLogin)
 
 // SIGNUP
+router.get('/signup', registerController.getSignup)
 router.post('/signup', registerController.postSignup)
+router.post('/checkuser', registerController.postCheckNum)
 router.post('/signupvalidation', registerController.signupValidation)
+router.get('/signup/otpform', registerController.getSignupotp)
+router.post('/verifySignotp', registerController.verifyOtpsignup)
+
 
 // LOGOUT
 router.get('/logout', userController.getLogout)
@@ -67,18 +78,69 @@ router.post('/addQuantity', cartController.addQuantity);
 router.post('/reduceQuantity', cartController.reduceQuantity);
 
 
-// //check if the product with particular varient is inside the cart of the user or not
-// router.post('/checkProductInCart', cartController.checkProduct);
+// CHECKOUT 
+router.get('/checkout', access.check, access.checkBlockedStatus,orderController.showAddress);
 
 
-// // Function to ADD and REDUCE to the quantity of the products by one in database.
-// router.post('/addQuantity', cartController.addQuantity);
-// router.post('/reduceQuantity', cartController.reduceQuantity);
+// PROFILE 
+router.get('/profile', access.check, access.checkBlockedStatus, userController.getProfile);
 
+router.post('/updateProfile', access.check, access.checkBlockedStatus, profileManager.updateProfile );
 
-// //function to remove items from cart
-// router.get('/removeFromCart/:id', cartController.removeItem );
+// ADDRESS 
+router.post('/addAddress', access.check, access.checkBlockedStatus, profileManager.addAddress);
+router.get('/deleteAddress/:id', access.check, access.checkBlockedStatus, profileManager.deleteAddress);
 
+// PASSWORD 
+
+router.post('/check-password', passwordController.checkPassword )
+
+router.post('/updatePassword', passwordController.changePassword)
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.get('/profile/overview', access.check, access.checkBlockedStatus, pageController.getOverview);
+// router.get('/profile/edit', access.check, access.checkBlockedStatus, pageController.getProfEdit);
+// router.get('/profile/address', access.check, access.checkBlockedStatus, pageController.getAddress);
+// router.get('/profile/password', access.check, access.checkBlockedStatus, pageController.getChangePass);
   

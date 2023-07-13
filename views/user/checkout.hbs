@@ -5,7 +5,22 @@
       <div class="row">
         <div class="col-lg-8">
           <h3>Billing Details</h3>
+
           <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+         
+                           {{#if address}}
+                            <div class="col-md-12 form-group p_star">
+                                <select class="country_select" id="address-list" onchange="updateAddress()">
+                                    <option value="1">Choose Address</option>
+                                    {{#each address}}
+                                    <option value="{{this._id}}">{{this.fname}},{{this.lname}}, {{this.houseName}}, {{this.city}},
+                                        {{this.pincode}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            {{/if}}
+                       
+
             <div class="col-md-6 form-group p_star">
               <input type="text" class="form-control" id="first" name="fname" />
               <span class="placeholder" data-placeholder="First name"></span>
@@ -14,14 +29,14 @@
               <input type="text" class="form-control" id="last" name="lname" />
               <span class="placeholder" data-placeholder="Last name"></span>
             </div>
-           <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="number" name="number" />
-              <span class="placeholder" data-placeholder="Phone number"></span>
+         
+            
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="phonenum" name="phone" />
+              <span class="placeholder" data-placeholder="Phone Number"></span>
             </div>
-            <div class="col-md-6 form-group p_star">
-              <input type="text" class="form-control" id="email" name="email" />
-              <span class="placeholder" data-placeholder="Email Address"></span>
-            </div><div class="col-md-12 form-group p_star">
+
+            <div class="col-md-12 form-group p_star">
               <input type="text" class="form-control" id="address" name="address" />
               <span class="placeholder" data-placeholder="House No/Building Name"></span>
             </div>
@@ -29,6 +44,10 @@
             <div class="col-md-12 form-group p_star">
               <input type="text" class="form-control" id="city" name="city" />
               <span class="placeholder" data-placeholder="Town/City"></span>
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="landmark" name="landmark" />
+              <span class="placeholder" data-placeholder="Landmark"></span>
             </div>
            
             <div class="col-md-12 form-group p_star">
@@ -53,18 +72,18 @@
               
               <li>
                 <a href="#">Subtotal
-                  <span>₹2210</span>
+                  <span>₹<span id="carttotal">{{totalAmount}}</span></span>
                 </a>
               </li>
               
               <li>
                 <a href="#">Shipping
-                  <span>₹50</span>
+                 <span>₹<span id="shipping">50</span></span>
                 </a>
               </li>
               <li>
                 <a href="#" style="font-size: large; font-weight: bold;">Total
-                  <span>₹2260</span>
+                  <span>₹<span id="total"></span></span>
                 </a>
               </li>
 
@@ -88,4 +107,17 @@
     </div>
   </div>
 </section>
+
+
+
 <!--================End Checkout Area =================-->
+
+
+
+<script>
+    const cartTotal= +document.getElementById('carttotal').innerText;
+    const shipping = +document.getElementById('shipping').innerText;
+    
+    const total = (cartTotal + shipping );
+    document.getElementById('total').innerText = total;
+</script>

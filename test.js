@@ -5,3 +5,4 @@ setTimeout(function() {
 }, 2000);
 
 console.log("Statement 3");
+console.l

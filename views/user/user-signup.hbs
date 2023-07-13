@@ -357,13 +357,15 @@
 
 {{!-- ENDING OF CSS --}}
 <div id="container" class="container">
- 
+    <!-- FORM SECTION -->
     <div class="row">
-        <!-- START SIGN UP -->
+        <!-- SIGN UP -->
         <div class="col align-items-center flex-col sign-up">
             <div class="form-wrapper align-items-center">
 
                 <div>
+                        
+
                     <div class="form sign-up">
                         <div class="input-group">
                             <i class='bx bxs-user'></i>
@@ -375,7 +377,7 @@
                         </div>
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="text" placeholder="Mobile Number" name="number" id="number" required>
+                            <input type="text" placeholder="" value="{{phoneNumber}}" name="number" id="number" readonly>
                         </div>
                         <div class="input-group">
                             <i class='bx bxs-lock-alt'></i>
@@ -426,38 +428,14 @@
                         <button>
                             Sign in
                         </button>
-
-                        <p class="msg" style="color:rgb(6, 164, 255)">
-                            <a href="/forgotpassword">
-                            <span>
-                                Forgot Password
-                            </span>
-                        </a>
-                        </p>
-                        {{#if blocked}}
-                        <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
-                            <b>
-                                THIS ACCOUNT HAS BEEN BLOCKED
-                            </b>
-                        </p>
-                        {{/if}}
-                        {{#if logsta}}
-                        <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
-                            <b>
-                                Email Or Password Maybe Incorrect
-                            </b>
-                        </p>
-                        {{/if}}
                     
-                        <p class="msg" style="color:black;text-decoration:none;">
+                        <p class="msg" style="color:black">
                             <span>
                                 Don't have an account?
                             </span>
-                            <a href="/signup" style="color: #50a988;">
-                            <b class="pointer">
+                            <b onclick="toggle()" class="pointer">
                                 Sign up here
                             </b>
-                            </a>
                         </p>
                     </div>
             </div>
@@ -478,8 +456,8 @@
         <!-- SIGN IN CONTENT -->
         <div class="col align-items-center flex-col">
             <div class="text sign-in">
-                <h2 style="display: block;">
-                    WELCOME
+                <h2 style="display: none;">
+                    Welcome
                 </h2>
 
             </div>
@@ -495,7 +473,7 @@
             </div>
             <div class="text sign-up">
                 <h2>
-                    Join With us
+                    Join with us
                 </h2>
 
             </div>
@@ -505,6 +483,17 @@
     <!-- END CONTENT SECTION -->
 </div>
 
+
+
+
+<script>
+  // Get the container element
+  let container = document.getElementById('container');
+
+  // Toggle the signup details by default
+  container.classList.toggle('sign-in');
+  container.classList.toggle('sign-up');
+</script>
 
 
 <script>

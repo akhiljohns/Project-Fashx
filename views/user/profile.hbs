@@ -1,163 +1,481 @@
-
-<body>
-    <div class="screen-overlay"></div>
-
-    <main class="main-wrap">
-        <header class="main-header navbar">
-            <div class="col-search">
-                <form class="searchform">
-                    <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
-                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
-                    </div>
-                    <datalist id="search_terms">
-                        <option value="Products">
-                        <option value="New orders">
-                        <option value="Apple iphone">
-                        <option value="Ahmed Hassan">
-                    </datalist>
-                </form>
-            </div>
-            <div class="col-nav">
-                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon" href="#">
-                            <i class="material-icons md-notifications animation-shake"></i>
-                            <span class="badge rounded-pill">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="#"> <i class="material-icons md-nights_stay"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
-                        </div>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User"></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <section class="content-main">
-            <div class="content-header">
-                <h2 class="content-title">Profile setting </h2>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row gx-5">
-                        <aside class="col-lg-3 border-end">
-                            <nav class="nav nav-pills flex-lg-column mb-4">
-                                <a class="nav-link active" aria-current="page" href="#">General</a>
-                                <a class="nav-link" href="#">Moderators</a>
-                                <a class="nav-link" href="#">Admin account</a>
-                                <a class="nav-link" href="#">SEO settings</a>
-                                <a class="nav-link" href="#">Mail settings</a>
-                                <a class="nav-link" href="#">Newsletter</a>
-                            </nav>
-                        </aside>
-                        <div class="col-lg-9">
-                            <section class="content-body p-xl-4">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <div class="row gx-3">
-                                                <div class="col-6  mb-3">
-                                                    <label class="form-label">First name</label>
-                                                    <input class="form-control" type="text" placeholder="Type here">
-                                                </div> <!-- col .// -->
-                                                <div class="col-6  mb-3">
-                                                    <label class="form-label">Last name</label>
-                                                    <input class="form-control" type="text" placeholder="Type here">
-                                                </div> <!-- col .// -->
-                                                <div class="col-lg-6  mb-3">
-                                                    <label class="form-label">Email</label>
-                                                    <input class="form-control" type="email" placeholder="example@mail.com">
-                                                </div> <!-- col .// -->
-                                                <div class="col-lg-6  mb-3">
-                                                    <label class="form-label">Phone</label>
-                                                    <input class="form-control" type="tel" placeholder="+1234567890">
-                                                </div> <!-- col .// -->
-                                                <div class="col-lg-12  mb-3">
-                                                    <label class="form-label">Address</label>
-                                                    <input class="form-control" type="text" placeholder="Type here">
-                                                </div> <!-- col .// -->
-                                                <div class="col-lg-6  mb-3">
-                                                    <label class="form-label">Birthday</label>
-                                                    <input class="form-control" type="date">
-                                                </div> <!-- col .// -->
-                                            </div> <!-- row.// -->
-                                        </div> <!-- col.// -->
-                                        <aside class="col-lg-4">
-                                            <figure class="text-lg-center">
-                                                <img class="img-lg mb-3 img-avatar" src="assets/imgs/people/avatar1.jpg" alt="User Photo">
-                                                <figcaption>
-                                                    <a class="btn btn-light rounded font-md" href="#">
-                                                        <i class="icons material-icons md-backup font-md"></i> Upload
-                                                    </a>
-                                                </figcaption>
-                                            </figure>
-                                        </aside> <!-- col.// -->
-                                    </div> <!-- row.// -->
-                                    <br>
-                                    <button class="btn btn-primary" type="submit">Save changes</button>
-                                </form>
-                                <hr class="my-5">
-                                <div class="row" style="max-width:920px">
-                                    <div class="col-md">
-                                        <article class="box mb-3 bg-light">
-                                            <a class="btn float-end btn-light btn-sm rounded font-md" href="#">Change</a>
-                                            <h6>Password</h6>
-                                            <small class="text-muted d-block" style="width:70%">You can reset or change your password by clicking here</small>
-                                        </article>
-                                    </div> <!-- col.// -->
-                                    <div class="col-md">
-                                        <article class="box mb-3 bg-light">
-                                            <a class="btn float-end btn-light rounded btn-sm font-md" href="#">Deactivate</a>
-                                            <h6>Remove account</h6>
-                                            <small class="text-muted d-block" style="width:70%">Once you delete your account, there is no going back.</small>
-                                        </article>
-                                    </div> <!-- col.// -->
-                                </div> <!-- row.// -->
-                            </section> <!-- content-body .// -->
-                        </div> <!-- col.// -->
-                    </div> <!-- row.// -->
-                </div> <!-- card body end// -->
-            </div> <!-- card end// -->
-        </section> <!-- content-main end// -->
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </main>
+<style>
    
-</body>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
 
+    .profile-section {
+      padding: 30px;
+    }
+
+    .profile-card {
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .profile-name {
+      margin-top: 20px;
+    }
+
+    .nav-tabs {
+      margin-top: 30px;
+      border-bottom: none;
+    }
+
+    .nav-link {
+      border: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .nav-link.active {
+      background-color: #f1f1f1;
+    }
+
+    .tab-content {
+      margin-top: 30px;
+    }
+
+    .profile-info {
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info-row {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .info-label {
+      flex: 0 0 30%;
+      font-weight: bold;
+    }
+
+    .info-value {
+      flex: 0 0 70%;
+    }
+
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .profile-image-actions {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .profile-image-actions input[type="file"] {
+      display: none;
+    }
+
+    .add-address-button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .address-card {
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .address-card .card-body {
+      padding: 0;
+    }
+
+    .address-card .card-body h5 {
+      margin-bottom: 5px;
+    }
+
+    .address-card .card-body .card-subtitle {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .address-card .card-body .card-text {
+      margin-bottom: 0;
+    }
+
+    /* Additional styles for responsiveness */
+    @media (max-width: 768px) {
+      .col-lg-4,
+      .col-lg-8 {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .profile-card,
+      .address-card {
+        padding: 15px;
+      }
+
+      .profile-info,
+      .address-card .card-body {
+        padding: 10px;
+      }
+
+      .profile-image {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+
+  <section class="profile-section">
+    <div class="container">
+      <div class="row">
+      
+        <div class="col-lg-12">
+          <div class="card profile-card">
+            <div class="card-body">
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Address</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="profile-overview">
+                  <div class="profile-info">
+                    <div class="info-row">
+                      <div class="info-label">Full Name</div>
+                      <div class="info-value">{{user.username}}</div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-label">Country</div>
+                      <div class="info-value">India</div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-label">Address</div>
+                      <div class="info-value">ABCD House</div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-label">Phone</div>
+                      <div class="info-value">{{user.number}}</div>
+                    </div>
+                    <div class="info-row">
+                      <div class="info-label">Email</div>
+                      <div class="info-value">{{user.email}}</div>
+                    </div>
+                  </div>
+                </div>
+                {{#if passupdate}}
+<p id="loginerror" style="color:rgb(0, 0, 0); font-size:100%; font-weight: bolder;font: bolder;">
+                            <b>
+                               Password Has Been Updated
+                            </b>
+                        </p>
+                        {{/if}}
+{{!-- END OF OVERVIEW TAB  --}}
+
+{{!-- START EDIT PROFILE TAB  --}}
+            <div class="tab-pane fade" id="profile-edit">
+              <form action="/updateProfile" method="post">
+                <div class="row mb-3">
+                  <label for="name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="name" type="text" class="form-control" id="name" value="{{user.username}}" required>
+                  </div>
+                </div>
+            
+                <div class="row mb-3">
+                  <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="phone" type="text" class="form-control" id="phone" value="{{user.number}}" readonly>
+                  </div>
+                </div>
+            
+                <div class="row mb-3">
+                  <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="email" type="email" class="form-control" id="email" value="{{user.email}}">
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-outline-success">Save Changes</button>
+                </div>
+              </form>
+            </div>
+
+
+             <div class="tab-pane fade pt-3" id="profile-settings">
+
+                <!-- add Address tab -->
+                <div class=" card card-body mb-3" id="addAddressField" style="display: none;">
+                  <form method="post" action="/addAddress">
+                    <div class="row mb-3">
+                      <label for="fname" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="fname" type="text" class="form-control" id="fname" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="lname" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="lname" type="text" class="form-control" id="lname" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="phone" type="text" class="form-control" id="phone" minlength="10" maxlength="10"
+                          pattern="[0-9/]*" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="housename" class="col-md-4 col-lg-3 col-form-label">House No./Building Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="houseName" type="text" class="form-control" id="houseName" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="landmark" class="col-md-4 col-lg-3 col-form-label">Landmark</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="landmark" type="text" class="form-control" id="landmark" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="city" class="col-md-4 col-lg-3 col-form-label">City</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="city" type="text" class="form-control" id="city" required>
+                      </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                      <label for="district" class="col-md-4 col-lg-3 col-form-label">District</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="district" class="form-control" id="district" required></input>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="pincode" class="col-md-4 col-lg-3 col-form-label">Pincode</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="pincode" type="text" class="form-control" id="pincode" pattern="[0-9/]*"
+                          minlength="6" required>
+                      </div>
+ 
+ 
+                    <div class="row mb-3">
+                      <label for="state" class="col-md-4 col-lg-3 col-form-label">State</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="state" class="form-control" id="state" required></input>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="country" class="form-control" id="country" required></input>
+                      </div>
+                    </div>
+                      <span id="addressErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
+                    </div>
+
+                    <div class="text-center">
+                      <button style="background-color: #052c66; color: white;" onclick="return validate()"
+                        class="btn ">Add Address</button>
+                      <a style="color: white;" class="btn btn-danger" onclick="hideAddressField()">Cancel</a>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+                </div>
+
+                <div class="row">
+                  <div class="card col-sm-5 addAddressBtn" id="addAddressBtn"
+                    style="width: 18rem; margin-left: 1em; cursor: pointer; display: flex; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.666); transition: transform 0.2s ease-in-out;">
+                    <div class="card-body"
+                      style=" box-sizing: border-box; display: flex; justify-content: center; align-items: center;"
+                      onclick="showAddressField()">
+                      <h3><i class="bi bi-building-add"></i></h3><br>
+                      <h5>ADD ADDRESS</h5>
+                      {{!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the card's
+                        content.
+                      </p> --}}
+
+                    </div>
+                  </div> {{!-- Card to add new Address --}}
+
+                  {{#if address}}
+                  {{#each address}}
+                  <div class="card col-sm-5" style="width: 18rem; margin-left: 1em;">
+                    <div class="card-body" style=" box-sizing: border-box;">
+                      <h5 class="card-title">{{this.fname}} {{this.lname}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{this.houseName}}</h6>
+                      <p class="card-text">{{this.landmark}} ,{{this.city}} , {{this.district}} , {{this.pincode}} , {{this.state}} , {{this.country}} .
+                        {{this.phone}}</p>
+                      <a href="/deleteAddress/{{this._id}}" class="card-link" style="color: #c60f0f;">Delete</a>
+                    </div>
+                  </div> {{!-- card to display address --}}
+                  {{/each}}
+                  {{/if}}
+                </div>
+
+              </div>
+
+                  <div class="tab-pane fade pt-3" id="profile-change-password">
+                <form action="/updatePassword" method="post">
+
+                  <div class="row mb-3">
+                    <label for="oldpPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="oldpassword" type="password" class="form-control" id="oldpassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="newpassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="newpassword" type="password" class="form-control" id="newpassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="confirmpassword" class="col-md-4 col-lg-3 col-form-label">Confirm Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="confirmpassword" type="password" class="form-control" id="confirmpassword" required>
+                    </div>
+                    <span id="passwordErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
+                  </div>
+
+                  <div class="text-center">
+                    <button onclick="return checkPassword()" class="btn btn-primary">Update</button>
+                  </div>
+
+                </form>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+  integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+  integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
+
+<script>
+
+
+  function validate() {
+    let name, phone, state, country, houseName, area;
+
+    fname = document.getElementById("fname").value.trim();
+    lname = document.getElementById("lname").value.trim();
+    phone = document.getElementById("phone").value.trim();
+    houseName = document.getElementById("houseName").value.trim();
+    landmark = document.getElementById("landmark").value.trim();
+    city = document.getElementById("city").value.trim();
+    district = document.getElementById("district").value.trim();
+    pincode = document.getElementById("pincode").value.trim();
+    state = document.getElementById("state").value.trim();
+    country = document.getElementById("country").value.trim();
+
+    if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" ||landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
+      document.getElementById('addressErr').innerText = 'All Fields Are Mandatory';
+      return false;
+
+    } else {
+      return true;
+    }
+  }
+  
+  function checkPassword() {
+    let oldpassword = document.getElementById("oldassword").value.trim()
+    let newpassword = document.getElementById('newassword').value.trim();
+    let confirmpassword = document.getElementById('confirmpassword').value.trim();
+    let click;
+
+    if (newpassword == '' || confirmpassword == '' || oldp  assword == '') {
+      document.getElementById('passwordErr').innerText = 'All Fields Are Mandatory';
+      return false;
+    } else if (newpassword !== confirmpassword) {
+      document.getElementById('passwordErr').innerText = "Passwords Doesn't Match";
+      return false;
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: '/check-password',
+        data: {
+          oldpassword: oldpassword,
+          newpassword: newpassword
+        },
+        success: function (response) {
+          console.log(response);
+          if (!response.oldPasswordCheck) {
+            document.getElementById('passwordErr').innerText = "The old password doesn't match";
+            click = false;
+          } else if (response.samePasswords) {
+            document.getElementById('passwordErr').innerText = "Old password and new password can't be the same";
+            click = false;
+          } else {
+            click = true;
+          }
+        }
+      })
+      return click;
+    }
+  }
+</script>
+
+<script>
+  
+  function showAddressField() {
+    document.getElementById('addAddressField').style.display = 'block';
+    document.getElementById('addAddressBtn').style.display = 'none';
+  }
+  function hideAddressField() {
+    document.getElementById('addAddressField').style.display = 'none';
+    document.getElementById('addAddressBtn').style.display = 'flex';
+  }
+
+</script>

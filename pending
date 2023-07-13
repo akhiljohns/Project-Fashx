@@ -1,3 +1,43 @@
+
+Pending last week :
+Image zoom - to do last
+Image crop - to do last
+edit product multi image delete
+negative number validation
+otp in signup
+set alert or toast messages
+
+Updations -
+Choose address rework
+Place order not done in checkout page
+Order history in user profile
+OTP expiry and resend button in forgot password
+Visiblity of category and product
+Stock management in order, cancel and retum
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 12 week
 User Side: User profile(Show user details, show
 address, show orders, Add address, edit profile,
@@ -23,4 +63,4 @@ EDIT PROFILE
 
 ADMIN SIDE
 LIST ORDERS
-
+Order management
