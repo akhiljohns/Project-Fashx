@@ -13,6 +13,7 @@
 
 //import models
 const cart = require('../../models/cart-model');
+const products = require('../../models/product-model');
 const customer = require('../../models/user-model');
 const order = require('../../models/order-model');
 // const couponCollection = require('../../models/coupon-model');
@@ -66,10 +67,16 @@ let orderProds = scart.items
 
 // LOOP TO UPDATE STOCK COUNT WHILE PLACING ORDR
 
-// for (let i = 0; i < orderProds.length; i++) {
-//     let prodstock = orderProds[i].product.stock
+for (let i = 0; i < orderProds.length; i++) {
+    let prodstock = orderProds[i].product.stock
+let cartquan = orderProds[i].quantity
+console.log("CART QUANTITY-----=>",i,cartquan)
+console.log("CART PROD STOCK-----=>",i,prodstock)
+let remainstock = prodstock - cartquan
+let prodid = orderProds[i].product._id
 
-// }
+await products.updateOne({_id: prodid}, {$set: {stock: remainstock}});
+}
 
         //loop to calculate the total amount;
             for(let i=0; i<scart.items.length; i++) {
