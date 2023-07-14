@@ -52,10 +52,19 @@
                                     <td> {{this.stock}} </td>
 
                                     <td>
-                                        <a class="btn btn-primary" href="/admin/products/edit/{{this._id}}">Edit</a>
+                                        <a class="btn btn-outline-success   " href="/admin/products/edit/{{this._id}}">Edit</a>
                                     </td>
+                                    {{#if this.hidden}}
                                     <td>
-                                        <a class="btn btn-primary" href="/admin/products/delete/{{this._id}}">Delete</a>
+                                        <a class="btn btn-outline-info" href="/admin/products/hide/{{this._id}}">Unhide</a>
+                                    </td>
+                                    {{else}}
+                                    <td>
+                                        <a class="btn btn-outline-primary" href="/admin/products/hide/{{this._id}}">Hide</a>
+                                    </td>
+                                    {{/if}}
+                                    <td>
+                                        <a class="btn btn-outline-danger" href="/admin/products/delete/{{this._id}}">Delete</a>
                                     </td>
 
                                     {{!-- <td>

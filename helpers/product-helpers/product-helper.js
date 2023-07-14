@@ -78,15 +78,36 @@ addProduct: async (productDetails, images) => {
     });
   },
   
-  showProductsUser: () => {
-    return new Promise((resolve, reject) => {
-      product.find({ deleted: false }).populate('category').lean().then((products) => {
-        resolve(products);
-      }).catch((err) => 
-console.log("show product err ",err)
-      );
+//   showProductsUser: () => {
+//     return new Promise((resolve, reject) => {
+
+//       product.find({ hidden: false }).populate('category').lean().then((products) => {
+
+         
+//         console.log("SHOW PRODUCTS-----===>",products)
+//         resolve(products);
+//       }).catch((err) => 
+// console.log("show product err ",err)
+//       );
+//     });
+//   },
+showProductsUser: () => {
+  return new Promise((resolve, reject) => {
+    product.find({ hidden: false }).populate('category').lean().then((products) => {
+      console.log("SHOW PRODUCTS-----===>", products);
+      
+      // Filter categories with hidden field value equal to true
+      const filteredProducts = products.filter((product) => {
+        return product.category.hiddenstatus === false;
+      });
+      
+      resolve(filteredProducts);
+    }).catch((err) => {
+      console.log("show product err ", err);
+      reject(err);
     });
-  },
+  });
+},
 
 
   findProductById: (id) => {
@@ -156,7 +177,24 @@ console.log("show product err ",err)
         resolve(false);
       })
     })
-  }
+  },
+  hideunhideprod: async (id) => {
+    try {  
+        const productItems = await product.findOne({ _id: id });
+    
+        if (productItems.hidden) {
+          await product.updateOne({ _id: id }, { $set: { hidden: false } });
+          return false;
+        } else {
+          await product.updateOne({ _id: id }, { $set: { hidden: true } });
+          return true;
+        }
+      } catch (err) {
+        console.log(err.message);
+        throw err;
+      }
+    },
+
   
   
 };

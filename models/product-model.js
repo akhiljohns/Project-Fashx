@@ -39,6 +39,10 @@ const productSchema = new mongoose.Schema(
     deleted: {
       type: Boolean,
       default: false
+    },
+    hidden: {
+      type: Boolean,
+      default: false
     }
   },
   { collection: "products" }

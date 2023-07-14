@@ -41,7 +41,22 @@ module.exports = {
           console.log('Error while soft deleting product: ' + err);
           res.redirect('/admin/products');
         });
-      }
+      },
+      hideunhideproduct: (req, res) => {
+        try {
+            let id = req.params.id;
+            productHelper.hideunhideprod(id).then((result) => {
+                res.redirect('/admin/products/');
+                if (result) {
+                console.log('PRODUCT HIDDEN '+ req.params.id);
+              }else {
+                  console.log('PRODUCT UNHIDDEN '+ req.params.id);
+                }
+            });
+        } catch (err) {
+            console.log(err.message);
+        }
+    },
       
 
 }

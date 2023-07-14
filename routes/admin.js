@@ -36,6 +36,7 @@ router.post('/products/edit/:id', upload.array('productImage'), productManage.po
 
 router.get("/products/delete/:id", access.logStatus, productManage.softDeleteProduct);
 router.get("/products/delete/image/:id", access.logStatus, productManage.softDeleteProduct);
+router.get('/products/hide/:id',access.logStatus, productManage.hideunhideproduct);
 
 
 
@@ -47,6 +48,7 @@ router.get('/categories', access.logStatus, categoryController.allCategories);
 router.post('/addCategory', access.logStatus, categoryController.addCategory);
 
 router.get('/category/delete/:id',access.logStatus, categoryController.deleteCategory);
+router.get('/category/hide/:id',access.logStatus, categoryController.hideunhide);
 
 
 //USER ROUTES

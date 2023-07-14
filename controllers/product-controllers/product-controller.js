@@ -15,7 +15,7 @@ module.exports = {
 postAddproduct: async (req, res) => {
   let productDetails = req.body;
   let images = req.files;
-  console.log(images);
+ console.log("---------------PRODUCTDETIALS------------",productDetails)
 
   try {
     await productHelper.addProduct(productDetails, images);

@@ -60,6 +60,21 @@ module.exports = {
             console.log(err.message);
         }
     },
+    hideunhide: (req, res) => {
+        try {
+            let id = req.params.id;
+            categoryHelper.hideunhidecat(id).then((result) => {
+                res.redirect('/admin/categories');
+                if (result) {
+                console.log('CATEGORY HIDDEN '+ req.params.id);
+              }else {
+                  console.log('CATEGORY UNHIDDEN '+ req.params.id);
+                }
+            });
+        } catch (err) {
+            console.log(err.message);
+        }
+    },
 
 
 

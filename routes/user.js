@@ -30,13 +30,13 @@ router.get('/tracking',access.check, access.checkBlockedStatus, pageController.g
 
 router.get('/contact',access.check, access.checkBlockedStatus, pageController.getContact);
 
-router.get("/products", access.check, access.checkBlockedStatus, productManage.showProducts );
 
 
 router.get('/elements', access.check, access.checkBlockedStatus, access.checkBlockedStatus, pageController.getElements);
 
 
 // PRODUCTS 
+router.get("/products", access.check, access.checkBlockedStatus, productManage.showProducts );
 router.get('/single-product/:id', access.check, access.checkBlockedStatus, productManage.getSinPro);
 
 // router.get('/signin', access.logStatus, pageController.getSignin)
@@ -104,6 +104,7 @@ router.get('/orders', access.check, access.checkBlockedStatus, orderController.g
 router.get('/order/details', access.check, access.checkBlockedStatus, orderController.getOrderdetails )
 router.post('/payment', access.check, access.checkBlockedStatus, paymentController.doPayment)
 router.post('/cancelorder', access.check, access.checkBlockedStatus, orderController.postCancelOrder)
+router.post('/returnorder', access.check, access.checkBlockedStatus, orderController.postReturnOrder)
 
 router.get('/confirm', access.check, access.checkBlockedStatus, (req, res)=> {
     res.render('user/confirmation', {order: req.session.lastOrder, customer: req.session.user, user: req.session.user});

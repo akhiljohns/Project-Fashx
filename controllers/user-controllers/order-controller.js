@@ -69,6 +69,7 @@ const orderManagement = {
             const orderId = req.query.itemId;
             const userId = req.session.user._id;
             console.log("---===---==-==-=[][][]Order canceled:",orderId,userId);
+            orderHelper.stockUpdate(orderId, userId)
             orderHelper.cancelOrder(orderId, userId).then((response) => {
                 res.status(200).json(response)
             }).catch((error) => {
@@ -78,7 +79,21 @@ const orderManagement = {
             console.log('error in controller while canceling the order', error);
         }
     },
-
+    postReturnOrder: (req, res, next) => {
+        try{
+            
+            const orderId = req.query.itemId;
+            const userId = req.session.user._id;
+            console.log("---===---==-==-=[][][]Order Returned:",orderId,userId);
+            orderHelper.returnOrder(orderId, userId).then((response) => {
+                res.status(200).json(response)
+            }).catch((error) => {
+                res.status(400).json({message: 'Somethings wrong Returning order'})
+            })
+        } catch (error) {
+            console.log('error in controller while Returning the order', error);
+        }
+    },
 
 
 

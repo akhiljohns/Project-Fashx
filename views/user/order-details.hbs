@@ -292,7 +292,7 @@
 <script>
   function cancel(cancel) {
     if (cancel) {
-alert(currentItem);
+
       $.ajax({
         url: '/cancelorder?itemId=' + currentItem,
         method: 'POST',

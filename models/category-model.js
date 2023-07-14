@@ -4,7 +4,12 @@ const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
+    },
+     hiddenstatus: {
+        type: Boolean,
+        default: false
     }
+    
     
 },{collection: 'category'});
 

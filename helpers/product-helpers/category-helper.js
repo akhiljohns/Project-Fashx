@@ -48,5 +48,21 @@ module.exports = {
             console.log('error while deleting category: ' + err);
         }
     },
+    hideunhidecat: async (id) => {
+        try {  
+            const categories = await category.findOne({ _id: id });
+        
+            if (categories.hiddenstatus) {
+              await category.updateOne({ _id: id }, { $set: { hiddenstatus: false } });
+              return false;
+            } else {
+              await category.updateOne({ _id: id }, { $set: { hiddenstatus: true } });
+              return true;
+            }
+          } catch (err) {
+            console.log(err.message);
+            throw err;
+          }
+        },
 
 }

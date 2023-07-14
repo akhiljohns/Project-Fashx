@@ -94,6 +94,15 @@
 <section class="container-fluid pl-5 pr-5 pt-3">
  
   <div class="row">
+    {{#if noOrders}}
+    <div class="card-body cart">
+  <div class="col-sm-12 empty-cart-cls text-center">
+    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+    <h3><strong>No Orders Till Now</strong></h3>
+
+  </div>
+</div>
+    {{else}}
     {{#each orders}}
     <div class="col-md-4">
       <div class="card">
@@ -110,6 +119,7 @@
       </div>
     </div>
     {{/each}}
+    {{/if}}
   </div>
   <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="text-align: center; justify-content: center;">
     <h6><a href="/products">Continue Shopping</a></h6>

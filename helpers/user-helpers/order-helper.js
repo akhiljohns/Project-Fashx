@@ -7,6 +7,7 @@ const customerCollection = require('../../models/user-model');
 const user_address = require('../../models/address-model');
 
 const cart = require('../../models/cart-model');
+const products = require('../../models/product-model');
 const orderCollection = require('../../models/order-model');
 
 
@@ -53,10 +54,75 @@ module.exports = {
           throw error;
         }
     },
-    cancelOrder: (orderId, userId) => {
+    
+// for (let i = 0; i < orderProds.length; i++) {
+//     let prodstock = orderProds[i].product.stock
+// let cartquan = orderProds[i].quantity
+// console.log("CART QUANTITY-----=>",i,cartquan)
+// console.log("CART PROD STOCK-----=>",i,prodstock)
+// let remainstock = prodstock - cartquan
+// let prodid = orderProds[i].product._id
+
+// await products.updateOne({_id: prodid}, {$set: {stock: remainstock}});
+// }
+   
+stockUpdate: async (orderId,userId)  =>{
+    const scart = await orderCollection.findOne({userId: userId}).populate('order.items');
+    let orderProds = scart.order.items
+    console.log("IN STOCK UPDATE FUNCTION SCART: ",orderProds)
+for (let i = 0; i < orderProds; i++) {
+    const productId = orderProds[i].order[0].items[0].product._id;
+    const quantity = orderProds[i].quantity;
+  
+    await incrementProductStock(productId, quantity);
+  }
+},
+incrementStock: async (productId,quantity)=>{
+    try {
+        const product = await products.findOne({ _id: productId });
+        if (!product) {
+          throw new Error('Product not found');
+        }else{
+    
+        const currentStock = product.stock;
+        const updatedStock = currentStock + quantity;
+    
+        await products.updateOne({ _id: productId }, { $set: { stock: updatedStock } });
+        console.log('Product stock updated successfully');
+        }
+      } catch (error) {
+        console.error('Error while incrementing product stock:', error);
+      }
+},                     
+
+
+// async function incrementProductStock(productId, quantity) {
+//     try {
+//       const product = await products.findOne({ _id: productId });
+//       if (!product) {
+//         throw new Error('Product not found');
+//       }
+  
+//       const currentStock = product.stock;
+//       const updatedStock = currentStock + quantity;
+  
+//       await products.updateOne({ _id: productId }, { $set: { stock: updatedStock } });
+//       console.log('Product stock updated successfully');
+//     } catch (error) {
+//       console.error('Error while incrementing product stock:', error);
+//     }
+//   },
+  
+
+
+
+
+
+   cancelOrder: (orderId, userId) => {
         try{
-            return new Promise((resolve, reject) => {
-                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "cancelled" } }
+            return new Promise(async (resolve, reject) => {
+                const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
+                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Cancelled" } }
                 ).then((response)=>{
                     resolve(response);
                 })
@@ -65,6 +131,20 @@ module.exports = {
             console.log('Error while canceling an Order:', err);
         }
     },
+    
+        returnOrder: (orderId, userId) => {
+        try{
+            return new Promise((resolve, reject) => {
+                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Returned" } }
+                ).then((response)=>{
+                    resolve(response);
+                })
+            })
+        } catch(err){
+            console.log('Error while canceling an Order:', err);
+        }
+    },
+
 
 
     // //function to fetch no. of items in a cart and whishlist of a customer

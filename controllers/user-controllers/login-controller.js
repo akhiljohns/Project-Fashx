@@ -21,8 +21,9 @@ module.exports ={
             res.render('user/user-signin',{layout:false,blocked:true,signuptog:true});
           }else{  
           req.session.userloggedIn = true;
+         const userloggedIn=req.session.userloggedIn
           req.session.user=response.user;
-          userloggedIn = true;
+          
         
           loginHelper.setActiveStatus(user,userloggedIn);
 

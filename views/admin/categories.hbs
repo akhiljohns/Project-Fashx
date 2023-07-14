@@ -62,8 +62,13 @@
                                             <td class="text-end">
                                                 <a href="/admin/category/delete/{{this._id}}">
                                              <button type="button" class="btn btn-outline-danger">Delete</button>
-                                             </a>
+                                            {{#if this.hiddenstatus}}
+                                            <a class="btn btn-outline-primary" href="/admin/category/hide/{{this._id}}">Unhide</a>
+                                            {{else}}
+                                            <a class="btn btn-outline-info" href="/admin/category/hide/{{this._id}}">Hide</a>
+                                            {{/if}}
                                             </td>
+                                            
                                         </tr>
                                         {{/each}}
                                         <!-- Loop through categories -->

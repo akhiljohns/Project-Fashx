@@ -7,10 +7,9 @@ set alert or toast messages
 
 Updations -
 OTP expiry
-Visiblity of category and product
 Stock management in order, cancel and retum
 
-
+`
 
 
 

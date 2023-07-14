@@ -4,7 +4,13 @@ module.exports = {
 
     showProducts: (req, res, next) => {
         productHelper.showProductsUser().then((products) => {
+            if (!products.length <= 0) {
             res.render('user/products', {products,user: req.session.user});
+            } else {
+                products = false;
+            res.render('user/products', {products,user: req.session.user});
+
+            }
         }).catch((err) =>{
             console.log("prd rende err",err);
         })
