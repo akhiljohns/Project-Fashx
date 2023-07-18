@@ -1,7 +1,3 @@
-{% extends 'base.html' %} 
-{% load static %}
-{% block title %}JOE&JEE | Product Details{% endblock %}
-
 
 {% block nav%}
 <ul>

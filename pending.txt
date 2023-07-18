@@ -5,7 +5,7 @@ Image crop - to do last
 OTP expiry
 edit product multi image delete - to do last
 
-Updations -
+
 
 
 
@@ -53,8 +53,8 @@ ADD ADDRESS
 EDIT PROFILE
  
  CART
- ADD ADDRESS IN CHECKOUT
- ORDER PLACEMENT WITH COD
+ADD ADDRESS IN CHECKOUT
+ORDER PLACEMENT WITH COD
 
 ADMIN SIDE
 LIST ORDERS

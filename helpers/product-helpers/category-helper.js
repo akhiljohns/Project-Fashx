@@ -17,13 +17,15 @@ module.exports = {
             console.log('Error while adding category: ' + err);
         }         
     },
-    getCategoryByName: (name) => {
+    getCategoryByName: async (name) => {
         try {
-          return category.findOne({ name: name });
+          const regex = new RegExp(`^${name}$`, 'i'); // Create a case-insensitive regex pattern
+          return category.findOne({ name: regex });
         } catch (err) {
           console.log('Error while getting category by name: ' + err);
         }
       },
+      
 
     allCategory: () => {
         try{

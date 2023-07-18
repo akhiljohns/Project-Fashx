@@ -20,7 +20,6 @@ postAddproduct: async (req, res) => {
   try {
     await productHelper.addProduct(productDetails, images);
     res.redirect("/admin/productS");
-    console.log("-----------PRODUCT ADDED IN THE DATABASE-----------");
   } catch (err) {
     console.log(err);
   }

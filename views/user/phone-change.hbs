@@ -61,10 +61,10 @@
                 <div class="form-group">
                     <label for="phone">Phone Number:</label>
                     <input type="text" id="phone" name="phone" placeholder="Enter your phone number" minlength="10"
-                        maxlength="10" required>
+                        maxlength="10"  pattern="[0-9]{10}" required title="Enter A Proper Mobile Number" required>
                 </div>
                 <div>
-                    <p id="errmsg" style="color: rgb(0, 0, 0); font-size: 90%;"></p>
+                    <p id="errmsg" style="color: rgb(255, 0, 0); font-size: 90%;"></p>
                 </div>
                 <button id="sendotp" onclick="validate()">Send OTP</button>
                 <button id="resendotp" style="display: none;" onclick="validate()">RESEND OTP</button>
@@ -75,7 +75,7 @@
                 <div class="form-group">
                     <input type="hidden" id="phone2" name="phone" value="">
                     <label for="otp">OTP:</label>
-                    <input type="text" id="otp" name="otp" placeholder="Enter the OTP" required>
+                    <input type="text" id="otp" name="otp" placeholder="Enter the OTP" maxlength="6" minlength="6" required>
                 </div>
                
                 <div>
@@ -93,35 +93,52 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function validate() {
-            let phone = document.getElementById("phone").value.trim();
-             $.ajax({
-                url: '/numexist',
-                method: 'POST',
-                data: {
-                    phone: phone
-                },
-                success: function (resp) {
-                    console.log("NUM EXIST RESPONSE", resp);
-                    if (!resp) {
-                        document.getElementById('errmsg').innerText = 'ENTER THE OTP';
-                        document.getElementById('resendotp').style.display = 'block';
-                        document.getElementById('sendotp').style.display = 'none';
+   function validate() {
+  let phone = document.getElementById("phone").value.trim();
+  
+  // Check if phone number contains alphabets or symbols
+  if (/[^0-9]/.test(phone)) {
+    document.getElementById('errmsg').innerText = 'ENTER A VALID NUMBER';
+    return false;
+  }
+  
+  // Check for specific invalid numbers
+  if (
+    phone === "0000000000" ||
+    phone === "1111111111" ||
+    phone === "2222222222" ||
+    phone === "3333333333" ||
+    phone === "4444444444" ||
+    phone === "5555555555" ||
+    phone === "9999999999" ||
+    phone === "0000000000"
+  ) {
+    document.getElementById('errmsg').innerText = 'ENTER A VALID NUMBER';
+    return false;
+  }
+  
+  $.ajax({
+    url: '/numexist',
+    method: 'POST',
+    data: {
+      phone: phone
+    },
+    success: function (resp) {
+      console.log("NUM EXIST RESPONSE", resp);
+      if (!resp) {
+        document.getElementById('errmsg').innerText = 'ENTER THE OTP';
+        document.getElementById('resendotp').style.display = 'block';
+        document.getElementById('sendotp').style.display = 'none';
 
-                        const inputField = document.getElementById('phone');
-                        inputField.readOnly = !inputField.readOnly;
+        const inputField = document.getElementById('phone');
+        inputField.readOnly = !inputField.readOnly;
+      } else {
+        document.getElementById('errmsg').innerText = 'NUMBER ALREADY REGISTERED';
+      }
+    }
+  });
+}
 
-
-                    } else{
-                        document.getElementById('errmsg').innerText = 'NUMBER ALREADY REGISTERED';
-                    }
-
-                    // Prevent form submission
-                    //return false;
-                },
-                //async: false // Make the request synchronous to return the value correctly
-            });
-        }
 
         function resendotp() {
             let phone = document.getElementById("phone").value.trim();
@@ -143,6 +160,10 @@
  function verifyotp() {
             let phone = document.getElementById("phone").value.trim();
             let otp = document.getElementById("otp").value.trim();
+            if (/[^0-9]/.test(phone)) {
+    document.getElementById('otpmsg').innerText = 'ENTER A VALID OTP FORMAT (DIGITS)';
+    return false;
+  }
              $.ajax({
                 url: '/veifyprofotp',
                 method: 'POST',
@@ -154,8 +175,7 @@
                    
                     if (!resp) {
                         document.getElementById('otpmsg').innerText = 'INVALID OTP';
-                      const inputField = document.getElementById('phone');
-                        inputField.readOnly = !inputField.readOnly;
+                     
 
 
                     } else {
@@ -168,7 +188,7 @@
                 },
                 success: function (resp) {
                   console.log("PHONE NUM UPDATE STATUS : ",resp);
-                   document.getElementById('otpmsg').innerText = 'number updated';
+                   document.getElementById('otpmsg').innerText = 'NUMBER UDPATED';
                        window.location.href = '/profile';
 
                    },

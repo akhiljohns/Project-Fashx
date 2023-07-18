@@ -1,13 +1,3 @@
-<!-- ElevateZoom CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.css">
-
-<!-- jQuery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<!-- ElevateZoom JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
-
-
 
 
 
@@ -20,24 +10,25 @@
           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-                <img id="zoom-image" src="/images/{{product.image.[0]}}" alt="" />
+                <img  src="/images/{{product.image.[0]}}" alt="" />
               </li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1">
-                <img id="zoom-image" src="/images/{{product.image.[1]}}" alt="" />
+                <img  src="/images/{{product.image.[1]}}" alt="" />
               </li>
               <li data-target="#carouselExampleIndicators" data-slide-to="2">
-                <img id="zoom-image" src="/images/{{product.image.[2]}}" alt="" />
+                <img  src="/images/{{product.image.[2]}}" alt="" />
               </li>
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img id="zoom-image" class="d-block w-100" src="/images/{{product.image.[0]}}" alt="First slide" />
+
+                <img id="zoom-image" class="d-block w-100 zoom-image" src="/images/{{product.image.[0]}}" data-zoom-image="/images/{{product.image.[0]}}" alt="First slide" />
               </div>
               <div class="carousel-item">
-                <img id="zoom-image" class="d-block w-100" src="/images/{{product.image.[0]}}" alt="Second slide" />
+                <img class="d-block w-100 zoom-image" src="/images/{{product.image.[0]}}" data-zoom-image="/images/{{product.image.[0]}}" alt="Second slide" />
               </div>
               <div class="carousel-item">
-                <img id="zoom-image" class="d-block w-100" src="/images/{{product.image.[0]}}" alt="Third slide" />
+                <img  class="d-block w-100 zoom-image" src="/images/{{product.image.[0]}}"  data-zoom-image="/images/{{product.image.[0]}}" alt="Third slide" />
               </div>
             </div>
           </div>
@@ -533,7 +524,16 @@
   </div>
 </section>
 <!--================End Product Description Area =================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script>
+  $(document).ready(function() {
+    $('.zoom-image').elevateZoom({
+      zoomType: 'inner',
+      cursor: 'crosshair'
+    });
+  });
+</script>
 
 {{!-- <!--===============================================================================================-->
 	<script src="/vendor2/sweetalert/sweetalert.min.js"></script>
