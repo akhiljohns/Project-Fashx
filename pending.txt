@@ -5,9 +5,8 @@ Image crop - to do last
 edit product multi image delete - to do last
 set alert or toast messages
 
-Updations -
-OTP expiry
-Stock management in order, cancel and retum
+
+
 
 `
 
