@@ -25,8 +25,10 @@
                                     <th>Email</th>
                                     <th>Name</th>
                                     <th>Number</th>
+                                    <th>Block</th>
+                                    <th>Delete</th>
                                    
-                                    <th style="padding-left: 90px;">Action</th>
+                                    {{!-- <th style="padding-left: 90px;">Block</th> --}}
 
                                 </tr>
                             </thead>
@@ -39,16 +41,15 @@
                                     <td>{{this.username}}</td>
                                     <td>{{this.number}}</td>
 
-                                    
-
                                     <td class="text-end">
                                         {{#if this.blocked}}
                                         <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-success">UNBLOCK</a>
                                         {{else}}
-                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-danger">BLOCK</a> 
+                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-danger">BLOCK</a>
                                         {{/if}}
                                     </td>
-                                </tr>
+                                    {{!-- <td><a href="/admin/users/delete/{{this._id}}" class="btn btn-outline-danger">DELETE</a></td> --}}
+                                    </tr>
                                 {{/each}}
                             </tbody>
 

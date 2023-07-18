@@ -35,9 +35,12 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Stock</th>
-                                    <th scope="col">Option</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Visibility</th>
+                                    <th scope="col">Delete</th>
                                     {{!-- <th scope="col">List/Unlist</th> --}}
                                 </tr>
                             </thead>
@@ -46,6 +49,7 @@
                                 <tr>
                                     <th scope="row" class="index"></th>
                                     <td> {{this.productName}} </td>
+                                    <td>₹{{this.regularPrice}}</td>
 
                                     <td> {{this.category.name}} </td>
 

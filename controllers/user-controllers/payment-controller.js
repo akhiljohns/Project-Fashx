@@ -20,7 +20,7 @@ const paymentController = {
                     req.session.lastOrder = response.order[response.order.length-1];
                     res.status(200).send({codSuccess: 'true'});
                 })
-            
+                 
         } catch (err) {
             console.log('Payment Error: ', err);
         }

@@ -170,9 +170,11 @@
   }
 </script>
 
-<script>
-   function payment() {
+<!--===============================================================================================-->
 
+<script>
+  function payment() {
+   
          fname = document.getElementById("fname").value.trim();
     lname = document.getElementById("lname").value.trim();
     phone = document.getElementById("phone").value.trim();
@@ -209,21 +211,38 @@
 
     
 
-        $.ajax({
-            url: '/payment',
-            method: 'POST',
-            data: JSON.stringify({
-                address: address,
-                paymentMethod: paymentMethod
-            }),
-            contentType: 'application/json',
-            success: function (response) {
-                if (response.codSuccess) {
-                    window.location.href = '/confirm'
-                } 
+
+    $.ajax({
+      url: '/payment',
+      method: 'POST',
+      data: JSON.stringify({
+        address: address,
+        paymentMethod: paymentMethod
+      }),
+      contentType: 'application/json',
+      success: function (response) {
+        if (response.codSuccess) {
+          swal({
+            title: "Order Confirmed",
+            text: "Your Order Has Been Placed Successfully.",
+            icon: "success",
+            buttons: {
+              ok: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+              }
             }
-        })
-
-    }
-
+          }).then(function (value) {
+            if (value) {
+              window.location.href = '/confirm';
+            }
+          });
+        }
+      }
+    });
+  }
 </script>
+<!--===============================================================================================-->

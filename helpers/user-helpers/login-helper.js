@@ -11,16 +11,16 @@ module.exports = {
       let response = {};
       return new Promise((resolve, reject) => {
         user.findOne({ email: userData.email }).then(async (foundUser) => {
-          console.log(foundUser + "----------------------");
+          // console.log(foundUser + "----------------------");
           if (foundUser) {
             let status = await bcrypt.compare(
               userData.password,
               foundUser.password
             );
-            console.log(status + "_______________");
+            // console.log(status + "_______________");
             if (status) {
             
-              console.log("logined Successfully");
+              // console.log("logined Successfully");
               response.user = foundUser;
               response.status = true;
             
@@ -57,22 +57,22 @@ module.exports = {
 
   signupValidate: (email, phone) => {
     return new Promise(function (resolve, reject) {
-      user.findOne({ email: email }).then((response) => {
-        if(response){
-          resolve({email: true});
+      user.findOne({ email: { $regex: new RegExp(`^${email}$`, "i") } }).then((response) => {
+        if (response) {
+          resolve({ email: true });
         } else {
-          user.findOne({number: phone}).then((response) => {
-            if(response){
-              resolve({phone:true})
+          user.findOne({ number: phone }).then((response) => {
+            if (response) {
+              resolve({ phone: true });
             } else {
-              resolve({phone: false, email:false})
+              resolve({ phone: false, email: false });
             }
-          })
+          });
         }
-
       });
     });
   },
+  
   setActiveStatus: async(actuser, loggedIn) => {
     try {
       

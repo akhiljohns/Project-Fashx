@@ -22,11 +22,11 @@ const upload = require('../middlewares/multer');
 
 
 // GET PAGES 
-router.get('/', access.check, access.checkBlockedStatus, userController.getHome) 
+router.get('/', access.checkBlockedStatus, userController.getHome) 
   
 
 
-router.get('/tracking',access.check, access.checkBlockedStatus, pageController.getTracking);
+router.get('/tracking', access.checkBlockedStatus, pageController.getTracking);
 
 router.get('/contact',access.check, access.checkBlockedStatus, pageController.getContact);
 
@@ -36,8 +36,8 @@ router.get('/elements', access.check, access.checkBlockedStatus, access.checkBlo
 
 
 // PRODUCTS 
-router.get("/products", access.check, access.checkBlockedStatus, productManage.showProducts );
-router.get('/single-product/:id', access.check, access.checkBlockedStatus, productManage.getSinPro);
+router.get("/products", access.checkBlockedStatus, productManage.showProducts );
+router.get('/single-product/:id', access.checkBlockedStatus, productManage.getSinPro);
 
 // router.get('/signin', access.logStatus, pageController.getSignin)
 
@@ -83,8 +83,13 @@ router.get('/checkout', access.check, access.checkBlockedStatus,orderController.
 
 
 // PROFILE 
-router.get('/profile', access.check, access.checkBlockedStatus, userController.getProfile);
+router.get('/profile', access.check, access.checkBlockedStatus, passwordController.getProfile);
+router.get('/editnumber', access.check, access.checkBlockedStatus, profileManager.getEditnumber);
+router.post('/numexist', access.check, access.checkBlockedStatus, profileManager.numExist);
+router.post('/resendotp', access.check, access.checkBlockedStatus, profileManager.resendOtp);
 
+router.post('/veifyprofotp', access.check, access.checkBlockedStatus, profileManager.verifyProfOtp );
+router.post('/updateprofnum', access.check, access.checkBlockedStatus, profileManager.updateNum );
 router.post('/updateProfile', access.check, access.checkBlockedStatus, profileManager.updateProfile );
 
 // ADDRESS 
@@ -106,9 +111,7 @@ router.post('/payment', access.check, access.checkBlockedStatus, paymentControll
 router.post('/cancelorder', access.check, access.checkBlockedStatus, orderController.postCancelOrder)
 router.post('/returnorder', access.check, access.checkBlockedStatus, orderController.postReturnOrder)
 
-router.get('/confirm', access.check, access.checkBlockedStatus, (req, res)=> {
-    res.render('user/confirmation', {order: req.session.lastOrder, customer: req.session.user, user: req.session.user});
-})
+router.get('/confirm', access.check, access.checkBlockedStatus, orderController.getConfirm)
 
 module.exports = router;
 

@@ -364,51 +364,40 @@
             <div class="form-wrapper align-items-center">
 
                 <div>
-                        
-                            <div class="form sign-up">
-                                <div class="input-group">
-                        
-                        
-                                    {{#if phoneNumber}}
-                        <form action="/checkuser" method="post" id="contactForm">
 
-                                    <div class="input-group">
-                                        <i class='bx bx-mail-send'></i>
-                                        <input type="text" placeholder="{{phoneNumber}}" name="phone" id="otpphone"
-                                            onfocus="this.placeholder =''" onblur="this.placeholder ={{phoneNumber}}" minlength="10"
-                                            maxlength="10" pattern="[0-9]{10}" required>
-                                    </div>
-                                    <p id="numempty" style="color: red;"></p>
-                                    {{else}}
-                        <form action="/checkuser" method="post" id="contactForm">
-  
+                    <div class="form sign-up">
+                        <div class="input-group">
+
+
+                            
+                                <form action="/checkuser" method="post" id="contactForm">
                                     <div class="input-group">
                                         <i class='bx bx-mail-send'></i>
                                         <input type="text" placeholder="Mobile Number" name="phone" id="otpphone" onfocus="this.placeholder =''"
-                                            onblur="this.placeholder ='Mobile Number'" minlength="10" maxlength="10" pattern="[0-9]{10}"
-                                            required>
+                                            {{#if phoneNumber}} value="{{phoneNumber}}" {{/if}}
+                                            onblur="this.placeholder ='Mobile Number'" minlength="10" maxlength="10" pattern="[0-9]{10}" required title="Enter A Proper Mobile Number">
                                     </div>
-                                    <p id="numempty" style="color: red;"></p>
+                                    {{#if zeroes}}
+                                    <p id="errmsg" style="color: red;">Enter A Valid Mobile Number</p>
                                     {{/if}}
-                        
-                        
-                        
+                                
                                     {{#if regUser}}
                                     <span id="custexst" style="color: red;">!! Phone Number Already Registered !!</span>
                                     {{/if}}
-                              
-                            <button type="submit" value="submit" style="cursor: pointer;" class="btn btn-primary">SEND OTP </button>
-                        </form>
-                            <p>
-                                <span>
-                                    Already have an account?
-                                </span>
-                                <a href="/signin">
-                                    <b class="pointer">
-                                        Sign in here
-                                    </b>
-                                </a>
-                            </p>
+                                
+                                    <button type="submit" onclick="validate()" value="submit" style="cursor: pointer;" class="btn btn-primary">SEND
+                                        OTP</button>
+                                </form>
+                                <p>
+                                    <span>
+                                        Already have an account?
+                                    </span>
+                                    <a href="/signin">
+                                        <b class="pointer">
+                                            Sign in here
+                                        </b>
+                                    </a>
+                                </p>
                         </div>
                     </div>
                 </div>
@@ -444,7 +433,7 @@
                 </div>
                 <div class="text sign-up">
                     <h2>
-                        Join With Us
+                      Register
                     </h2>
 
                 </div>
@@ -454,125 +443,26 @@
         <!-- END CONTENT SECTION -->
     </div>
 
-    <script>
-        function sendotp() {
-
-            const phone = document.getElementById('otpphone').value.trim();
-            if (phone == '') {
-                numempty.innerHTML = "!! ENTER VALID MOBILE NUMBER !!";
-            } else {
-                $.ajax({
-                    url: '/checkuser',
-                    method: 'POST',
-                    data: {
-                        phone: phone
-                    },
-                    success: function (response) {
-                        console.log("CHECKUSER IN SIGNUP")
-                    }
-                })
-            }
-        }
-    </script>
+  
 
     <script>
-        // Get the container element
+    
         let container = document.getElementById('container');
-
-        // Toggle the signup details by default
         container.classList.toggle('sign-in');
         container.classList.toggle('sign-up');
     </script>
+ 
+<script>
+  async function validate(event) {
+    event.preventDefault(); // Prevent form submission
 
+    let number = document.getElementById('otpphone').value.trim();
+    let errmsg = document.getElementById('errmsg');
 
-    <script>
-        let container = document.getElementById('container')
-
-
-        toggle = () => {
-            container.classList.toggle('sign-in')
-            container.classList.toggle('sign-up')
-        }
-        setTimeout(() => {
-            container.classList.add('sign-in')
-        }, 200)
-
-
-    </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-    {{!-- SIGNUP VALIDATION --}}
-    <script>
-
-        async function validate() {
-
-            let email = document.getElementById('email').value.trim();
-            let username = document.getElementById('username').value.trim();
-            let number = document.getElementById('number').value.trim();
-            let password = document.getElementById('password').value.trim();
-            let password2 = document.getElementById('password2').value.trim();
-            let errmsg = document.getElementById('errmsg');
-
-
-            if (email == '' || number == '' || username == "" || password == '' || password2 == '') {
-                errmsg.innerHTML = "ALL FIELDS ARE REQUIRED";
-            } else if (password !== password2) {
-                errmsg.innerHTML = "Passwords Do Not Match"
-            } else {
-                let flag;
-                await $.ajax({
-                    url: '/signupvalidation',
-                    method: 'POST',
-                    data: {
-                        email: email,
-                        number: number
-                    },
-                    success: function (res) {
-                        if (res.availability) {
-                            signup();
-                        } else {
-                            if (res.err == 'email') {
-                                errmsg.innerHTML = 'Email Already Exists';
-                            } else {
-                                errmsg.innerHTML = 'Phone Number Already Exists';
-                            }
-
-                        }
-                    }
-                })
-            }
-
-
-        }
-
-        function signup() {
-            const email = document.getElementById('email').value.trim();
-            const username = document.getElementById('username').value.trim();
-            const number = document.getElementById('number').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            $.ajax({
-                url: '/signup',
-                method: 'POST',
-                data: {
-                    email: email,
-                    username: username,
-                    number: number,
-                    password: password
-                },
-                success: function (response) {
-                    if (response.status) {
-                        window.location.href = '/signin'
-                    }
-                }
-            })
-        }
-
-
-
-
-    </script>
+    if (number === '0000000000') {
+      errmsg.innerHTML = number + " is not a valid number";
+    } else {
+      document.getElementById('contactForm').submit(); // Submit the form if the validation passes
+    }
+  }
+</script>

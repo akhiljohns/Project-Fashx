@@ -1,170 +1,148 @@
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 
 //controllers
 
 //models
-const customerCollection = require('../../models/user-model');
-const user_address = require('../../models/address-model');
+const customerCollection = require("../../models/user-model");
+const user_address = require("../../models/address-model");
 
-const cart = require('../../models/cart-model');
-const products = require('../../models/product-model');
-const orderCollection = require('../../models/order-model');
+const cart = require("../../models/cart-model");
+const products = require("../../models/product-model");
+const orderCollection = require("../../models/order-model");
 
-
-module.exports = {
-
-
-    //order section
-    getOrders: (userId) => {
-        return new Promise((resolve, reject) => {
-            orderCollection.findOne({userId: userId})
-            .sort({ 'order.date': 1 })
-            .populate('order.items.product')
-            .lean().exec().then((response) => {
-                // console.log('orderpage:::', response.order[0].products[0].product);
-                resolve(response);
-            })
+const orderhelper = {
+  //order section
+  getOrder: (userId) => {
+    return new Promise((resolve, reject) => {
+      orderCollection
+        .findOne({ userId: userId })
+        .sort({ "order.date": -1 }) // Sort by descending order of 'order.date'
+        .populate("order.items.product")
+        .lean()
+        .exec()
+        .then((response) => {
+          resolve(response);
         })
-    },
-    getOrderdetails:  (orderId, userId) => {
-        try {
-            return new Promise(async (resolve, reject) => {
-                // Get the user's order
-                const orderColl = await orderCollection.findOne(
-                                    {userId: userId, 'order._id': orderId},
-                                    {'order.$': 1}
-                                    ).populate('order.items.product').lean();
-                                    
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
 
-                console.log('its order collection',orderColl);
-                const order = orderColl.order[0];
-                
-                console.log(order);
-
-                if (!order) {
-                  throw new Error('Order not found');
-                }
-
-                // console.log('hello::', products);
-
-                resolve (order);
-            })
-        } catch (error) {
-          console.error(error);
-          throw error;
-        }
-    },
-    
-// for (let i = 0; i < orderProds.length; i++) {
-//     let prodstock = orderProds[i].product.stock
-// let cartquan = orderProds[i].quantity
-// console.log("CART QUANTITY-----=>",i,cartquan)
-// console.log("CART PROD STOCK-----=>",i,prodstock)
-// let remainstock = prodstock - cartquan
-// let prodid = orderProds[i].product._id
-
-// await products.updateOne({_id: prodid}, {$set: {stock: remainstock}});
-// }
-   
-stockUpdate: async (orderId,userId)  =>{
-    const scart = await orderCollection.findOne({userId: userId}).populate('order.items');
-    let orderProds = scart.order.items
-    console.log("IN STOCK UPDATE FUNCTION SCART: ",orderProds)
-for (let i = 0; i < orderProds; i++) {
-    const productId = orderProds[i].order[0].items[0].product._id;
-    const quantity = orderProds[i].quantity;
-  
-    await incrementProductStock(productId, quantity);
-  }
-},
-incrementStock: async (productId,quantity)=>{
+  getOrderdetails: (orderId, userId) => {
     try {
-        const product = await products.findOne({ _id: productId });
-        if (!product) {
-          throw new Error('Product not found');
-        }else{
-    
+      return new Promise(async (resolve, reject) => {
+        // Get the user's order
+        const orderColl = await orderCollection
+          .findOne({ userId: userId, "order._id": orderId }, { "order.$": 1 })
+          .populate("order.items.product")
+          .lean();
+
+        console.log("its order collection", orderColl);
+        const order = orderColl.order[0];
+
+        console.log(order);
+
+        if (!order) {
+          throw new Error("Order not found");
+        }
+
+        // console.log('hello::', products);
+
+        resolve(order);
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+
+
+  stockUpdate: async (orderId, userId) => {
+    try {
+      const order = await orderCollection.findOne(
+        { userId: userId, "order._id": orderId },
+        { "order.$": 1 }
+      );
+      const cancelledOrder = order.order[0]; // inside cancelledOrder -> items -> [{product-productid/quantity-quantity to add/totalAmount}]
+     
+
+      if (!order) {
+        throw new Error("Order not found");
+      }
+
+      const orderItems = cancelledOrder.items;
+      for (let i = 0; i < orderItems.length; i++) {
+        const productId = orderItems[i].product._id;
+        const quantity = orderItems[i].quantity;
+
+        await orderhelper.incrementStock(productId, quantity);
+      }
+
+      console.log("Product Stock Updated Successfully");
+    } catch (error) {
+      console.error("Error while updating product stock:", error);
+    }
+  },
+
+  incrementStock: async (productId, quantity) => {
+    try {
+      const product = await products.findOne({ _id: productId });
+      if (!product) {
+        throw new Error("Product not found");
+      } else {
         const currentStock = product.stock;
         const updatedStock = currentStock + quantity;
-    
-        await products.updateOne({ _id: productId }, { $set: { stock: updatedStock } });
-        console.log('Product stock updated successfully');
-        }
-      } catch (error) {
-        console.error('Error while incrementing product stock:', error);
+
+        await products.updateOne(
+          { _id: productId },
+          { $set: { stock: updatedStock } }
+        );
+        console.log("Product stock updated successfully");
       }
-},                     
+    } catch (error) {
+      console.error("Error while incrementing product stock:", error);
+    }
+  },
 
+  cancelOrder: (orderId, userId) => {
+    try {
+      return new Promise(async (resolve, reject) => {
+        const orders = await orderCollection
+          .findOne({ userId: userId })
+          .populate("order.items.product");
+        orderCollection
+          .updateOne(
+            { userId: userId, "order._id": orderId },
+            { $set: { "order.$.status": "Cancelled" } }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      });
+    } catch (err) {
+      console.log("Error while canceling an Order:", err);
+    }
+  },
 
-// async function incrementProductStock(productId, quantity) {
-//     try {
-//       const product = await products.findOne({ _id: productId });
-//       if (!product) {
-//         throw new Error('Product not found');
-//       }
-  
-//       const currentStock = product.stock;
-//       const updatedStock = currentStock + quantity;
-  
-//       await products.updateOne({ _id: productId }, { $set: { stock: updatedStock } });
-//       console.log('Product stock updated successfully');
-//     } catch (error) {
-//       console.error('Error while incrementing product stock:', error);
-//     }
-//   },
-  
+  returnOrder: (orderId, userId) => {
+    try {
+      return new Promise((resolve, reject) => {
+        orderCollection
+          .updateOne(
+            { userId: userId, "order._id": orderId },
+            { $set: { "order.$.status": "Returned" } }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      });
+    } catch (err) {
+      console.log("Error while canceling an Order:", err);
+    }
+  },
 
+};
 
-
-
-
-   cancelOrder: (orderId, userId) => {
-        try{
-            return new Promise(async (resolve, reject) => {
-                const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
-                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Cancelled" } }
-                ).then((response)=>{
-                    resolve(response);
-                })
-            })
-        } catch(err){
-            console.log('Error while canceling an Order:', err);
-        }
-    },
-    
-        returnOrder: (orderId, userId) => {
-        try{
-            return new Promise((resolve, reject) => {
-                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Returned" } }
-                ).then((response)=>{
-                    resolve(response);
-                })
-            })
-        } catch(err){
-            console.log('Error while canceling an Order:', err);
-        }
-    },
-
-
-
-    // //function to fetch no. of items in a cart and whishlist of a customer
-    // getCartOrWishlistCount: (userId) => {
-    //     return new Promise((resolve, reject) => {
-    //         cart.findOne({userId: userId}).lean().then((cartResponse) => {
-    //             wishlist.findOne({user: userId}).lean().then((wishlistResponse) => {
-    //                 const cartLength = cartResponse? cartResponse.items.length : 0;
-    //                 const wishlistLength = wishlistResponse? wishlistResponse.items.length : 0;
-    //                 resolve({cartLength: cartLength, wishlistLength: wishlistLength});
-    //             }).catch((err)=> {
-    //                 console.log('Error getting wishlist length', err);
-    //                 resolve({error: true});
-    //             })
-    //         }).catch((err) => {
-    //             console.log('Error getting wishlist length', err);
-    //             resolve({error: true});
-    //         })
-    //     })
-    // }
-
-
-}
+module.exports = orderhelper;

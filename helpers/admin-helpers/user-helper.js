@@ -41,6 +41,26 @@ checkBlockStatus: async (id) => {
     }
   },
 
+deleteUser: async (id) => {
+  try {
+    const result = await user.deleteOne({ _id: id });
+    
+    if (result.deletedCount === 1) {
+      console.log('Document deleted successfully');
+      return true;
+    } else {
+      console.log('Document not found');
+      return false;
+    }
+  } catch (error) {
+    console.log('Error deleting document:', error);
+    throw error;
+  }
+},
+
+
+
+
   findBlockStatus: (email) => {
     try {
         return new Promise(async (resolve, reject) => {

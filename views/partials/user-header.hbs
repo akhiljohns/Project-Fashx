@@ -1,11 +1,14 @@
-
+<head>
+   <title>FashX Ecommerce</title>
+    <link rel="icon" href="assets/imgs/theme/shopping-cart.png" type="image/png" />
+</head>
   <header class="header_area">
     <div class="top_menu">
       <div class="container">
         <div class="row">
           <div class="col-lg-7">
             <div class="float-left">
-              <p>Phone: +91 85904 28598</p>
+              <p>Phone: +91 12345 67890</p>
               <p>email: info@fashx.com</p>
             </div>
           </div>
@@ -14,7 +17,8 @@
               <ul class="right_side">
                 <li>
                     {{#if user}}
-                        <div class="dropdown show">
+                    {{!-- USER NAME & LOGOUT DROPDOWN  --}}
+                        {{!-- <div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" role="button"
                                 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">{{user.username}}
@@ -26,16 +30,25 @@
                                 <a class="dropdown-item" href="logout">LOGOUT</a>
                                 
                             </div>
-                        </div>
+                        </div> --}}
+                        {{!-- END  --}}
+                         <a href="/logout" style="font-size: medium; font-weight: bolder ;color: rgb(5, 9, 0)"  >
+                 Logout
+                  </a>
                     {{else}}
-                        <a href="signin" style="font-size: larger; color: rgb(0, 0, 0);">
+                        {{!-- <a href="signin" style="font-size: large;  font-weight: bolder; color: rgb(0, 0, 0);">
                          Login
-                        </a>
+                        </a> --}}
+                        <li>
+                  <a href="/signin" style="font-size: large; font-weight: bolder ;color: rgb(113, 205, 20)"  >
+                 Login
+                  </a>
+                </li>
                     {{/if}}
                 </li>
                 <li>
-                  <a href="/cart">
-                  cart
+                  <a href="/checkout">
+                  Checkout
                   </a>
                 </li>
                 <li>
@@ -77,45 +90,23 @@
                       <li class="nav-item">
                         <a class="nav-link" href="/products">Products</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Product Details</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/checkout">Product Checkout</a>
-                      </li>
+                     
                       <li class="nav-item">
                         <a class="nav-link" href="/cart">Shopping Cart</a>
                       </li>
                     </ul>
                   </li>
-                   <li class="nav-item submenu dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                      aria-expanded="false">Pages</a>
-                    <ul class="dropdown-menu">
-                      <li class="nav-item">
-                        <a class="nav-link" href="/cart">Tracking</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/elements">Elements</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact</a>
-                  </li>
+                   
+                 
                 </ul>
               </div>
 
               <div class="col-lg-5 pr-0">
                 <ul class="nav navbar-nav navbar-right right_nav pull-right">
-                  <li class="nav-item">
-                    <a href="#" class="icons">
-                      <i class="ti-search" aria-hidden="true"></i>
-                    </a>
-                  </li>
+
 
                   <li class="nav-item">
-                    <a href="/checkout" class="icons">
+                    <a href="/cart" class="icons">
                       <i class="ti-shopping-cart"></i>
                     </a>
                   </li>
@@ -126,11 +117,7 @@
                     </a>
                   </li>
 
-                  <li class="nav-item">
-                    <a href="#" class="icons">
-                      <i class="ti-heart" aria-hidden="true"></i>
-                    </a>
-                  </li>
+                  
                 </ul>
               </div>
             </div>

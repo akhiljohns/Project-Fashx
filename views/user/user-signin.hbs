@@ -357,7 +357,7 @@
 
 {{!-- ENDING OF CSS --}}
 <div id="container" class="container">
- 
+
     <div class="row">
         <!-- START SIGN UP -->
         <div class="col align-items-center flex-col sign-up">
@@ -409,30 +409,31 @@
 
 
         <!-- SIGN IN -->
-   
 
-        <div  class="col align-items-center flex-col sign-in">
+
+        <div class="col align-items-center flex-col sign-in">
             <div class="form-wrapper align-items-center">
                 <form action="/signin" method="post">
                     <div class="form sign-in">
                         <div class="input-group">
                             <i class='bx bxs-user'></i>
-                            <input type="text" name="email" placeholder="Email">
+                           <input type="email" name="email" placeholder="Enter Email" required>
+
                         </div>
                         <div class="input-group">
                             <i class='bx bxs-lock-alt'></i>
-                            <input type="password" name="password" placeholder="Password">
+                            <input type="password" name="password" placeholder="Enter Password" required>
                         </div>
                         <button>
-                            Sign in
+                            Sign In
                         </button>
 
                         <p class="msg" style="color:rgb(6, 164, 255)">
                             <a href="/forgotpassword">
-                            <span>
-                                Forgot Password
-                            </span>
-                        </a>
+                                <span>
+                                    Forgot Password
+                                </span>
+                            </a>
                         </p>
                         {{#if blocked}}
                         <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
@@ -448,15 +449,15 @@
                             </b>
                         </p>
                         {{/if}}
-                    
-                        <p class="msg" style="color:black;text-decoration:none;">
-                            <span>
+
+                        <p class="msg">
+                            <span style="font-size: small; font-weight: bold;">
                                 Don't have an account?
                             </span>
-                            <a href="/signup" style="color: #50a988;">
-                            <b class="pointer">
-                                Sign up here
-                            </b>
+                            <a href="/signup"  style="color: #50a988;text-decoration:none; font-size: small;">
+                                <b class="pointer">
+                                    Sign Up here
+                                </b>
                             </a>
                         </p>
                     </div>
@@ -530,7 +531,7 @@
 {{!-- SIGNUP VALIDATION --}}
 <script>
 
-    async function validate() {                  
+    async function validate() {
 
         let email = document.getElementById('email').value.trim();
         let username = document.getElementById('username').value.trim();
@@ -538,14 +539,14 @@
         let password = document.getElementById('password').value.trim();
         let password2 = document.getElementById('password2').value.trim();
         let errmsg = document.getElementById('errmsg');
-        
+
 
         if (email == '' || number == '' || username == "" || password == '' || password2 == '') {
             errmsg.innerHTML = "ALL FIELDS ARE REQUIRED";
-        }else if (password !== password2) {
+        } else if (password !== password2) {
             errmsg.innerHTML = "Passwords Do Not Match"
         } else {
-            let flag ;
+            let flag;
             await $.ajax({
                 url: '/signupvalidation',
                 method: 'POST',
@@ -555,14 +556,14 @@
                 },
                 success: function (res) {
                     if (res.availability) {
-                         signup();
+                        signup();
                     } else {
-                        if(res.err == 'email'){
+                        if (res.err == 'email') {
                             errmsg.innerHTML = 'Email Already Exists';
                         } else {
                             errmsg.innerHTML = 'Phone Number Already Exists';
                         }
-                        
+
                     }
                 }
             })
@@ -571,7 +572,7 @@
 
     }
 
-    function signup(){
+    function signup() {
         const email = document.getElementById('email').value.trim();
         const username = document.getElementById('username').value.trim();
         const number = document.getElementById('number').value.trim();
@@ -586,8 +587,8 @@
                 number: number,
                 password: password
             },
-            success: function (response){
-                if(response.status){
+            success: function (response) {
+                if (response.status) {
                     window.location.href = '/signin'
                 }
             }

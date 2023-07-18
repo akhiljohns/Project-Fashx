@@ -8,7 +8,7 @@ module.exports = {
     checkUser: async(number) => {
         try{
             const customer = await user.findOne({number:number});
-            console.log("in checkuser funct",customer)
+            console.log("in checkuser findone funct customer status: ",customer)
             if(customer) {
                 return true;
             } else {

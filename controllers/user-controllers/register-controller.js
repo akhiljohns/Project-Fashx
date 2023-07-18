@@ -10,6 +10,7 @@ let phoneNumber = null;
 let otpValid = false;
 let inValidotp = false;
 let otptimeout = false;
+let zeroes = false;
 module.exports = {
 
   getSignup: (req, res) => {
@@ -20,16 +21,18 @@ module.exports = {
       phoneNumber = null;
     }else if(inValidotp){
       res.render("user/user-signup-otp",{layout: false,phoneNumber:phoneNumber,regUser,inValidotp});
-      
     } else {
       console.log("IN PHONE REGISTER PAGE");
-      res.render("user/user-signup-phone", {layout: false,phoneNumber:phoneNumber,regUser,});
+      const invalid = zeroes, phone = phoneNumber;
+      zeroes = false, phoneNumber = null;;
+      res.render("user/user-signup-phone", {layout: false,phoneNumber:phone,regUser,zeroes:invalid});
     }
   },
 
   getSignupotp: (req, res) => {
     if (otpsent) {
       res.render("user/user-signup-otp", { layout: false, phoneNumber,inValidotp,otptimeout });
+      otpsent = false;
     } else {
       res.redirect('/signup')
       
@@ -38,19 +41,28 @@ module.exports = {
   
   postCheckNum: async (req, res) => {
       const userData = req.body;
-      number = userData.phone;
-      console.log("At postchecknum user number :", number);
-      const response = await registerHelper.checkUser(number);
-      console.log("in postchecknum funct", response);
+      phoneNumber = userData.phone;
+      console.log("At postchecknum user number :", phoneNumber);
+      const response = await registerHelper.checkUser(phoneNumber);
+      console.log("in postchecknum user response", response);
   
-      if (!response) {
+ 
+     if (!response) {
         phoneNumber = userData.phone
-        otpController.sendOtp(userData);
-        otpsent = true;
-        res.redirect('/signup/otpform')
-       
+        otpController.sendOtp(userData).then((otpResponse)=>{
+          if(!otpResponse){
+            // res.render("user/user-signup-phone", {layout: false,zeroes:true});
+            zeroes = true;
+            res.redirect('/signup');
+          }else{
+            otpsent = true;
+            res.redirect('/signup/otpform')
+         
+          }
+        })
+
       } else {
-        phoneNumber = number;
+        phoneNumber;
         regUser = true;
         res.render("user/user-signup-phone", {
           layout: false,

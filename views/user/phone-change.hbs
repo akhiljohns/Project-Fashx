@@ -1,0 +1,224 @@
+<head>
+    <title>PHONE NUMBER CHANGE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .otp-form {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="otp-form">
+            <h2>OTP Verification</h2>
+
+            {{!-- PHONE NUMBER FORM --}}
+            {{!-- <form action="" method="POST" id="phoneForm"> --}}
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" placeholder="Enter your phone number" minlength="10"
+                        maxlength="10" required>
+                </div>
+                <div>
+                    <p id="errmsg" style="color: rgb(0, 0, 0); font-size: 90%;"></p>
+                </div>
+                <button id="sendotp" onclick="validate()">Send OTP</button>
+                <button id="resendotp" style="display: none;" onclick="validate()">RESEND OTP</button>
+            {{!-- </form> --}}
+
+            {{!-- OTP VALUE FORM --}}
+            {{!-- <form action="/verifyotp" method="post" id="otpForm"> --}}
+                <div class="form-group">
+                    <input type="hidden" id="phone2" name="phone" value="">
+                    <label for="otp">OTP:</label>
+                    <input type="text" id="otp" name="otp" placeholder="Enter the OTP" required>
+                </div>
+               
+                <div>
+                    <p id="otpmsg" style="color: rgb(255, 0, 0); font-size: 90%;">
+                       
+                    </p>
+                </div>
+              
+                <div class="form-group">
+                    <button onclick="verifyotp()">Verify OTP</button>
+                </div>
+            {{!-- </form> --}}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function validate() {
+            let phone = document.getElementById("phone").value.trim();
+             $.ajax({
+                url: '/numexist',
+                method: 'POST',
+                data: {
+                    phone: phone
+                },
+                success: function (resp) {
+                    console.log("NUM EXIST RESPONSE", resp);
+                    if (!resp) {
+                        document.getElementById('errmsg').innerText = 'ENTER THE OTP';
+                        document.getElementById('resendotp').style.display = 'block';
+                        document.getElementById('sendotp').style.display = 'none';
+
+                        const inputField = document.getElementById('phone');
+                        inputField.readOnly = !inputField.readOnly;
+
+
+                    } else{
+                        document.getElementById('errmsg').innerText = 'NUMBER ALREADY REGISTERED';
+                    }
+
+                    // Prevent form submission
+                    //return false;
+                },
+                //async: false // Make the request synchronous to return the value correctly
+            });
+        }
+
+        function resendotp() {
+            let phone = document.getElementById("phone").value.trim();
+            $.ajax({
+                type: 'POST',
+                url: '/resendotp',
+                data: {
+                    phone: phone
+                },
+                success: function (resp) {
+                    if (!resp) {
+                        document.getElementById('errmsg').innerText = 'OTP RESENT';
+                    }
+                },
+                async: false // Make the request synchronous to return the value correctly
+            });
+        }
+
+ function verifyotp() {
+            let phone = document.getElementById("phone").value.trim();
+            let otp = document.getElementById("otp").value.trim();
+             $.ajax({
+                url: '/veifyprofotp',
+                method: 'POST',
+                data: {
+                  otp:otp,
+                    phone: phone
+                },
+                success: function (resp) {
+                   
+                    if (!resp) {
+                        document.getElementById('otpmsg').innerText = 'INVALID OTP';
+                      const inputField = document.getElementById('phone');
+                        inputField.readOnly = !inputField.readOnly;
+
+
+                    } else {
+                        $.ajax({
+                url: '/updateprofnum',
+                method: 'POST',
+                data: {
+                  otp:otp,
+                    phone: phone
+                },
+                success: function (resp) {
+                  console.log("PHONE NUM UPDATE STATUS : ",resp);
+                   document.getElementById('otpmsg').innerText = 'number updated';
+                       window.location.href = '/profile';
+
+                   },
+               
+            });
+                    }
+
+                    // Prevent form submission
+                    //return false;
+                },
+                //async: false // Make the request synchronous to return the value correctly
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Handle form submission
+        document.getElementById("otpForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting
+            // Add your logic here to handle the form submission
+        });
+    </script>
+    <script>
+  window.addEventListener('beforeunload', function (e) {
+    // Cancel the event to prevent the browser from refreshing
+    e.preventDefault();
+    // Chrome requires the event to be assigned to the returnValue property
+    e.returnValue = '';
+
+    // Display a confirmation dialog
+    const confirmationMessage = 'Are you sure you want to leave this page?';
+    e.returnValue = confirmationMessage; // For Chrome
+
+    return confirmationMessage; // For other browsers
+
+  });
+</script>
+
+</body>

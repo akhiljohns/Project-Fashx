@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>FashX Dashboard</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        .toolEll {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 150px;
+        }
+
+        .order_details {
+            background-color: #f7f7f7;
+            padding: 50px 0;
+        }
+
+        .confirmation-card {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .billing-alert {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .billing-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .order-rable {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .order-rable td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-rable td:first-child {
+            font-weight: bold;
+            width: 30%;
+        }
+
+        .order_details_table {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .order_details_table h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th:first-child,
+        .table td:first-child {
+            width: 50%;
+            font-weight: bold;
+        }
+
+        .table th:last-child,
+        .table td:last-child {
+            text-align: right;
+        }
+
+        .subtotal-row {
+            background-color: #f5f5f5;
+        }
+
+        .subtotal-row td {
+            font-weight: bold;
+        }
+
+        .subtotal-row td:last-child {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen-overlay"></div>
+   
+   
+    <main class="main-wrap">
+        <section class="order_details section-margin--small">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                        <div class="confirmation-card">
+                            <h3 class="billing-title">Order Info</h3>
+                            <table class="order-rable">
+                                <div id="orderDate" hidden>{{order.date}}</div>
+                                <tr>
+                                    <td>Order Id:</td>
+                                    <td>{{order.orderNo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td id="modifiedDate"></td>
+                                </tr>
+                                <tr>
+                                    <td>Total:</td>
+                                    <td>₹{{order.totalAmount}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment:</td>
+                                    <td>{{order.paymentMethod}}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Status:</td>
+                                    <td style="color: red;">{{order.status}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                        <div class="confirmation-card">
+                            <h3 class="billing-title">Billing Address</h3>
+                            <table class="order-rable">
+                                <tr>
+                                    <td>House:</td>
+                                    <td>{{order.address.houseName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>City:</td>
+                                    <td>{{order.address.city}}</td>
+                                </tr>
+                                <tr>
+                                    <td>State:</td>
+                                    <td>{{order.address.state}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Postcode:</td>
+                                    <td>{{order.address.pincode}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+                        <div class="confirmation-card">
+                            <h3 class="billing-title">Shipping Address</h3>
+                            <table class="order-rable">
+                                <tr>
+                                    <td>House:</td>
+                                    <td>{{order.address.houseName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>City:</td>
+                                    <td>{{order.address.city}}</td>
+                                </tr>
+                                <tr>
+                                    <td>State:</td>
+                                    <td>{{order.address.state}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Postcode:</td>
+                                    <td>{{order.address.pincode}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="order_details_table">
+                    <h2>Order Details</h2>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each order.items}}
+                                <tr>
+                                    <td>
+                                        <p class="toolEll">{{this.product.productName}}</p>
+                                    </td>
+                                    <td>
+                                        <h5>x {{this.quantity}}</h5>
+                                    </td>
+                                    <td>
+                                        <p>₹ <span class="productTotal">{{this.productTotal}}</span></p>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                <tr class="subtotal-row">
+                                    <td>
+                                        <h4>Subtotal</h4>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <p>₹ <span id="subtotal"></span></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Shipping</h4>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <p>Flat rate: ₹ 50.00</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h4>Total</h4>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <h4>₹ {{order.totalAmount}}</h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {{!-- </div>
+
+                <button onclick="cancelOrder('{{order._id}}')" class="btn btn-outline-danger mt-5"
+                    style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
+            </div> --}}
+              {{!-- {{#if (eq order.status "Cancelled")}}
+                 {{else if (eq order.status "pending")}}
+        
+        </div>
+        <button onclick="cancelOrder('{{order._id}}')" class="btn btn-outline-danger mt-5" style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
+        </div>
+        {{/if}} --}}
+        </section>
+        <!--================End Order Details Area =================-->
+
+
+<!-- Popup Dialog Box HTML -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Cancel Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are You Sure You Want To Cancel This Order?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="cancel(true)">Cancel Order</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+          onclick="cancel(false)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Popup Dialog Box HTML END -->
+
+
+<!-- Popup Dialog Box Script -->
+<script>
+  let currentItem;
+
+  function cancelOrder(orderId) {
+    currentItem = orderId;
+    showConfirmationModal();
+  }
+
+  function showConfirmationModal() {
+    $('#confirmationModal').modal('show');
+  }
+    
+</script>
+<script>
+  function cancel(cancel) {
+    if (cancel) {
+
+      $.ajax({
+        url: '/cancelorder?itemId=' + currentItem,
+        method: 'POST',
+        success: function (response) {
+          window.location.reload();
+
+          currentItem = null;
+        }
+      });
+    }
+    currentItem = null;
+  }
+  
+</script>
+        <!-- Popup Dialog Box Script END -->
+        <script>
+            let subtotal = 0;
+            let total = document.getElementsByClassName('productTotal');
+            for (let i = 0; i < total.length; i++) {
+                subtotal += +total[i].innerHTML;
+            }
+            document.getElementById('subtotal').innerHTML = subtotal;
+        </script>
+
+        <script>
+            let timestamp = document.getElementById('orderDate').innerText;
+            const day = timestamp.substring(8, 10)
+            const month = timestamp.substring(4, 7);
+            const year = timestamp.substring(11, 15);
+            const formattedDate = `${month} ${day}, ${year}`;
+
+            document.getElementById('modifiedDate').innerHTML = formattedDate;
+        </script>
+    </main>
+</body>
+
+</html>

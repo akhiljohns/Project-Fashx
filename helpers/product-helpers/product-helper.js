@@ -2,7 +2,7 @@ const product = require("../../models/product-model"); // Assuming the product m
 const { ObjectId } = require('mongoose').Types;
 const sharp = require('sharp');
 const mongoose = require('mongoose');
-
+const fs=require('fs');
 
 
 module.exports = {
@@ -135,11 +135,41 @@ showProductsUser: () => {
 
 
 
-  updateProductById: (id, productDetails, images) => {
-    return new Promise(async (resolve, Reject) => {
-      console.log(id, productDetails, images);
-      try {
+  // updateProductById: (id, productDetails, images) => {
+  //   return new Promise(async (resolve, Reject) => {
+  //     console.log(id, productDetails, images);
+  //     try {
         
+  //       const updateFields = {
+  //         productName: productDetails.prodtitle,
+  //         description: productDetails.proddescr,
+  //         regularPrice: productDetails.prodrprice,
+  //         discount: productDetails.proddiscount,
+  //         stock: productDetails.prodstock,
+  //         brand: productDetails.prodbrand,
+  //         category: productDetails.prodcategoryid // Use the existing category ObjectId value
+  //       };
+  
+  //       if (images && images.length) {
+  //         const imageFiles = images.map(image => image.filename)
+  //         updateFields.image = imageFiles;
+  //       }
+  
+  //       const updatedProduct = await product.updateOne(
+  //         { _id: new ObjectId(id) },
+  //         { $set: updateFields }
+  //       );
+  
+  //       resolve(updatedProduct);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  // },
+
+  updateProductById: (id, productDetails, images) => {
+    return new Promise(async (resolve, reject) => {
+      try {
         const updateFields = {
           productName: productDetails.prodtitle,
           description: productDetails.proddescr,
@@ -151,7 +181,19 @@ showProductsUser: () => {
         };
   
         if (images && images.length) {
-          const imageFiles = images.map(image => image.filename)
+          const imageFiles = [];
+  
+          for (const image of images) {
+            const { filename } = image;
+  
+            const processedImage = await sharp(image.path)
+              .resize(800, 800, { fit: 'cover' })
+              .jpeg()
+              .toFile(`public/images/${filename}.jpg`);
+  
+            imageFiles.push(`${filename}.jpg`);
+          }
+  
           updateFields.image = imageFiles;
         }
   
@@ -163,10 +205,11 @@ showProductsUser: () => {
         resolve(updatedProduct);
       } catch (error) {
         console.log(error);
+        reject(error);
       }
     });
   },
-
+  
   
   getStock: (productId) => {
     return new Promise ((resolve, reject) => {

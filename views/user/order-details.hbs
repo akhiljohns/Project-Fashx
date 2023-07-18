@@ -101,7 +101,7 @@
 <!--================Order Details Area =================-->
 <section class="order_details section-margin--small">
     <div class="container">
-        <p class="text-center billing-alert">Thank you. Your order has been received.</p>
+        
         <div class="row mb-5">
             <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
                 <div class="confirmation-card">
@@ -242,11 +242,16 @@
                     </tbody>
                 </table>
             </div>
+        {{#if (eq order.status "Cancelled")}}
+
+       {{else}}
+        
         </div>
-    
-        <button onclick="cancelOrder('{{order._id}}')" class="btn btn-outline-danger mt-5" style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
-    </div>
-</section>
+        <button onclick="cancelOrder('{{order._id}}')" class="btn btn-outline-danger mt-5"
+            style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
+        </div>
+        {{/if}}
+        </section>
 <!--================End Order Details Area =================-->
 
 

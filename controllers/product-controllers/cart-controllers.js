@@ -4,9 +4,8 @@ const productHelper = require("../../helpers/product-helpers/product-helper");
 
 const cartController = {
   addtoCart: (req, res, next) => {
-
-    if(!req.session.user){
-      res.status(200).json({user:false});
+    if (!req.session.user) {
+      res.status(200).json({ user: false });
     }
     // let data = JSON.parse(req.query.data);
     const productId = req.body.productId;
@@ -15,7 +14,7 @@ const cartController = {
 
     if (customer) {
       console.log(customer);
-      cartHelper.addtoCart(customer, productId,quantity).then((cart) => {
+      cartHelper.addtoCart(customer, productId, quantity).then((cart) => {
         req.session.user.cart = cart;
 
         productHelper.findProductByIdUser(productId).then((product) => {
@@ -25,12 +24,11 @@ const cartController = {
           //   user: req.session.user,
           // });
 
-          res.status(200).json({resmsg: true})
+          res.status(200).json({ resmsg: true });
         });
       });
     } else {
       console.log("no user");
-      
     }
   },
 
@@ -40,67 +38,83 @@ const cartController = {
       cartHelper.showCart(customer).then(async (cart) => {
         // let products = cart.items
         if (cart && cart.items.length > 0) {
-          let products = cart.items, total = [], subtotal = 0;
-                    console.log("cart items__________________________________",cart.items);
+          let products = cart.items,
+            total = [],
+            subtotal = 0;
+          console.log(
+            "cart items__________________________________",
+            cart.items
+          );
 
-                    for (let i=0; i<products.length; i++) {
-                        products[i].amount = products[i].product.regularPrice * products[i].quantity;
-                    }//to find total product price.
-                    for (let i = 0; i < products.length; i++) {
-                        subtotal += products[i].amount;
-                    }
+          for (let i = 0; i < products.length; i++) {
+            products[i].amount =
+              products[i].product.regularPrice * products[i].quantity;
+          } //to find total product price.
+          for (let i = 0; i < products.length; i++) {
+            subtotal += products[i].amount;
+          }
 
-          
-          console.log("<=---PRODUCT----=>",products )
-          res.render("user/cart", { products, user: req.session.user , subtotal ,emptyCart:false});
+          console.log("<=---PRODUCT----=>", products);
+          res.render("user/cart", {
+            products,
+            user: req.session.user,
+            subtotal,
+            emptyCart: false,
+          });
         } else {
-          let products = null
-          res.render("user/cart", { products, user: req.session.user ,emptyCart:true });
+          let products = null;
+          res.render("user/cart", {
+            products,
+            user: req.session.user,
+            emptyCart: true,
+          });
         }
       });
-    }
-     catch (err) {
+    } catch (err) {
       console.log("Error while showing cart: " + err);
     }
   },
 
   removeItem: (req, res) => {
-      const userId = req.session.user._id
-      const itemId = req.query.itemId;
-      cartHelper.removeItem(userId, itemId).then((response) => {
-          console.log(response)
-          // res.redirect('/cart')
-          res.status(200).json({response: response});
-      })  
+    const userId = req.session.user._id;
+    const itemId = req.query.itemId;
+    cartHelper.removeItem(userId, itemId).then((response) => {
+      console.log(response);
+      // res.redirect('/cart')
+      res.status(200).json({ response: response });
+    });
   },
 
-
   addQuantity: (req, res, next) => {
-  const itemId = req.query.itemId;
-  const userId = req.session.user._id;
-  const productId = req.body.productId;
-  cartHelper.addQuantity(itemId, userId, productId).then((cart) => {
-      console.log('<=-----ADD QUANTITY RESULT-----=>',cart);
-      res.status(200).json({cart});
-  }).catch((err) => {
-      console.log('the error occurred: '+ err);
-  })
-},
+    const itemId = req.query.itemId;
+    const userId = req.session.user._id;
+    const productId = req.body.productId;
+    cartHelper
+      .addQuantity(itemId, userId, productId)
+      .then((cart) => {
+        console.log("<=-----ADD QUANTITY RESULT-----=>", cart);
+        res.status(200).json({ cart });
+      })
+      .catch((err) => {
+        console.log("the error occurred: " + err);
+      });
+  },
 
+  reduceQuantity: (req, res, next) => {
+    const itemId = req.query.itemId;
+    const userId = req.session.user._id;
+    const productId = req.body.productId;
+    cartHelper
+      .reduceQuantity(itemId, userId, productId)
+      .then((cart) => {
+        console.log("<=-----REDUCE QUANTITY RESULT-----=>", cart);
 
-reduceQuantity: (req, res, next) => {
-  const itemId = req.query.itemId;
-  const userId = req.session.user._id;
-  const productId = req.body.productId;
-  cartHelper.reduceQuantity(itemId, userId, productId).then((cart) => {
-    console.log('<=-----REDUCE QUANTITY RESULT-----=>',cart);
-
-      res.status(200).json({cart: cart});
-  }).catch((err) => {
-      console.log('the error occurred: '+ err);
-  })
-},
-
+        res.status(200).json({ cart: cart });
+      })
+      .catch((err) => {
+        console.log("the error occurred: " + err);
+      });
+  },
 
   // // This is a function which helps to add the quantity of a product in the cart by calling another function addQuantity in cartHelper.
   //     addQuantity: (req, res, next) => {

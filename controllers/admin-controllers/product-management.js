@@ -1,6 +1,8 @@
 const productHelper = require('../../helpers/product-helpers/product-helper');
 const categoryHelper = require('../../helpers/product-helpers/category-helper');
 const product = require("../../models/product-model");
+const fs=require('fs');
+
 module.exports = {
 
     showProducts: (req, res, next) => {
@@ -19,18 +21,32 @@ module.exports = {
         })
     },
 
-    postEditProduct: (req, res, next) => {
-        let id = req.params.id;
-        let productDetails = req.body;
-        let image = req.files;
+    // postEditProduct: (req, res, next) => {
+    //     let id = req.params.id;
+    //     let productDetails = req.body;
+    //     let image = req.files;
 
 
-        productHelper.updateProductById(id, productDetails, image).then((response)=> {
-            if(response){
-                res.redirect('/admin/products');
-            }
-        })
-    },
+    //     productHelper.updateProductById(id, productDetails, image).then((response)=> {
+    //         if(response){
+    //             res.redirect('/admin/products');
+    //         }
+    //     })
+    // },
+    
+postEditProduct: (req, res, next) => {
+    let id = req.params.id;
+    let productDetails = req.body;
+    let image = req.files;
+    let deletedImages = req.body.deletedImages; // Get the deleted image filenames from the request body
+
+    productHelper.updateProductById(id, productDetails, image, deletedImages).then((response) => {
+        if (response) {
+            res.redirect('/admin/products');
+        }
+    })
+},
+
     softDeleteProduct: (req, res, next) => {
         const productId = req.params.id;
       

@@ -294,9 +294,7 @@
             right: 0;
         }
 
-        /* .container.sign-in .col.sign-up {
-        transform: translateY(100%);
-    } */
+ 
 
         .container.sign-in .col.sign-in,
         .container.sign-up .col.sign-up {
@@ -376,7 +374,7 @@
 
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  required>
+                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  minlength="6" maxlength="6"  required>
                         </div>
                         {{#if inValidotp}}
                         <p id="invalidotp" style="color: red;">INVALID OTP</p>

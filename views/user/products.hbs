@@ -7,9 +7,41 @@
       transform: scale(1.05);
       box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
     }
+
+.search-bar {
+    display: flex;
+    align-items:center;
+    width: 192px;
+    margin: 13px 80vw;
+
+}
+
+#searchInput {
+  display: none;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#searchIcon {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
   </style>
 
+
+
   <section>
+<div class="search-bar">
+  <i class="fa fa-search" id="searchIcon"></i>
+  <input type="text" id="searchInput" placeholder="Search...">
+</div>
+    <div style="text-align: center; display: none;" id="xxx">
+			<h5>No Product Found</h5>
+		</div>
     <div class="container">
       <div class="row">
         {{#if products}}
@@ -44,4 +76,27 @@
   </section>
 </body>
 
+<script>
+  const searchInput = document.getElementById('searchInput');
+const searchIcon = document.getElementById('searchIcon');
 
+searchIcon.addEventListener('click', function() {
+  searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
+});
+
+searchInput.addEventListener('input', function() {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach(function(card) {
+    const productName = card.querySelector('.card-title').textContent.toLowerCase();
+    
+    if (productName.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
+
+</script>

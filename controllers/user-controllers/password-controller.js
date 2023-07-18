@@ -1,13 +1,35 @@
 const registerHelper = require('../../helpers/user-helpers/register-helper');
 const otpController = require('./otp-controller');
+const userHelper = require('../../helpers/admin-helpers/user-helper');
 
 const bcrypt = require('bcrypt');
 
 
 let phnumber = null;
+let passupdate = false;
 
 module.exports = {
    
+    getProfile: async (req, res, next) => {
+        try {
+            const userId = req.session.user._id
+            const customer = user = await userHelper.findUserById(userId)
+          
+            const userAddress = await userHelper.getAddress(userId);
+            if(userAddress){
+                let address = userAddress.address;
+                console.log("Address", address)
+                console.log("passupdate", passupdate+"/n")
+                res.render('user/profile', { user, customer, address ,passupdate});
+                passupdate = false
+            } else {
+                res.render('user/profile', { user, customer, passupdate});
+            passupdate = false
+            }
+        } catch (err) {
+            console.log('Error fetching address'+err);
+        }
+    },
     getForgotPassword:(req, res)=>{
 
         res.render('user/otpform',{layout:false,otp:false,phoneNumber:false});
@@ -75,49 +97,46 @@ module.exports = {
     },
 
     checkPassword: (req, res, next) => {
-        console.log('entered the area');
+        console.log('entered the checkpassword area');
         const oldpassword = req.body.oldpassword;
         const newpassword = req.body.newpassword;
         const user = req.session.user;
-        console.log("old password: " + oldpassword+" new password: " + newpassword);
-        const response = {};
-
-        return new Promise((resolve, reject) => {
-            if(oldpassword === newpassword){
-                response.samePasswords = true;
-            }
-
-            bcrypt.compare(oldpassword, user.password).then((status)=>{
-                response.oldPasswordCheck = status;
-                res.status(200).json(response);
-            })
-        })
-
-
-
-    },
-    changePassword: async(req, res, next) => {
+        console.log("old password: " + oldpassword + " new password: " + newpassword);
+        
+        bcrypt.compare(oldpassword, user.password, (err, status) => {
+          if (err) {
+            console.log(err);
+            res.status(500).json({});
+            return;
+          }
+          
+          const response = { oldPasswordCheck: status };
+          res.status(200).json(response);
+        });
+      },
+      
+      changePassword: async (req, res, next) => {
         try {
-             const oldpassword = req.body.oldpassword;
-        const newpassword = req.body.newpassword;
-        const user = req.session.user;
-
-        await bcrypt.compare(oldpassword, newpassword).then((status) => {
-            if(!status){
-                const newUserData = { phone : user.number, password: newpassword };
-                registerHelper.updatePassword(newUserData)
-                res.redirect('/profile')
-                // let passupdate = true;
-                // res.render('user/profile', { user, customer, address , passupdate });
-
-            } else {
-                res.status(200).json({})
-            }
-        })
-    }
- catch (error) {
-            console.log(error)
-}
-
-}
+          const oldpassword = req.body.oldpassword;
+          const newpassword = req.body.newpassword;
+          const user = req.session.user;
+      
+          const isPasswordMatch = await bcrypt.compare(oldpassword, user.password);
+      
+          if (isPasswordMatch) {
+            const newUserData = { phone: user.number, password: newpassword };
+            await registerHelper.updatePassword(newUserData);
+            passupdate = true;
+            console.log('updated password and passupdate = ' + passupdate);
+             res.status(200).json(passupdate);
+            // res.redirect('/profile');
+          } else {
+            res.redirect('/profile');
+          }
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({});
+        }
+      }
+      
 }

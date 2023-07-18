@@ -369,11 +369,11 @@
                     <div class="form sign-up">
                         <div class="input-group">
                             <i class='bx bxs-user'></i>
-                            <input type="text" placeholder="Username" name="username" id="username" required>
+                            <input type="text" placeholder="Username" name="username" id="username" pattern="[A-Za-z\s]+" minlength="4" maxlength="20" required>
                         </div>
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="email" placeholder="Email" name="email" id="email" required>
+                            <input type="email" placeholder="Email" name="email" id="email" maxlength="30" required>
                         </div>
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>

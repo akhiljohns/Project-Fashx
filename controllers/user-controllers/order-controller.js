@@ -34,21 +34,28 @@ const orderManagement = {
 
     
 
-    getOrders: (req, res) => {
-        const customer = user = req.session.user;
-        const userId = req.session.user._id;
-        orderHelper.getOrders(userId).then((response) => {
-            if(response){
-                const orders = response.order
-                for(let i = 0; i < orders.length; i++) {
-                    orders[i].no = orders[i].items.length;
-                }
-                res.render('user/orders', {orders, customer, user })
-            } else {
-                res.render('user/orders', {noOrders: true, customer, user})
-            }
-        })
-    },
+getOrders: (req, res) => {
+    const customer = req.session.user;
+    const userId = req.session.user._id;
+    
+    orderHelper.getOrder(userId)
+      .then((response) => {
+        if (response) {
+          const orders = response.order.reverse(); // Reverse the order array to display newest orders first
+          for (let i = 0; i < orders.length; i++) {
+            orders[i].no = orders[i].items.length;
+          }
+          res.render('user/orders', { orders, customer });
+        } else {
+          res.render('user/orders', { noOrders: true, customer });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({});
+      });
+  },
+  
 
 
    
@@ -114,7 +121,10 @@ const orderManagement = {
     //     })
     // }
 
+getConfirm: (req, res, next) => {
+    res.render('user/confirmation', {order: req.session.lastOrder, customer: req.session.user, user: req.session.user});
 
+}
 
 
 

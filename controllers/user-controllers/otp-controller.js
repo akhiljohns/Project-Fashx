@@ -18,10 +18,11 @@ module.exports ={
                 .create({to: countryCode+userData.phone, channel: 'sms'})
                 .then((verification) => {
                     console.log("SEND OTP STATUS:",verification.status);
-                    resolve(verification.status);
                     console.log("SEND OTP DATA:",countryCode+userData.phone)
+                    resolve(verification.status);
                 }).catch((error) => {
-                    console.log(error.message);
+                   resolve(false)
+                    console.log("INVALID NUMBER",error.message);
                 })
         })
     },

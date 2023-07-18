@@ -14,6 +14,7 @@ const userController = require("../controllers/admin-controllers/user-controller
 const productController = require("../controllers/product-controllers/product-controller")
 const productManage = require('../controllers/admin-controllers/product-management');
 const userManage = require('../controllers/admin-controllers/userMang-controller');
+const orderController = require('../controllers/admin-controllers/order-controller');
 
 
 router.get("/dashboard", access.logStatus,  pageController.getDashboard)
@@ -31,7 +32,20 @@ router.post("/add-product",  upload.array('productImage'), productController.pos
 router.get("/products", access.logStatus, productManage.showProducts );
 
 router.get('/products/edit/:id', access.logStatus, productManage.getEditProduct );
-
+router.delete('/admin/products/delete-image/:filename', (req, res, next) => {
+    const filename = req.params.filename;
+  
+    // Use file system module to delete the image file
+    fs.unlink(`./public/images/${filename}`, (err) => {
+      if (err) {
+        console.error(err);
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(200);
+      }
+    });
+  });
+  
 router.post('/products/edit/:id', upload.array('productImage'), productManage.postEditProduct );
 
 router.get("/products/delete/:id", access.logStatus, productManage.softDeleteProduct);
@@ -55,13 +69,18 @@ router.get('/category/hide/:id',access.logStatus, categoryController.hideunhide)
 router.get("/users", access.logStatus,  userController.getUsers);
 
 router.get('/users/block/:id', access.logStatus, userManage.blockUnblockUser );
+router.get('/users/delete/:id', access.logStatus, userManage.deleteUser );
 
-router.get("/admin-logout", loginController.getLogout);
+router.get("/logout", access.logStatus, loginController.getLogout);
 
-router.get("/orders", loginController.getOrders);
 
-router.get("/useredit", loginController.getUserEdit);
-router.get("/userdetails", loginController.getUserDetails);
+router.get("/useredit", access.logStatus, loginController.getUserEdit);
+router.get("/userdetails",  access.logStatus, loginController.getUserDetails);
+
+
+// ORDERS 
+router.get("/orders", access.logStatus,orderController.getOrders );
+router.get('/orders/details', access.logStatus, orderController.getOrderdetails);
 
 
 

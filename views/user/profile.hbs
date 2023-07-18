@@ -1,237 +1,274 @@
 <style>
-   
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f1f1f1;
-      margin: 0;
-      padding: 0;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+  }
 
-    .profile-section {
-      padding: 30px;
-    }
+  .profile-section {
+    padding: 30px;
+  }
 
-    .profile-card {
-      border-radius: 10px;
-      background-color: #ffffff;
-      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
+  .profile-card {
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
 
-    .profile-name {
-      margin-top: 20px;
-    }
+  .profile-name {
+    margin-top: 20px;
+  }
 
-    .nav-tabs {
-      margin-top: 30px;
-      border-bottom: none;
-    }
+  .nav-tabs {
+    margin-top: 30px;
+    border-bottom: none;
+  }
 
-    .nav-link {
-      border: none;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
+  .nav-link {
+    border: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 
-    .nav-link.active {
-      background-color: #f1f1f1;
-    }
+  .nav-link.active {
+    background-color: #f1f1f1;
+  }
 
-    .tab-content {
-      margin-top: 30px;
-    }
+  .tab-content {
+    margin-top: 30px;
+  }
 
-    .profile-info {
-      padding: 20px;
-      background-color: #f1f1f1;
-      border-radius: 10px;
+  .profile-info {
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .info-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .info-label {
+    flex: 0 0 30%;
+    font-weight: bold;
+  }
+
+  .info-value {
+    flex: 0 0 70%;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .profile-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .profile-image-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .profile-image-actions input[type="file"] {
+    display: none;
+  }
+
+  .add-address-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .address-card {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .address-card .card-body {
+    padding: 0;
+  }
+
+  .address-card .card-body h5 {
+    margin-bottom: 5px;
+  }
+
+  .address-card .card-body .card-subtitle {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .address-card .card-body .card-text {
+    margin-bottom: 0;
+  }
+
+  /* Additional styles for responsiveness */
+  @media (max-width: 768px) {
+
+    .col-lg-4,
+    .col-lg-8 {
       margin-bottom: 20px;
     }
+  }
 
-    .info-row {
-      display: flex;
-      margin-bottom: 10px;
-    }
+  @media (max-width: 576px) {
 
-    .info-label {
-      flex: 0 0 30%;
-      font-weight: bold;
-    }
-
-    .info-value {
-      flex: 0 0 70%;
-    }
-
-    .profile-image {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .profile-image-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-
-    .profile-image-actions {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .profile-image-actions input[type="file"] {
-      display: none;
-    }
-
-    .add-address-button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
+    .profile-card,
     .address-card {
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      padding: 15px;
+    }
+
+    .profile-info,
+    .address-card .card-body {
       padding: 10px;
     }
 
-    .address-card .card-body {
-      padding: 0;
+    .profile-image {
+      width: 120px;
+      height: 120px;
     }
+  }
+</style>
 
-    .address-card .card-body h5 {
-      margin-bottom: 5px;
-    }
+<section class="profile-section">
+  <div class="container">
+    <div class="row">
 
-    .address-card .card-body .card-subtitle {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
+      <div class="col-lg-12">
+        <div class="card profile-card">
+          <div class="card-body">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab"
+                  data-bs-target="#profile-overview">Overview</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link " data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Address</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change
+                  Password</button>
+              </li>
+            </ul>
 
-    .address-card .card-body .card-text {
-      margin-bottom: 0;
-    }
+            {{#if passupdate}}
+            <script>
+              clickButton()
+            </script>
+            {{/if}}
 
-    /* Additional styles for responsiveness */
-    @media (max-width: 768px) {
-      .col-lg-4,
-      .col-lg-8 {
-        margin-bottom: 20px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .profile-card,
-      .address-card {
-        padding: 15px;
-      }
-
-      .profile-info,
-      .address-card .card-body {
-        padding: 10px;
-      }
-
-      .profile-image {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
-
-  <section class="profile-section">
-    <div class="container">
-      <div class="row">
-      
-        <div class="col-lg-12">
-          <div class="card profile-card">
-            <div class="card-body">
-              <ul class="nav nav-tabs nav-tabs-bordered">
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Address</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
-              </ul>
-
-              <div class="tab-content">
-                <div class="tab-pane fade show active" id="profile-overview">
-                  <div class="profile-info">
-                    <div class="info-row">
-                      <div class="info-label">Full Name</div>
-                      <div class="info-value">{{user.username}}</div>
-                    </div>
-                    <div class="info-row">
-                      <div class="info-label">Country</div>
-                      <div class="info-value">India</div>
-                    </div>
-                    <div class="info-row">
-                      <div class="info-label">Address</div>
-                      <div class="info-value">ABCD House</div>
-                    </div>
-                    <div class="info-row">
-                      <div class="info-label">Phone</div>
-                      <div class="info-value">{{user.number}}</div>
-                    </div>
-                    <div class="info-row">
-                      <div class="info-label">Email</div>
-                      <div class="info-value">{{user.email}}</div>
-                    </div>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="profile-overview">
+                <div class="profile-info">
+                  <div class="info-row">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value">{{user.username}}</div>
+                  </div>
+                  {{!-- {{#if address}}
+                  <div class="info-row">
+                    <div class="info-label">Country</div>
+                    <div class="info-value">{{address.country}}</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-label">Address</div>
+                    <div class="info-value">{{address.houseName}} {{address.city}}</div>
+                  </div>
+                  {{else}} --}}
+                  <div class="info-row">
+                    <div class="info-label">Country</div>
+                    <div class="info-value">India</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-label">Address</div>
+                    <div class="info-value">ABCD House</div>
+                  </div>
+                  {{!-- {{/if}} --}}
+                  <div class="info-row">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value">{{user.number}}</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{user.email}}</div>
                   </div>
                 </div>
-                {{#if passupdate}}
-<p id="loginerror" style="color:rgb(0, 0, 0); font-size:100%; font-weight: bolder;font: bolder;">
-                            <b>
-                               Password Has Been Updated
-                            </b>
-                        </p>
-                        {{/if}}
-{{!-- END OF OVERVIEW TAB  --}}
+              </div>
 
-{{!-- START EDIT PROFILE TAB  --}}
-            <div class="tab-pane fade" id="profile-edit">
-              <form action="/updateProfile" method="post">
-                <div class="row mb-3">
-                  <label for="name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="name" type="text" class="form-control" id="name" value="{{user.username}}" required>
+              {{!-- END OF OVERVIEW TAB --}}
+
+              {{!-- START EDIT PROFILE TAB --}}
+              <div class="tab-pane fade" id="profile-edit">
+                {{!-- <form action="" method=""> --}}
+                <form action="/updateProfile" method="post">
+                  <div class="row mb-3">
+                    <label for="name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="name" type="text" class="form-control" id="name" pattern="[A-Za-z\s]+"
+                        title="Name Should Only Contain Alphabetic Characters" minlength="4" value="{{user.username}}"
+                        required>
+                    </div>
                   </div>
-                </div>
-            
-                <div class="row mb-3">
-                  <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="phone" type="text" class="form-control" id="phone" value="{{user.number}}" readonly>
+
+                  <div class="row mb-3">
+                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="email" type="email" class="form-control" id="email" minlength="5"
+                        value="{{user.email}}">
+                    </div>
                   </div>
-                </div>
-            
-                <div class="row mb-3">
-                  <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="email" value="{{user.email}}">
+                  <div class="row mb-3">
+ 
+
+                      {{!-- <span id="proferr" style="display: block; color: #c60f0f; margin: 0.3rem 16.7rem; font-size: x-large;"></span> --}}
+
+                {{!-- <div class="row mb-3 otpfield" style="display: block;">
+                    <label for="otp" class="col-md-4 col-lg-3 col-form-label">OTP</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="otp" type="text" class="form-control" style="width: 200px;" id="otp" minlength="6"
+                        maxlength="6" pattern="[0-9]{6}" title="OTP Should Be 6 Digits Long" 
+                        placeholder="Enter The OTP">
+                    </div>
+                  </div> --}}
+
+                  <div class="text-center">
+                    <button onclick="" class="btn btn-outline-success">Save Changes</button>
                   </div>
-                </div>
-                <div class="text-center">
-                  <button class="btn btn-outline-success">Save Changes</button>
-                </div>
-              </form>
-            </div>
+                </form>
 
 
-             <div class="tab-pane fade pt-3" id="profile-settings">
+                 <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+  <div class="col-md-6 col-lg-7 mt-5">
+    <input name="phone" type="text" class="form-control" id="phone" value="{{user.number}}"
+      minlength="10" maxlength="10" pattern="[0-9]{10}" title="Phone Number Should Be 10 Digits Long & Numeric Characters Only">
+  </div>
+  <div class="col-md-2 col-lg-2">
+    <a type="button" class="btn btn-primary  mt-5" href="/editnumber">Edit Number</a>
+  </div>
+</div>
+              </div>
+              
+
+
+              <div class="tab-pane fade pt-3" id="profile-settings">
 
                 <!-- add Address tab -->
                 <div class=" card card-body mb-3" id="addAddressField" style="display: none;">
@@ -239,42 +276,46 @@
                     <div class="row mb-3">
                       <label for="fname" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fname" type="text" class="form-control" id="fname" required>
+                        <input name="fname" type="text" class="form-control" id="fname" pattern="[A-Za-z\s]+"
+                          title="Please Enter Only Alphabetic Characters" minlength="4" required>
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label for="lname" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="lname" type="text" class="form-control" id="lname" required>
+                        <input name="lname" type="text" class="form-control" id="lname" pattern="[A-Za-z\s]+"
+                          title="Please Enter Only Alphabetic Characters" minlength="4" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <label for="phonenum" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="phone" minlength="10" maxlength="10"
-                          pattern="[0-9/]*" required>
+                        <input name="phone" type="text" class="form-control" id="phonenum" minlength="10" maxlength="10"
+                          pattern="[0-9]{10}" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="housename" class="col-md-4 col-lg-3 col-form-label">House No./Building Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="houseName" type="text" class="form-control" id="houseName" required>
+                        <input name="houseName" type="text" minlength="1" class="form-control" id="houseName" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="landmark" class="col-md-4 col-lg-3 col-form-label">Landmark</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="landmark" type="text" class="form-control" id="landmark" required>
+                        <input name="landmark" type="text" class="form-control" pattern="[A-Za-z\s]+"
+                          title="Please Enter Only Alphabetic Characters" minlength="2" id="landmark" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="city" class="col-md-4 col-lg-3 col-form-label">City</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="city" type="text" class="form-control" id="city" required>
+                        <input name="city" type="text" class="form-control" id="city" pattern="[A-Za-z\s]+"
+                          title="Please Enter Only Alphabetic Characters" minlength="2" required>
                       </div>
                     </div>
 
@@ -282,7 +323,8 @@
                     <div class="row mb-3">
                       <label for="district" class="col-md-4 col-lg-3 col-form-label">District</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="district" class="form-control" id="district" required></input>
+                        <input name="district" class="form-control" id="district" pattern="[A-Za-z\s]+"
+                          title="Please Enter Only Alphabetic Characters" minlength="2" required></input>
                       </div>
                     </div>
 
@@ -290,23 +332,25 @@
                       <label for="pincode" class="col-md-4 col-lg-3 col-form-label">Pincode</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="pincode" type="text" class="form-control" id="pincode" pattern="[0-9/]*"
-                          minlength="6" required>
+                          minlength="6" title="Please Enter Only Numeric Characters" required>
                       </div>
- 
- 
-                    <div class="row mb-3">
-                      <label for="state" class="col-md-4 col-lg-3 col-form-label">State</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="state" class="form-control" id="state" required></input>
-                      </div>
-                    </div>
 
-                    <div class="row mb-3">
-                      <label for="country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" class="form-control" id="country" required></input>
+
+                      <div class="row mb-3">
+                        <label for="state" class="col-md-4 col-lg-3 col-form-label">State</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="state" class="form-control" id="state" pattern="[A-Za-z\s]+"
+                            title="Please Enter Only Alphabetic Characters" minlength="2" required></input>
+                        </div>
                       </div>
-                    </div>
+
+                      <div class="row mb-3">
+                        <label for="country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                        <div class="col-md-8 col-lg-9">
+                          <input name="country" class="form-control" id="country" pattern="[A-Za-z\s]+"
+                            title="Please Enter Only Alphabetic Characters" minlength="2" required></input>
+                        </div>
+                      </div>
                       <span id="addressErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
                     </div>
 
@@ -341,7 +385,8 @@
                     <div class="card-body" style=" box-sizing: border-box;">
                       <h5 class="card-title">{{this.fname}} {{this.lname}}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{this.houseName}}</h6>
-                      <p class="card-text">{{this.landmark}} ,{{this.city}} , {{this.district}} , {{this.pincode}} , {{this.state}} , {{this.country}} .
+                      <p class="card-text">{{this.landmark}} ,{{this.city}} , {{this.district}} , {{this.pincode}} ,
+                        {{this.state}} , {{this.country}} .
                         {{this.phone}}</p>
                       <a href="/deleteAddress/{{this._id}}" class="card-link" style="color: #c60f0f;">Delete</a>
                     </div>
@@ -352,27 +397,30 @@
 
               </div>
 
-                  <div class="tab-pane fade pt-3" id="profile-change-password">
-                <form action="/updatePassword" method="post">
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <form action="#" method="post">
 
                   <div class="row mb-3">
                     <label for="oldpPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="oldpassword" type="password" class="form-control" id="oldpassword" required>
+                      <input name="oldpassword" type="password" class="form-control" id="oldpassword" minlength="2"
+                        required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label for="newpassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="newpassword" type="password" class="form-control" id="newpassword" required>
+                      <input name="newpassword" type="password" class="form-control" id="newpassword" minlength="2"
+                        required>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <label for="confirmpassword" class="col-md-4 col-lg-3 col-form-label">Confirm Password</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="confirmpassword" type="password" class="form-control" id="confirmpassword" required>
+                      <input name="confirmpassword" type="password" class="form-control" id="confirmpassword"
+                        minlength="2" required>
                     </div>
                     <span id="passwordErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
                   </div>
@@ -382,14 +430,17 @@
                   </div>
 
                 </form>
-              </div>
+                <div id="passupdate" style="display: none;">
+                  <p>Password Has Been Updated</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -406,12 +457,40 @@
 <script>
 
 
+
+</script>
+
+<script>
+
+  function clickButton() {
+    const shouldClickChangePasswordButton = true; // Replace with your specific condition
+
+    if (shouldClickChangePasswordButton) {
+      const button = document.querySelector('[data-bs-target="#profile-change-password"]');
+      button.classList.add('active');
+      button.setAttribute('aria-selected', 'true');
+
+      const changePasswordTab = document.querySelector('#profile-change-password');
+      changePasswordTab.classList.add('show', 'active');
+
+      const passUpdateMessage = document.getElementById('passupdate');
+      passUpdateMessage.style.display = 'block';
+    }
+  }
+
+
+</script>
+
+<script>
+
+
+
   function validate() {
     let name, phone, state, country, houseName, area;
 
     fname = document.getElementById("fname").value.trim();
     lname = document.getElementById("lname").value.trim();
-    phone = document.getElementById("phone").value.trim();
+    phone = document.getElementById("phonenum").value.trim();
     houseName = document.getElementById("houseName").value.trim();
     landmark = document.getElementById("landmark").value.trim();
     city = document.getElementById("city").value.trim();
@@ -420,7 +499,7 @@
     state = document.getElementById("state").value.trim();
     country = document.getElementById("country").value.trim();
 
-    if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" ||landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
+    if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" || landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
       document.getElementById('addressErr').innerText = 'All Fields Are Mandatory';
       return false;
 
@@ -428,19 +507,38 @@
       return true;
     }
   }
-  
+</script>
+<script>
+   function profedit() {
+    var name = document.getElementById("name").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var otp = document.getElementById("otp").value.trim();
+   
+    if (name === "" || email === "" || phone === "") {
+      document.getElementById('proferr').innerText = 'All Fields Are Mandatory';
+      return false;
+    } else if ({{user.number}} !== phone) {
+      console.log('hi phone teher')
+      return false;
+    }
+  }
+</script>
+
+<script>
+
   function checkPassword() {
-    let oldpassword = document.getElementById("oldpassword").value.trim()
+    let oldpassword = document.getElementById("oldpassword").value.trim();
     let newpassword = document.getElementById('newpassword').value.trim();
     let confirmpassword = document.getElementById('confirmpassword').value.trim();
-    let click;
+    let click = false;
 
-    if (newpassword == '' || confirmpassword == '' || oldpassword == '') {
+    if (newpassword === '' || confirmpassword === '' || oldpassword === '') {
       document.getElementById('passwordErr').innerText = 'All Fields Are Mandatory';
-      return false;
     } else if (newpassword !== confirmpassword) {
-      document.getElementById('passwordErr').innerText = "New Passwords Doesn't Match";
-      return false;
+      document.getElementById('passwordErr').innerText = "New Password And Confirm Password Don't Match";
+    } else if (oldpassword === newpassword) {
+      document.getElementById('passwordErr').innerText = 'New Password Should Be Different From The Old Password';
     } else {
       $.ajax({
         type: 'POST',
@@ -449,26 +547,45 @@
           oldpassword: oldpassword,
           newpassword: newpassword
         },
-        success: function (response) {
-          console.log(response);
-          if (!response.oldPasswordCheck) {
-            document.getElementById('passwordErr').innerText = "The old password doesn't match";
-            click = false;
-          } else if (response.samePasswords) {
-            document.getElementById('passwordErr').innerText = "Old password and new password can't be the same";
-            click = false;
+        success: function (resp) {
+          console.log("OLD PASSWORD CHECK", resp.oldPasswordCheck);
+          if (!resp.oldPasswordCheck) {
+            document.getElementById('passwordErr').innerText = 'The old Password Is Wrong';
           } else {
-            click = true;
+
+            $.ajax({
+              type: 'POST',
+              url: '/updatePassword',
+              data: {
+                oldpassword: oldpassword,
+                newpassword: newpassword
+              },
+              success: function (resp) {
+                console.log("updatepass res", resp)
+                if (resp) {
+                  document.getElementById('passwordErr').style.fontSize = 'larger';
+                  document.getElementById('passwordErr').style.color = 'rgb(9 173 163)';
+                  document.getElementById('passwordErr').style.margin = '1.3rem 38.7rem';
+                  document.getElementById('passwordErr').innerText = 'Password Updated';
+
+
+
+                }
+              },
+              async: false // Make the request synchronous to return the value correctly
+            });
           }
-        }
-      })
-      return click;
+        },
+        async: false
+      });
     }
+
+    return click;
   }
 </script>
 
 <script>
-  
+
   function showAddressField() {
     document.getElementById('addAddressField').style.display = 'block';
     document.getElementById('addAddressBtn').style.display = 'none';
