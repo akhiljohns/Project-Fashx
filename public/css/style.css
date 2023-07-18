@@ -3968,6 +3968,7 @@ h6 {
 }
 
 .s_product_text {
+    position: relative;
     margin-left: -15px;
     margin-top: 65px
 }

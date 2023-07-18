@@ -374,13 +374,16 @@
 
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  minlength="6" maxlength="6"  required>
+                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  minlength="6" maxlength="6" pattern="[0-9]{10}" required title="Enter A Valid 6 DIGIT OTP (NUMERICAL DIGITS ONLY)" required>
                         </div>
                         {{#if inValidotp}}
                         <p id="invalidotp" style="color: red;">INVALID OTP</p>
                         {{/if}}
                         {{#if otptimeout}}
                         <p id="otptimeout" style="color: red;">OTP LIMIT RATE EXCEEDED. TRY AFTER SOME TIME</p>
+                        {{/if}}
+                        {{#if expired}}
+                        <p id="otptimeout" style="color: red;">OTP EXPIRED, REQUEST ANOTHER</p>
                         {{/if}}
                          <button type="submit" value="submit" style="cursor: pointer;" class="btn btn-primary"> Verify OTP   </button>
                       
@@ -448,18 +451,8 @@
         const otp = document.getElementById('otp').value.trim();
           if (otp == '') {
             numempty.innerHTML = "!! ENTER OTP !!";
-        }else{
-        $.ajax({
-            url: '/verifyotpsignup',
-            method: 'POST',
-            data: {
-               otp:otp,
-               phone:phone
-            },
-            success: function (response) {
-               console.log("CHECKUSER IN SIGNUP")
-                }
-            })
+        }else if(otp == '      '){
+ numempty.innerHTML = "!! ENTER OTP !!";
         }
         }
 </script>

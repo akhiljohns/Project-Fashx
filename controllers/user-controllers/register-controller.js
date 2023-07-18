@@ -11,6 +11,7 @@ let otpValid = false;
 let inValidotp = false;
 let otptimeout = false;
 let zeroes = false;
+let expired = false;
 module.exports = {
 
   getSignup: (req, res) => {
@@ -122,9 +123,14 @@ module.exports = {
     const phone = userData.phone;
 
     console.log(userData);
+    
 
     otpController.verifyOtp(userData).then((result) => {
-      if (result) {
+      if(result == expired){
+        expired = true;
+        phoneNumber = phone;
+        res.redirect('/signup')
+      }else if (result) {
         otpValid = true;
         phoneNumber = phone;
         res.redirect('/signup')

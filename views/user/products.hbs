@@ -1,102 +1,77 @@
-
-
-  <!--================PRODUCTS LISTING=================-->
-  <style>
-    /* CSS styles for the hover effect */
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .2);
-    }
-
-.search-bar {
-    display: flex;
-    align-items:center;
-    width: 192px;
-    margin: 13px 80vw;
-
-}
-
-#searchInput {
-  display: none;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #000000;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-#searchIcon {
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-  </style>
-
-
-
-  <section>
-<div class="search-bar">
-  <i class="fa fa-search" id="searchIcon"></i>
-  <input type="text" id="searchInput" placeholder="Search...">
-</div>
-    <div style="text-align: center; display: none;" id="xxx">
-			<h5>No Product Found</h5>
-		</div>
-    <div class="container">
-      <div class="row">
-        {{#if products}}
-        {{#each products}}
-        <div class="col-md-2">
-          <div class="card mx-auto mt-3">
-            <img class="mx-auto img-thumbnail" src="/images/{{this.image.[0]}}" width="auto" height="auto" />
-            <div class="card-body text-center">
-              <div class="cvp">
-                <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
-                <p class="card-text">₹{{this.regularPrice}}</p>
-                <a href="/single-product/{{this._id}}" class="btn btn-outline-primary " style="margin-bottom: 15px; width: 120px;">View Details</a><br />
-              </div>
+<section>
+  <div class="search-bar">
+    <div id="searchContainer">
+      <input type="text" id="searchInput" style="display: none;" placeholder="Search...">
+      <button type="button" class="btn btn-outline-success" style="display: none;" id="submitBtn">Submit</button>
+    </div>
+    <i class="fa fa-search" id="searchIcon"></i>
+  </div>
+  <div style="text-align: center; display: none;" id="xxx">
+    <h5>No Product Found</h5>
+  </div>
+  <div class="container justify-content-start"> <!-- Added the class "justify-content-start" -->
+    <div class="row">
+      {{#if products}}
+      {{#each products}}
+      <div class="col-md-2">
+        <div class="card mx-auto mt-3">
+          <img class="mx-auto img-thumbnail" src="/images/{{this.image.[0]}}" width="auto" height="auto" />
+          <div class="card-body text-center">
+            <div class="cvp">
+              <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
+              <p class="card-text">₹{{this.regularPrice}}</p>
+              <a href="/single-product/{{this._id}}" class="btn btn-outline-primary " style="margin-bottom: 15px; width: 120px;">View Details</a><br />
             </div>
           </div>
         </div>
-        {{/each}}
-        {{else}}
-               
-<div class="card-body cart">
-  <div class="col-sm-12 empty-cart-cls text-center">
-    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
-    <h3><strong>NO PRODUCTS AVAILABLE NOW, COME BACK LATER</strong></h3>
-
-    <a href="/" class="btn btn-success cart-btn-transform m-3" data-abc="true">GO HOME</a>
-  </div>
-</div>
-
-        {{/if}}
       </div>
+      {{/each}}
+      {{else}}
+      <div class="card-body cart">
+        <div class="col-sm-12 empty-cart-cls text-center">
+          <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+          <h3><strong>NO PRODUCTS AVAILABLE NOW, COME BACK LATER</strong></h3>
+          <a href="/" class="btn btn-success cart-btn-transform m-3" data-abc="true">GO HOME</a>
+        </div>
+      </div>
+      {{/if}}
     </div>
-  </section>
+  </div>
+</section>
 </body>
+
+<style>
+  .search-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+  }
+</style>
 
 <script>
   const searchInput = document.getElementById('searchInput');
-const searchIcon = document.getElementById('searchIcon');
+  const searchIcon = document.getElementById('searchIcon');
+  const submitBtn = document.getElementById('submitBtn');
+  const searchContainer = document.getElementById('searchContainer');
 
-searchIcon.addEventListener('click', function() {
-  searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
-});
-
-searchInput.addEventListener('input', function() {
-  const searchTerm = searchInput.value.trim().toLowerCase();
-  const cards = document.querySelectorAll('.card');
-
-  cards.forEach(function(card) {
-    const productName = card.querySelector('.card-title').textContent.toLowerCase();
-    
-    if (productName.includes(searchTerm)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
+  searchIcon.addEventListener('click', function() {
+    searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
+    submitBtn.style.display = submitBtn.style.display === 'none' ? 'inline-block' : 'none';
   });
-});
 
+  submitBtn.addEventListener('click', function() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(function(card) {
+      const productName = card.querySelector('.card-title').textContent.toLowerCase();
+
+      if (productName.includes(searchTerm)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
 </script>
