@@ -77,6 +77,17 @@ addProduct: async (productDetails, images) => {
       });
     });
   },
+  deleteImg: (imgId, productId) => {
+    return new Promise((resolve, reject) => {
+      product.updateOne({ _id: productId },{ $pull: { image: imgId } }).then((result) => {
+          resolve(result);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  
   
 //   showProductsUser: () => {
 //     return new Promise((resolve, reject) => {

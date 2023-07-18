@@ -3,7 +3,6 @@ Pending last week :
 Image zoom - to do last
 Image crop - to do last
 OTP expiry
-edit product multi image delete - to do last
 
 
 

@@ -7,6 +7,9 @@ const serviceid = process.env.TWILIO_SERVICE_ID;
 
 const countryCode = '+91';
 
+let sentTime
+let currentTime
+
 module.exports ={
 
     

@@ -68,24 +68,13 @@
               <label for="image1">Image</label>
 
 
-              <div class="d-flex flex-wrap">
-  {{#each product.image}}
-  <div class="image-container mb-3 mr-3">
-    <img src="/images/{{this}}" alt="IMG" class="mr-2" style="width: 100px; height: 100px;">
-    <button class="btn btn-outline-danger delete-btn" data-filename="{{this}}" style="height: 30px;">Delete</button>
-  </div>
-  {{/each}}
-</div>
-
+             
               <div class="custom-file">
                 <input type="file" class="custom-file-input mt-5" id="image" value="{{product.image}}" name="productImage" required multiple>
                 <label class="custom-file-label" for="image">Choose images</label>
               </div>
 
-              <div id="preview-images" class="uploaded-images" style="height: 90px;width: 90px;">
-                <!-- Selected images will be shown here -->
-              </div>
-            </div>
+            
 
             <!-- Rest of the form -->
 
@@ -93,9 +82,28 @@
           </div>
         </form>
       </section>
+              <input type="hidden" class="form-control" id="prodid" name="prodcategoryid" readonly value="{{product._id}}" required>
+
+       <div class="d-flex flex-wrap">
+  {{#each product.image}}
+  <div class="image-container mb-3 mr-3">
+    <img src="/images/{{this}}" alt="IMG" class="mr-2" style="width: 100px; height: 100px;">
+
+    <button class="btn btn-outline-danger delete-btn" data-filename="{{this}}" onclick="deleteimg('{{this}}')" value="{{this}}" style="height: 30px;">Delete</button>
+  </div>
+  {{/each}}
+</div>
+            <span id="imgmsg" style="color: red;"></span>
+
+  <div id="preview-images" class="uploaded-images" style="height: 90px;width: 90px;">
+            
+              </div>
+            </div>
+
     </main>
 
     <script>
+    
       // Handle file input change event
       const fileInput = document.getElementById('image');
       const previewImages = document.getElementById('preview-images');
@@ -126,7 +134,7 @@
       });
 
     // Handle delete button click event
-  const deleteButtons = document.querySelectorAll('.delete-btn');
+  {{!-- const deleteButtons = document.querySelectorAll('.delete-btn');
 
   deleteButtons.forEach(button => {
     button.addEventListener('click', function () {
@@ -147,7 +155,7 @@
           console.error(error);
         });
     });
-  });
+  }); --}}
 
 
       function select(categoryName, id) {
@@ -177,4 +185,48 @@
         }
       }
     </script>
-  </body>
+
+
+<script>
+  function deleteimg(imgId){
+    let productId = document.getElementById('prodid').value.trim();
+    {{!-- alert(imgId+" "+productId); --}}
+    $.ajax({
+            url: "/admin/deleteimg",
+            method: "POST",
+            data: { 
+              imgId:imgId, 
+            productId:productId
+             },
+            success: function (res) {
+               swal({
+            title: "",
+            text: "Image Is Deleted",
+            icon: "success",
+            buttons: {
+              ok: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+              }
+            }
+          }).then(function (value) {
+            if (value) {
+              window.location.reload();
+            }
+          });
+               
+
+               
+                }
+               
+                
+               
+            })
+        }
+
+
+</script>
+   

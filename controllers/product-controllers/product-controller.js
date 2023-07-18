@@ -43,4 +43,19 @@ postAddproduct: async (req, res) => {
       res.render("admin/products", { products, admin: true});
     });
   },
+
+  deleteImg: (req, res) => {
+    const imgId = req.body.imgId;
+    const productId = req.body.productId;
+console.log("<=--=>",imgId+" "+productId);
+productHelper.deleteImg(imgId,productId).then((response) => {
+  if (response){
+    res.status(200).json({response});
+
+  }
+}).catch((err) => {
+  console.log(err);
+})
+
+  }
 };

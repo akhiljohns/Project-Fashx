@@ -28,6 +28,7 @@ router.post("/signin", loginController.postSignin);
 router.get("/add-product", access.logStatus, productController.getAddproduct);
 
 router.post("/add-product",  upload.array('productImage'), productController.postAddproduct);
+router.post('/deleteimg', productController.deleteImg);
 
 router.get("/products", access.logStatus, productManage.showProducts );
 
