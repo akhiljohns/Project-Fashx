@@ -26,7 +26,8 @@ module.exports = {
       console.log("IN PHONE REGISTER PAGE");
       const invalid = zeroes, phone = phoneNumber;
       zeroes = false, phoneNumber = null;;
-      res.render("user/user-signup-phone", {layout: false,phoneNumber:phone,regUser,zeroes:invalid});
+      res.render("user/user-signup-phone", {layout: false,phoneNumber:phone,regUser,zeroes:invalid,expired});
+      expired = false;
     }
   },
 
@@ -126,10 +127,12 @@ module.exports = {
     
 
     otpController.verifyOtp(userData).then((result) => {
-      if(result == expired){
+
+      if(result == 'expired'){
         expired = true;
         phoneNumber = phone;
         res.redirect('/signup')
+
       }else if (result) {
         otpValid = true;
         phoneNumber = phone;

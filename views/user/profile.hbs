@@ -292,7 +292,7 @@
                       <label for="phonenum" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="phone" type="text" class="form-control" id="phonenum" minlength="10" maxlength="10"
-                          pattern="[0-9]{10}" required>
+                          pattern="[0-9]{10}" title="Enter A Valid Number(Digits Only)" required>
                       </div>
                     </div>
 
@@ -327,13 +327,15 @@
                           title="Please Enter Only Alphabetic Characters" minlength="2" required></input>
                       </div>
                     </div>
+<div class="row mb-3">
+  <label for="pincode" class="col-md-4 col-lg-3 col-form-label">Pincode</label>
+  <div class="col-md-8 col-lg-9">
+    <input name="pincode" type="text" class="form-control" id="pincode" pattern="[0-9]*"
+      minlength="6" title="Please Enter Only Numeric Characters" required>
+    <!-- Update the pattern attribute to pattern="[0-9]*" -->
+  </div>
 
-                    <div class="row mb-3">
-                      <label for="pincode" class="col-md-4 col-lg-3 col-form-label">Pincode</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="pincode" type="text" class="form-control" id="pincode" pattern="[0-9/]*"
-                          minlength="6" title="Please Enter Only Numeric Characters" required>
-                      </div>
+
 
 
                       <div class="row mb-3">
@@ -481,11 +483,11 @@
 
 </script>
 
-<script>
+{{!-- <script>
 
 
 
-  function validate() {
+  function () {
     let name, phone, state, country, houseName, area;
 
     fname = document.getElementById("fname").value.trim();
@@ -503,11 +505,14 @@
       document.getElementById('addressErr').innerText = 'All Fields Are Mandatory';
       return false;
 
-    } else {
+    } elseif (pincode === "" || !/^[0-9]+$/.test(pincode)) {
+       document.getElementById('addressErr').innerText = "Please enter a valid pincode (numeric characters only)";
+    return false
+    }else {
       return true;
     }
   }
-</script>
+</script> --}}
 <script>
    function profedit() {
     var name = document.getElementById("name").value.trim();
@@ -521,6 +526,122 @@
     } else if ({{user.number}} !== phone) {
       console.log('hi phone teher')
       return false;
+    }
+  }
+</script>
+<script>
+  function validate() {
+
+    fname = document.getElementById("fname").value.trim();
+    lname = document.getElementById("lname").value.trim();
+    phone = document.getElementById("phone").value.trim();
+    houseName = document.getElementById("houseName").value.trim();
+    landmark = document.getElementById("landmark").value.trim();
+    city = document.getElementById("city").value.trim();
+    district = document.getElementById("district").value.trim();
+    pincode = document.getElementById("pincode").value.trim();
+    state = document.getElementById("state").value.trim();
+    country = document.getElementById("country").value.trim();
+
+    if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" || landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
+      document.getElementById('addErr').innerHTML = 'All fields Are Required'
+      return false;
+    } else if (
+      fname === "" || !/^[A-Za-z]+$/.test(fname)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid First Name"
+
+      return false;
+       }  else if (
+      lname === "" || !/^[A-Za-z]+$/.test(lname)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Last Name"
+
+      return false;
+
+       }  else if (
+      city === "" || !/^[A-Za-z]+$/.test(city)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid City Name"
+
+      return false;
+
+       }  else if (
+      district === "" || !/^[A-Za-z]+$/.test(district)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid District Name"
+
+      return false;
+
+       }   else if (
+      state === "" || !/^[A-Za-z]+$/.test(state)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid State Name"
+
+      return false;
+
+       }   else if (
+      country === "" || !/^[A-Za-z]+$/.test(country)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Country Name"
+
+      return false;
+
+       } else if (pincode === "" || !/^[0-9]+$/.test(pincode)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Pincode";
+      return false;
+        } else if (phone === "" || !/^[0-9]+$/.test(phone)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number";
+      return false;
+        } else if (/^(\d)\1+$/.test(phone)) {
+  document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number (No Repeating Digits)";
+  return false;
+} else {
+      let address = {
+        fname,
+        lname,
+        phone,
+        houseName,
+        landmark,
+        city,
+        district,
+        pincode,
+        state,
+        country
+      }
+
+      let paymentMethod;
+      let radioBtn = document.getElementById('f-option6');
+      paymentMethod = radioBtn.value;
+
+
+
+
+      $.ajax({
+        url: '/payment',
+        method: 'POST',
+        data: JSON.stringify({
+          address: address,
+          paymentMethod: paymentMethod
+        }),
+        contentType: 'application/json',
+        success: function (response) {
+          if (response.codSuccess) {
+            swal({
+              title: "Order Confirmed",
+              text: "Your Order Has Been Placed Successfully.",
+              icon: "success",
+              buttons: {
+                ok: {
+                  text: "OK",
+                  value: true,
+                  visible: true,
+                  className: "",
+                  closeModal: true
+                }
+              }
+            }).then(function (value) {
+              if (value) {
+                window.location.href = '/confirm';
+              }
+            });
+          }
+        }
+      });
     }
   }
 </script>

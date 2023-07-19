@@ -4,6 +4,8 @@ Image zoom - to do last
 Image crop - to do last
 OTP expiry
 
+prof address
+phone title
 
 
 

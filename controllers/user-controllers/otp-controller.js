@@ -9,6 +9,7 @@ const countryCode = '+91';
 
 let sentTime;
 let currentTime;
+let timelimit = '300';
 
 module.exports = {
   sendOtp: (userData) => {
@@ -20,7 +21,7 @@ module.exports = {
           console.log("SEND OTP STATUS:", verification.status);
           console.log("SEND OTP DATA:", countryCode + userData.phone);
           if (verification.status === 'pending') {
-            sentTime = Date.now();
+            sentTime = Date.now() / 1000;
             console.log("OTP SENT TIME:", sentTime);
           }
           resolve(verification.status);
@@ -39,10 +40,13 @@ module.exports = {
         .create({ to: countryCode + userData.phone, code: userData.otp })
         .then((verification_check) => {
           if (verification_check.status === 'approved') {
-            currentTime = Date.now();
-            const timeDiffInSeconds = (currentTime - sentTime) / 1000;
-            if (timeDiffInSeconds > 120) {
-              let otpExpired = expired; // Assuming there is a variable named 'expiredotp' to check for expiration
+            currentTime = Date.now() / 1000;
+            const timeDiffInSeconds = (currentTime - sentTime);
+            console.log("-==-=-=-=-=",timeDiffInSeconds)
+            if (timeDiffInSeconds > timelimit) {
+                console.log('otp expired')
+                
+              let otpExpired = "expired";
               resolve(otpExpired);
             } else {
               console.log(userData.otp);

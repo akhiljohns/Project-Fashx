@@ -35,7 +35,7 @@
 
             <div class="col-md-12 form-group  ">
               <label for="phone">Phone Number</label>
-              <input type="text" class="form-control" id="phone" name="phone" />
+              <input type="text" class="form-control" id="phone" name="phone" minlength="10" maxlength="10" />
               <span class="placeholder" data-placeholder="Phone Number"></span>
             </div>
 
@@ -63,7 +63,7 @@
 
             <div class="col-md-12 form-group  ">
               <label for="pincode">Pincode</label>
-              <input type="text" class="form-control" id="pincode" name="pincode" />
+              <input type="text" class="form-control" id="pincode" minlength="6" maxlength="6" name="pincode" />
               <span class="placeholder" data-placeholder="Postal Code"></span>
             </div>
             <div class="col-md-12 form-group  ">
@@ -110,7 +110,7 @@
 
             <div class="payment_item active">
               <div class="radion_btn">
-                <input type="radio" id="f-option6" value="cod" name="selector" />
+                <input type="radio" id="f-option6" value="cod" checked name="selector" />
                 <label for="f-option6">Cash On Delivery</label>
 
                 <div class="check"></div>
@@ -118,8 +118,8 @@
 
             </div>
 
-            <a class="main_btn" onclick="payment()">Place Order</a>
-                      <span id="addErr" style="color: #ff0000;margin: 15.3rem 8.7rem;font-size: x-large;"></span>
+            <a class="main_btn" onclick="return payment()">Place Order</a>
+            <span id="addErr" style="color: #ff0000;margin: 15.3rem -0.3remrem;font-size: medium;"></span>
 
           </div>
         </div>
@@ -132,7 +132,122 @@
 
 <!--================End Checkout Area =================-->
 
+<script>
+  function payment() {
 
+    fname = document.getElementById("fname").value.trim();
+    lname = document.getElementById("lname").value.trim();
+    phone = document.getElementById("phone").value.trim();
+    houseName = document.getElementById("houseName").value.trim();
+    landmark = document.getElementById("landmark").value.trim();
+    city = document.getElementById("city").value.trim();
+    district = document.getElementById("district").value.trim();
+    pincode = document.getElementById("pincode").value.trim();
+    state = document.getElementById("state").value.trim();
+    country = document.getElementById("country").value.trim();
+
+    if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" || landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
+      document.getElementById('addErr').innerHTML = 'All fields Are Required'
+      return false;
+    } else if (
+      fname === "" || !/^[A-Za-z]+$/.test(fname)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid First Name"
+
+      return false;
+       }  else if (
+      lname === "" || !/^[A-Za-z]+$/.test(lname)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Last Name"
+
+      return false;
+
+       }  else if (
+      city === "" || !/^[A-Za-z]+$/.test(city)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid City Name"
+
+      return false;
+
+       }  else if (
+      district === "" || !/^[A-Za-z]+$/.test(district)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid District Name"
+
+      return false;
+
+       }   else if (
+      state === "" || !/^[A-Za-z]+$/.test(state)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid State Name"
+
+      return false;
+
+       }   else if (
+      country === "" || !/^[A-Za-z]+$/.test(country)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Country Name"
+
+      return false;
+
+       } else if (pincode === "" || !/^[0-9]+$/.test(pincode)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Pincode";
+      return false;
+        } else if (phone === "" || !/^[0-9]+$/.test(phone)) {
+       document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number";
+      return false;
+        } else if (/^(\d)\1+$/.test(phone)) {
+  document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number (No Repeating Digits)";
+  return false;
+} else {
+      let address = {
+        fname,
+        lname,
+        phone,
+        houseName,
+        landmark,
+        city,
+        district,
+        pincode,
+        state,
+        country
+      }
+
+      let paymentMethod;
+      let radioBtn = document.getElementById('f-option6');
+      paymentMethod = radioBtn.value;
+
+
+
+
+      $.ajax({
+        url: '/payment',
+        method: 'POST',
+        data: JSON.stringify({
+          address: address,
+          paymentMethod: paymentMethod
+        }),
+        contentType: 'application/json',
+        success: function (response) {
+          if (response.codSuccess) {
+            swal({
+              title: "Order Confirmed",
+              text: "Your Order Has Been Placed Successfully.",
+              icon: "success",
+              buttons: {
+                ok: {
+                  text: "OK",
+                  value: true,
+                  visible: true,
+                  className: "",
+                  closeModal: true
+                }
+              }
+            }).then(function (value) {
+              if (value) {
+                window.location.href = '/confirm';
+              }
+            });
+          }
+        }
+      });
+    }
+  }
+</script>
 
 <script>
   const cartTotal = +document.getElementById('carttotal').innerText;
@@ -170,79 +285,4 @@
   }
 </script>
 
-<!--===============================================================================================-->
-
-<script>
-  function payment() {
-   
-         fname = document.getElementById("fname").value.trim();
-    lname = document.getElementById("lname").value.trim();
-    phone = document.getElementById("phone").value.trim();
-    houseName = document.getElementById("houseName").value.trim();
-    landmark = document.getElementById("landmark").value.trim();
-    city = document.getElementById("city").value.trim();
-    district = document.getElementById("district").value.trim();
-    pincode = document.getElementById("pincode").value.trim();
-    state = document.getElementById("state").value.trim();
-    country = document.getElementById("country").value.trim();
-
-         if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" ||landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
-
-            document.getElementById('addErr').innerHTML = 'All fields Are Required'
-            return;
-        }
-
-        let address = {
-            fname,
-            lname,
-            phone,
-            houseName,
-            landmark,
-            city,
-            district,
-            pincode,
-            state,
-            country
-        }
-
-        let paymentMethod ;
-        let radioBtn = document.getElementById('f-option6');
-                paymentMethod = radioBtn.value;
-
-    
-
-
-    $.ajax({
-      url: '/payment',
-      method: 'POST',
-      data: JSON.stringify({
-        address: address,
-        paymentMethod: paymentMethod
-      }),
-      contentType: 'application/json',
-      success: function (response) {
-        if (response.codSuccess) {
-          swal({
-            title: "Order Confirmed",
-            text: "Your Order Has Been Placed Successfully.",
-            icon: "success",
-            buttons: {
-              ok: {
-                text: "OK",
-                value: true,
-                visible: true,
-                className: "",
-                closeModal: true
-              }
-            }
-          }).then(function (value) {
-            if (value) {
-              window.location.href = '/confirm';
-            }
-          });
-        }
-      }
-    });
-  }
-</script>
 <!--===============================================================================================-->

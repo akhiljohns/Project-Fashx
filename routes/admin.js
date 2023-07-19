@@ -82,6 +82,10 @@ router.get("/userdetails",  access.logStatus, loginController.getUserDetails);
 // ORDERS 
 router.get("/orders", access.logStatus,orderController.getOrders );
 router.get('/orders/details', access.logStatus, orderController.getOrderdetails);
+router.post('/cancelorder', access.logStatus, orderController.CancelOrder)
+router.get('/deliverorder/:order_id/:user_id', access.logStatus, orderController.deliverOrder)
+router.get('/returnorder/:order_id/:user_id', access.logStatus, orderController.returnOrder)
+
 
 
 

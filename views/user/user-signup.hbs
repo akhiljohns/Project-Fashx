@@ -369,7 +369,7 @@
                     <div class="form sign-up">
                         <div class="input-group">
                             <i class='bx bxs-user'></i>
-                            <input type="text" placeholder="Username" name="username" id="username" pattern="[A-Za-z\s]+" minlength="4" maxlength="20" required>
+                            <input type="text" placeholder="Name" name="username" id="username" pattern="[A-Za-z\s]+" minlength="4" maxlength="20" required>
                         </div>
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
@@ -528,11 +528,14 @@
         let password2 = document.getElementById('password2').value.trim();
         let errmsg = document.getElementById('errmsg');
         
+         const alphabetsPattern = /^[A-Za-z]+$/;
 
         if (email == '' || number == '' || username == "" || password == '' || password2 == '') {
             errmsg.innerHTML = "ALL FIELDS ARE REQUIRED";
         }else if (password !== password2) {
             errmsg.innerHTML = "Passwords Do Not Match"
+        } else if (!alphabetsPattern.test(username)){
+            errmsg.innerHTML = "Enter A Proper Name (Only Alphabets Are Allowed)"
         } else {
             let flag ;
             await $.ajax({

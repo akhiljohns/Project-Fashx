@@ -23,23 +23,23 @@
                                 <div class="form-group">
                                     <h6>1. General Info</h6>
                                     <label class="form-label">Product Title</label>
-                                    <input type="text" placeholder="Type Here" class="form-control" minlength="5"
+                                    <input type="text" placeholder="Type Here" class="form-control" id="pname" minlength="5"
                                         maxlength="50" name="prodtitle" pattern="[A-Za-z\s]+" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
-                                    <textarea placeholder="Type Here" class="form-control" rows="1" minlength="10"
+                                    <textarea placeholder="Type Here" class="form-control" id="pdesc" rows="1" minlength="10"
                                         pattern="[A-Za-z\s]+" name="proddescr" required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Brand Name</label>
-                                    <input type="text" placeholder="Type Here" class="form-control" minlength="5"
+                                    <input type="text" placeholder="Type Here" id="pbrand" class="form-control" minlength="5"
                                         pattern="[A-Za-z\s]+" name="prodbrand" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Stock</label>
                                     <input id="stock" type="text" required placeholder="0" class="form-control numinp"
-                                        name="prodstock" pattern="[0-9]*" title="Stock Count Should Not Be Less Than 1">
+                                        name="prodstock" pattern="[0-9]*" title="Stock Count Should Not Be Less Than 1 (Numeric Digits Only)">
                                 </div>
                             </div>
                         </div>
@@ -51,13 +51,13 @@
                                     <h6>2. Pricing</h6>
                                     <label class="form-label">Regular Price</label>
                                     <input id="price" type="text" placeholder="₹" class="form-control numinp"
-                                        pattern="[0-9]*" title="Price Should Not Be Less Than 1Rs" name="prodrprice"
+                                        pattern="[0-9]*" title="Price Should Not Be Less Than 1Rs (Numeric Digits Only)" name="prodrprice"
                                         required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Discount Percentage</label>
                                     <input id="discount" type="text" placeholder="%" class="form-control numinp"
-                                        title="Discount Percentage Should Only Contain Number & Not Be Less Than 1"
+                                        title="Discount Percentage Should Not Be Less Than 1 (Numeric Digits Only)"
                                         pattern="[0-9]*" name="proddiscount" required>
                                 </div>
                             </div>
@@ -148,30 +148,43 @@
         document.getElementById("categoryId").value = selectedCategory;
     }
 
-    function validate() {
+   function validate() {
+  let pname = document.getElementById('pname').value.trim();
+  let pdesc = document.getElementById('pdesc').value.trim();
+  let pbrand = document.getElementById('pbrand').value.trim();
+  let stock = document.getElementById('stock').value.trim();
+  let price = document.getElementById('price').value.trim();
+  let discount = document.getElementById('discount').value.trim();
+  let errmsg = document.getElementById('errmsg');
 
-        let stock = document.getElementById('stock').value.trim();
-        let price = document.getElementById('price').value.trim();
-        let discount = document.getElementById('discount').value.trim();
-        let errmsg = document.getElementById('errmsg');
+const regex = /^[A-Za-z\s]+$/;
 
+  if (pname === '' || !regex.test(pname)) {
+    errmsg.innerHTML = "Enter a Valid Product Name";
+    return false;
+  } else if (pdesc === '' || !regex.test(pdesc)) {
+    errmsg.innerHTML = "Enter a Valid Product Description";
+    return false;
+  } else if (pbrand === '' || !regex.test(pbrand)) {
+    errmsg.innerHTML = "Enter a Valid Brand Name";
+    return false;
+  } else if (stock <= 0) {
+    errmsg.innerHTML = "Stock Quantity Should Be Greater Than 0";
+    return false;
+  } else if (price <= 0) {
+    errmsg.innerHTML = "Price Should Be Greater Than 0";
+    return false;
+  } else if (discount <= 0) {
+    errmsg.innerHTML = "Discount Percentage Should Be Greater Than 0";
+    return false;
+  } else if (discount > 100) {
+    errmsg.innerHTML = "Discount Percentage Should Be Between 0 & 100";
+    return false;
+  } else {
+    return true;
+  }
+}
 
-        if (stock <= 0) {
-            errmsg.innerHTML = "STOCK COUNT SHOULD BE GREATER THAN 0";
-            return false;
-        } else if (price <= 0) {
-            errmsg.innerHTML = "PRICE SHOULD BE GREATER THAN 0";
-            return false;
-
-        } else if (discount <= 0) {
-            errmsg.innerHTML = "DISCOUNT PERCENTAGE SHOULD BE GREATER THAN 0";
-            return false;
-
-        } else {
-            return true;
-        }
-
-    }
 
 
 

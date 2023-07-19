@@ -28,11 +28,26 @@
                         <tr>
                             <td id="date">{{this.order.date}}</td>
                             <td><a style="color: black;">{{this.order.orderNo}}</a></td>
+                            
                         
                             <td><b>{{this.order.address.fname}} {{this.order.address.lname}}</b></td>
                         
                             <td>{{this.order.paymentMethod}}</td>
-                            <td>{{this.order.status}}</td>
+                         
+                            
+                           
+                            {{#if (eq this.order.status 'Cancelled') }}
+                            <td style="color:red">{{order.status}}</td>
+                            {{else if (eq this.order.status 'Pending')}}
+                            <td style="color:rgb(250, 196, 35)">{{order.status}}</td>
+                            {{else if (eq this.order.status 'Returned')}}
+                            <td style="color:rgb(0, 98, 255)">{{order.status}}</td>
+                              {{else if (eq this.order.status 'Delivered')}}
+                                <td style="color:rgb(204, 0, 255)">{{order.status}}</td>
+                            {{else}}
+                            <td style="color:green">{{this.order.status}}</td>
+                            {{/if}}
+                 
                         
                         
                             <td class="text-end">

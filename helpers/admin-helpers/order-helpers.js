@@ -148,10 +148,23 @@ incrementStock: async (productId,quantity)=>{
             console.log('Error while canceling an Order:', err);
         }
     },
-    
-        returnOrder: (orderId, userId) => {
+   deliverOrder: (orderId, userId) => {
         try{
-            return new Promise((resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
+                const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
+                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Delivered" } }
+                ).then((response)=>{
+                    resolve(response);
+                })
+            })
+        } catch(err){
+            console.log('Error while canceling an Order:', err);
+        }
+    },
+   returnOrder: (orderId, userId) => {
+        try{
+            return new Promise(async (resolve, reject) => {
+                const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
                 orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Returned" } }
                 ).then((response)=>{
                     resolve(response);
@@ -161,6 +174,8 @@ incrementStock: async (productId,quantity)=>{
             console.log('Error while canceling an Order:', err);
         }
     },
+    
+   
 
 
 

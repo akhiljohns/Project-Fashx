@@ -47,17 +47,18 @@ postEditProduct: (req, res, next) => {
     })
 },
 
-    softDeleteProduct: (req, res, next) => {
-        const productId = req.params.id;
-      
-        product.findByIdAndUpdate(productId, { deleted: true }).then(() => {
-            console.log('Product deleted');
-          res.redirect('/admin/products');
-        }).catch((err) => {
-          console.log('Error while soft deleting product: ' + err);
-          res.redirect('/admin/products');
-        });
-      },
+softDeleteProduct: (req, res, next) => {
+    const productId = req.params.id;
+    
+    product.findByIdAndDelete(productId).then(() => {
+      console.log('Product deleted');
+      res.redirect('/admin/products');
+    }).catch((err) => {
+      console.log('Error while deleting product: ' + err);
+      res.redirect('/admin/products');
+    });
+  },
+  
       hideunhideproduct: (req, res) => {
         try {
             let id = req.params.id;

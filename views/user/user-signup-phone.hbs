@@ -384,9 +384,17 @@
                                     {{#if regUser}}
                                     <span id="custexst" style="color: red;">!! Phone Number Already Registered !!</span>
                                     {{/if}}
-                                
-                                    <button type="submit" onclick="validate()" value="submit" style="cursor: pointer;" class="btn btn-primary">SEND
+                                    {{#if expired}}
+                        <p id="otptimeout" style="color: red;">OTP EXPIRED, REQUEST ANOTHER</p>
+                        {{/if}}
+                                 {{#if expired}}
+                                    
+                                           <button type="submit" onclick="validate()" value="submit" style="cursor: pointer;" class="btn btn-primary">RESEND
                                         OTP</button>
+                                        {{else}}
+                                        <button type="submit" onclick="validate()" value="submit" style="cursor: pointer;" class="btn btn-primary">SEND
+                                        OTP</button>
+                                        {{/if}}
                                 </form>
                                 <p>
                                     <span>

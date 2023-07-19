@@ -374,7 +374,7 @@
 
                         <div class="input-group">
                             <i class='bx bx-mail-send'></i>
-                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'"  minlength="6" maxlength="6" pattern="[0-9]{10}" required title="Enter A Valid 6 DIGIT OTP (NUMERICAL DIGITS ONLY)" required>
+                            <input type="text" placeholder="Enter OTP" name="otp" id="otp"  onfocus="this.placeholder =''" onblur="this.placeholder ='Enter OTP'" minlength="6"  maxlength="6" pattern="[0-9]{6}" required title="Enter A Valid 6 DIGIT OTP (NUMERICAL DIGITS ONLY)" required>
                         </div>
                         {{#if inValidotp}}
                         <p id="invalidotp" style="color: red;">INVALID OTP</p>
@@ -382,9 +382,8 @@
                         {{#if otptimeout}}
                         <p id="otptimeout" style="color: red;">OTP LIMIT RATE EXCEEDED. TRY AFTER SOME TIME</p>
                         {{/if}}
-                        {{#if expired}}
-                        <p id="otptimeout" style="color: red;">OTP EXPIRED, REQUEST ANOTHER</p>
-                        {{/if}}
+                        <p id="invalidotp" style="color: red;">OTP IS Only Valid For 5 Mins</p>
+                        
                          <button type="submit" value="submit" style="cursor: pointer;" class="btn btn-primary"> Verify OTP   </button>
                       
 

@@ -75,6 +75,7 @@ deleteUser: async (id) => {
         console.log('Error while finding block status: '+ err);
     }
 },
+
 getAddress: (userId) => {
   try{
       return new Promise((resolve, reject) => {

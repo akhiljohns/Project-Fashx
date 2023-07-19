@@ -26,7 +26,7 @@
                                         name="name" pattern="[A-Za-z\s]+" title="Category Name Should Only Contain Alphabetical Letters"/>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create category</button>
+                                    <button onclick="return validate()" class="btn btn-primary">Create category</button>
                                 </div>
                             </form>
                             {{#if catext}}
@@ -36,6 +36,9 @@
                             </b>
                         </p>
                         {{/if}}
+                        <p>
+                            <b id="catemsg" style="color:rgb(255, 0, 0); font-size:100%;"></b>
+                        </p>
                         </div>
                         <!-- ADD CATEGORY FORM END-->
 
@@ -92,7 +95,24 @@
         }
     </script>
 
+<script>
+    
+      function validate() {
+  let category = document.getElementById('product_name').value.trim();
 
+  let catemsg = document.getElementById('catemsg');
+
+const regex = /^[A-Za-z]+$/;
+
+  if (category === '' || !regex.test(category)) {
+    catemsg.innerHTML = "Enter a Valid Category Name (Only Alphabets & No Space In Between)";
+    return false;
+  } else {
+    return true;
+  }
+}
+
+</script>
 
 
 
