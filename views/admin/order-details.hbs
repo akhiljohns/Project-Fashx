@@ -273,7 +273,7 @@
                     style="width: 10vw; height: 5vh;">CANCEL ORDER</button>
             </div> --}}
             {{#if (eq order.status "Cancelled")}}
-            {{else if (eq order.status "pending")}}
+            {{else if (eq order.status "Pending")}}
 
             </div>
             <button onclick="cancelOrder('{{order._id}}','{{order.user._id}}')" class="btn btn-outline-danger mt-5"

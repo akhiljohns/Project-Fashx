@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 let phnumber = null;
 let passupdate = false;
 
+
 module.exports = {
    
     getProfile: async (req, res, next) => {
@@ -80,8 +81,12 @@ module.exports = {
         
         otpController.verifyOtp(userData).then((result) => {
             
-          result = true
-            if(result){
+            if(result == 'expired'){
+            let otpexpired = true;
+            
+                res.render('user/otpform',{layout:false,phoneNumber,otpexpired})
+        
+              }else if (result){
                 res.redirect('/resetpassword');
             } else {
                 res.render('user/otpform',{layout:false,resmsg3:true,phoneNumber,otp})

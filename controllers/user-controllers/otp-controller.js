@@ -9,7 +9,7 @@ const countryCode = '+91';
 
 let sentTime;
 let currentTime;
-let timelimit = '300';
+let timelimit = '60';
 
 module.exports = {
   sendOtp: (userData) => {

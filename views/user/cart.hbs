@@ -101,7 +101,7 @@
               <td>
                 <div class="product_count">
                   <input type="text" name="qty" id="{{this._id}}" maxlength="12" value="{{this.quantity}}" title="Quantity:"
-                    class="input-text qty" />
+                    class="input-text qty" readonly/>
 
                   <button onclick="add_quantity('{{this._id}}','{{this.product._id}}')"
                      class="increase items-count" type="button">
@@ -153,6 +153,7 @@
             </tr>
 
           </tbody>
+            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Maximum Product Quantity Reached. Can't Add More Quantity</p>
         </table>
         {{/if}}
       </div>
@@ -268,7 +269,9 @@
             if (quantity < stock) {
                 addQuantity(itemId, productId);
                 quantity++;
-            }
+            }   else {
+      showQuantityMsg(); // Show the message when quantity reaches maxQuantity
+    }
             document.getElementById(itemId).value = quantity;
         })
     }
@@ -278,10 +281,18 @@
         if (quantity > 1) {
             minusQuantity(itemId, productId);
             quantity--;
+      hideQuantityMsg(); // Hide the message when quantity is greater than 1
+
         }
         document.getElementById(itemId).value = quantity;
     }
+ function showQuantityMsg() {
+    document.getElementById('quantitymsg').style.display = "block";
+  }
 
+  function hideQuantityMsg() {
+    document.getElementById('quantitymsg').style.display = "none";
+  }
 
 
      function addQuantity(itemId, productId) {

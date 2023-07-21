@@ -1,3 +1,30 @@
+FOR 13TH week
+
+Updations:-
+
+display orders in list format
+product search & catergory wise filter
+confinnation popup before blocking user
+
+
+next week
+online payment
+product return with wallet
+coupon management
+banner management
+admin dashboard
+
+Task:7.5
+Coding: 7.5
+
+order no 
+amount 
+payment
+status
+view details
+
+--------------------------------------------------------------------
+
 
 Pending last week :
 Image zoom - to do last

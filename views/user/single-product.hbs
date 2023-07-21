@@ -100,9 +100,6 @@
               <i class="lnr lnr-chevron-down"></i>
             </button>
           </div> --}}
-          <div id="quantitymsg" style="display: none;color: red;font-size: larger;" class="md-3">
-            <p>Only {{product.stock}} Products Left. Cant Add More Quantity</p>
-          </div>
           <div class="product_count">
             <label for="qty">Quantity:</label>
             <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
@@ -114,6 +111,9 @@
               <i class="lnr lnr-chevron-down"></i>
             </button>
           </div>
+      
+            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Products Available. Cant Add More Quantity</p>
+        
                        <div class="magnified-img"></div>
 
           {{#if user}}
@@ -226,18 +226,17 @@
 
 <!--===============================================================================================-->
 
-
 <script>
   function increaseQuantity() {
     var quantityInput = document.getElementById('quantity');
     var currentQuantity = parseInt(quantityInput.value);
     var maxQuantity = parseInt("{{product.stock}}");
-    
 
     if (currentQuantity < maxQuantity) {
       quantityInput.value = currentQuantity + 1;
-    }else{
-      document.getElementById('quantitymsg').style.display = block;
+      hideQuantityMsg(); // Hide the message when quantity is less than maxQuantity
+    } else {
+      showQuantityMsg(); // Show the message when quantity reaches maxQuantity
     }
   }
 
@@ -247,10 +246,18 @@
 
     if (currentQuantity > 1) {
       quantityInput.value = currentQuantity - 1;
+      hideQuantityMsg(); // Hide the message when quantity is greater than 1
     }
   }
-</script>
 
+  function showQuantityMsg() {
+    document.getElementById('quantitymsg').style.display = "block";
+  }
+
+  function hideQuantityMsg() {
+    document.getElementById('quantitymsg').style.display = "none";
+  }
+</script>
   <script>
         const lens= document.querySelector('.magnifier-lens');
         const product_img= document.querySelector('.product__details__pic__item img');

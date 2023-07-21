@@ -81,6 +81,13 @@
   </p>
         </div>
         {{/if}}
+        {{#if otpexpired}}
+        <div>
+        <p id="loginerror" style="color:rgb(255, 0, 0); font-size:90%;">
+       OTP EXPIRED , REQUEST ANOTHER
+  </p>
+        </div>
+        {{/if}}
         {{#if resmsg2}}
         <div>
          <p id="loginerror" style="color:rgb(0, 110, 255); font-size:90%;">
@@ -92,6 +99,10 @@
         <button>RESEND OTP</button>
         {{else}}
         <button>Send OTP</button>
+        {{#if otpexpired}}
+        <button>RESEND OTP</button>
+        {{/if}}
+
 {{/if}}
 
         {{!-- OTP VALUE FORM --}}

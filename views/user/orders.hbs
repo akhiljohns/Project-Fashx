@@ -103,22 +103,72 @@
   </div>
 </div>
     {{else}}
-    {{#each orders}}
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-header">
-            Order No: {{this.orderNo}}
-          </div>
-          <p class="card-text"><span><h6 class="toolEll">{{#with (lookup this.items 0)}} {{product.productName}} {{/with}}</h6></span> & {{ this.no }} more items</p>
-          <p class="card-text">Amount: ₹ <span>{{this.totalAmount}}</span></p>
-          <p class="card-text">Payment: <span class="color-green">{{this.paymentMethod}}</span></p>
-          <p class="card-text">Status: <span class="color-orange">{{this.status}}</span></p>
-          <a href="/order/details?orderId={{this._id}}" class="btn btn-primary">See details</a>
-        </div>
+<section class="cart_area">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Order ID</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Payment</th>
+              <th scope="col">Status</th>
+              <th scope="col">Details</th>
+            </tr>
+          </thead>
+        <tbody>
+            {{#each orders}}
+            <tr>
+              <td>
+                  <div class="media-body">
+                    <p> <span id="orderno" style="font-size: x-large;font-weight: bolder;">{{this.orderNo}}</span></p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5 style="font-size: x-large;font-weight: bolder;">₹{{this.totalAmount}}</h5>
+              </td>
+             <td>
+  <h5 style="font-size: x-large; font-weight: bolder;">{{this.paymentMethod}}</h5>
+</td>
+
+             
+            
+                {{#if (eq this.status 'Cancelled') }}
+                            <td style="color:red">{{this.status}}</td>
+                            {{else if (eq this.status 'Pending')}}
+                            <td style="color:rgb(250, 196, 35)">{{this.status}}</td>
+                            {{else if (eq this.status 'Returned')}}
+                            <td style="color:rgb(0, 98, 255)">{{this.status}}</td>
+                              {{else if (eq this.status 'Delivered')}}
+                                <td style="color:rgb(204, 0, 255)">{{this.status}}</td>
+                            {{else}}
+                            <td style="color:green">{{this.status}}</td>
+                            {{/if}}
+                
+            
+              <td>
+                <a  href="/order/details?orderId={{this._id}}" class="btn btn-outline-success">See details</a>
+
+              </td>
+            </tr>
+
+            {{/each}}
+           
+          
+          </tbody>
+          
+        </table>
+      
       </div>
     </div>
-    {{/each}}
+  </div>
+
+
+
+</section>
     {{/if}}
   </div>
   <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm" style="text-align: center; justify-content: center;">
