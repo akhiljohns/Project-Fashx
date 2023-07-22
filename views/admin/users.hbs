@@ -11,9 +11,9 @@
             <div class="card mb-4">
                 <header class="card-header">
                     <div class="row gx-3">
-                  
 
-                        
+
+
                     </div>
                 </header> <!-- card-header end// -->
                 <div class="card-body">
@@ -27,7 +27,7 @@
                                     <th>Number</th>
                                     <th>Block</th>
                                     <th>Delete</th>
-                                   
+
                                     {{!-- <th style="padding-left: 90px;">Block</th> --}}
 
                                 </tr>
@@ -43,13 +43,18 @@
 
                                     <td class="text-end">
                                         {{#if this.blocked}}
-                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-success">UNBLOCK</a>
+                                        <a  href="#" onclick="return unblock(event, '/admin/users/block/{{this._id}}');"
+                                            class="btn btn-outline-success">UNBLOCK</a>
                                         {{else}}
-                                        <a href="/admin/users/block/{{this._id}}" class="btn btn-outline-danger">BLOCK</a>
+                                        <a href="#" onclick="return block(event, '/admin/users/block/{{this._id}}');"
+                                            class="btn btn-outline-danger">BLOCK</a>
                                         {{/if}}
                                     </td>
-                                    <td><a href="/admin/users/delete/{{this._id}}" class="btn btn-outline-danger">DELETE</a></td>
-                                    </tr>
+                                    <td><a  href="#" onclick="return deleteUser(event, '/admin/users/delete/{{this._id}}');"
+                                            class="btn btn-outline-danger">DELETE</a></td>
+
+
+                                </tr>
                                 {{/each}}
                             </tbody>
 
@@ -57,7 +62,7 @@
                     </div>
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
-           
+
         </section> <!-- content-main end// -->
 
     </main>
@@ -68,6 +73,147 @@
 
         for (let i = 0; i < index.length; i++) {
             index[i].innerHTML = i + 1;
+        }
+    </script>
+    {{!-- BLOCKING CONFIRMATION MODAL --}}
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Block User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Block This User?</p>
+                </div>
+               <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" id="blockButton"
+        onclick="blockUser(true)">Block</button>
+    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+        onclick="blockUser(false)">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+   {{!-- UNBLOCKING CONFIRMATION MODAL --}}
+<div class="modal fade" id="unblockConfirmationModal" tabindex="-1" role="dialog"
+aria-labelledby="unblockConfirmationModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title" id="unblockConfirmationModalLabel">Unblock User</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to Unblock This User?</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" id="unblockButton"
+        onclick="unblockUser(true)">Unblock</button>
+    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+        onclick="unblockUser(false)">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+{{!-- DELETING CONFIRMATION MODAL --}}
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete User</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Are you sure you want to Delete This User?</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" id="deleteButton"
+        onclick="deleteUserConfirmed(true)">Delete</button>
+    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
+        onclick="deleteUserConfirmed(false)">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+    <script>
+
+
+        function block(event, url) {
+            console.log("hoi");
+            event.preventDefault();
+            showConfirmationModal(url);
+        }
+
+        function showConfirmationModal(url) {
+            $('#confirmationModal').modal('show');
+            document.getElementById('blockButton').addEventListener('click', function () {
+                blockUser(true, url);
+            });
+        }
+
+
+        function blockUser(block, url) {
+            if (block) {
+                // Redirect to the URL when the block is true
+                window.location.href = url;
+            } else {
+                // Do nothing
+            }
+        }
+{{!-- <=----------------------------------------------------------------------------------------------=> --}}
+        function unblock(event, url) {
+            console.log("Unblock clicked");
+            event.preventDefault();
+            showUnblockConfirmationModal(url);
+        }
+
+        function showUnblockConfirmationModal(url) {
+            $('#unblockConfirmationModal').modal('show');
+            document.getElementById('unblockButton').addEventListener('click', function () {
+                unblockUser(true, url);
+            });
+        }
+
+        function unblockUser(unblock, url) {
+            if (unblock) {
+                // Redirect to the URL when unblocking is true
+                window.location.href = url;
+            } else {
+                // Do nothing
+            }
+        }
+{{!-- <=----------------------------------------------------------------------------------------------=> --}}
+
+        function deleteUser(event, url) {
+            console.log("Delete clicked");
+            event.preventDefault();
+            showDeleteConfirmationModal(url);
+        }
+
+        function showDeleteConfirmationModal(url) {
+            $('#deleteConfirmationModal').modal('show');
+            document.getElementById('deleteButton').addEventListener('click', function () {
+                deleteUserConfirmed(true, url);
+            });
+        }
+
+        function deleteUserConfirmed(del, url) {
+            if (del) {
+                // Redirect to the URL when delete is true
+                window.location.href = url;
+            } else {
+                // Do nothing
+            }
         }
     </script>
 

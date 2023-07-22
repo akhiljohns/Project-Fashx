@@ -10,6 +10,7 @@ const productColl = require("../../models/product-model");
 const orderHelper = require("../../helpers/admin-helpers/order-helpers");
 
 module.exports = {
+
   getOrders: (req, res) => {
     try {
       orderHelper.getOrdersadmin().then((orders) => {
@@ -32,7 +33,6 @@ module.exports = {
     }
   },
 
-  
   getOrderdetails: (req, res, next) => {
     try {
       let orderId = req.query.orderId;
@@ -50,53 +50,68 @@ module.exports = {
       console.log("error in controller while getting order details", err);
     }
   },
+
+
   CancelOrder: (req, res, next) => {
-    try{
-        
-        const orderId = req.body.orderId;
-        const custId = req.body.customer;
-        console.log("---===---==-==-=Order canceled Admin:",orderId,custId);
-        orderHelper.stockUpdate(orderId, custId)
-        orderHelper.cancelOrder(orderId, custId).then((response) => {
-            res.status(200).json(response)
-        }).catch((error) => {
-            res.status(400).json({message: 'Somethings wrong cancelling order'})
+    try {
+      const orderId = req.body.orderId;
+      const custId = req.body.customer;
+      console.log("---===---==-==-=Order canceled Admin:", orderId, custId);
+      orderHelper.stockUpdate(orderId, custId);
+      orderHelper
+        .cancelOrder(orderId, custId)
+        .then((response) => {
+          res.status(200).json(response);
         })
+        .catch((error) => {
+          res
+            .status(400)
+            .json({ message: "Somethings wrong cancelling order" });
+        });
     } catch (error) {
-        console.log('error in controller while canceling the order', error);
+      console.log("error in controller while canceling the order", error);
     }
-},
+  },
+
+
   deliverOrder: (req, res, next) => {
-    try{
-      const previousUrl = req.get('Referer');
-        const orderId =req.params.order_id;
-        const custId = req.params.user_id;
-        console.log("---===---==-==-=Order delivered Admin:",orderId,custId);
-        
-        orderHelper.deliverOrder(orderId, custId).then((response) => {
-      
-          res.redirect(previousUrl);
-        }).catch((error) => {
-           console.log(error);
-        })
-    } catch (error) {
-        console.log('error in controller while canceling the order', error);
-    }
-},
-  returnOrder: (req, res, next) => {
-    try{
-      const previousUrl = req.get('Referer');
-      const orderId =req.params.order_id;
+    try {
+      const previousUrl = req.get("Referer");
+      const orderId = req.params.order_id;
       const custId = req.params.user_id;
-        console.log("---===---==-==-=Order returned Admin:",orderId,custId);
-      
-        orderHelper.returnOrder(orderId, custId).then((response) => {
+      console.log("---===---==-==-=Order delivered Admin:", orderId, custId);
+
+      orderHelper
+        .deliverOrder(orderId, custId)
+        .then((response) => {
           res.redirect(previousUrl);
-        }).catch((error) => {
-          console.log(error);
         })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
-        console.log('error in controller while canceling the order', error);
+      console.log("error in controller while canceling the order", error);
     }
-},
+  },
+
+  
+  returnOrder: (req, res, next) => {
+    try {
+      const previousUrl = req.get("Referer");
+      const orderId = req.params.order_id;
+      const custId = req.params.user_id;
+      console.log("---===---==-==-=Order returned Admin:", orderId, custId);
+
+      orderHelper
+        .returnOrder(orderId, custId)
+        .then((response) => {
+          res.redirect(previousUrl);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log("error in controller while canceling the order", error);
+    }
+  },
 };

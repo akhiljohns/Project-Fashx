@@ -2,9 +2,9 @@ FOR 13TH week
 
 Updations:-
 
-display orders in list format
+
 product search & catergory wise filter
-confinnation popup before blocking user
+                                                                                                          
 
 
 next week

@@ -6,7 +6,6 @@ const categoryHelper = require("../../helpers/product-helpers/category-helper");
 
 module.exports = {
 
-  
   addCategory: async (req, res, next) => {
     let categoryData = req.body;
     console.log("Category Name :" + categoryData.name);
@@ -37,20 +36,13 @@ module.exports = {
     }
   },
 
-  // addCategory: async(req, res, next) => {
-  //     let categoryData = req.body;
-  //     console.log('body: '+ categoryData.name);
-  //     await categoryHelper.addCategory(categoryData).then((result) => {
-  //         console.log('category added successfully');
-  //         res.redirect('/admin/categories');
-  //     })
-  // },
 
   allCategories: async (req, res) => {
     await categoryHelper.allCategory().then((category) => {
       res.render("admin/categories", { category, admin: true });
     });
   },
+
 
   deleteCategory: (req, res, next) => {
     try {
@@ -64,7 +56,7 @@ module.exports = {
     }
   },
 
-
+  
   hideunhide: (req, res) => {
     try {
       let id = req.params.id;

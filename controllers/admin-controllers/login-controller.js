@@ -3,7 +3,6 @@ const loginhelper = require("../../helpers/admin-helpers/login-helper");
 let errmsg = false;
 module.exports = {
 
-
   getSignin: (req, res) => {
     res.render("admin/signin", { admin: true, layout: false, errmsg });
   },
@@ -24,14 +23,13 @@ module.exports = {
     } catch (err) {
       console.log("post login error: ", err);
     }
- 
   },
 
+  
   getLogout: (req, res) => {
     req.session.adminlog = false;
     res.redirect("/admin/signin");
   },
-
 
 
   getUserEdit: (req, res) => {

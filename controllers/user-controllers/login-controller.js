@@ -1,14 +1,15 @@
 const session = require("express-session");
 const loginHelper = require("../../helpers/user-helpers/login-helper");
 
-
 module.exports = {
-
-
+  
   getLogin: (req, res, next) => {
-    res.render("user/user-signin", {layout: false,logsta: false,blocked: false});
+    res.render("user/user-signin", {
+      layout: false,
+      logsta: false,
+      blocked: false,
+    });
   },
-
 
 
   postLogin: (req, res) => {
@@ -19,7 +20,11 @@ module.exports = {
           if (user.blocked) {
             console.log("USER IS BLOCKED");
 
-            res.render("user/user-signin", {layout: false,blocked: true,signuptog: true});
+            res.render("user/user-signin", {
+              layout: false,
+              blocked: true,
+              signuptog: true,
+            });
           } else {
             req.session.userloggedIn = true;
             const userloggedIn = true;

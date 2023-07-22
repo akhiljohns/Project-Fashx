@@ -1,11 +1,12 @@
-const profileHelper = require('../../helpers/user-helpers/profile-helper');
-const userHelper = require('../../helpers/user-helpers/user-helper');
-const registerHelper = require('../../helpers/user-helpers/register-helper');
-const otpController = require('./otp-controller');
-
-
+const profileHelper = require("../../helpers/user-helpers/profile-helper");
+const userHelper = require("../../helpers/user-helpers/user-helper");
+const registerHelper = require("../../helpers/user-helpers/register-helper");
+const otpController = require("./otp-controller");
 
 module.exports = {
+
+
+
   updateProfile: (req, res, next) => {
     const userId = req.session.user._id;
     const newData = req.body;
@@ -19,6 +20,8 @@ module.exports = {
       res.redirect("/profile");
     });
   },
+
+
   updateNum: (req, res, next) => {
     const userId = req.session.user._id;
     const newData = req.body;
@@ -26,13 +29,13 @@ module.exports = {
 
     profileHelper.updateNum(userId, newData).then((response) => {
       res.status(200).json(response);
- 
+
       console.log("<=-----USERDATA-----=>", req.session.user);
       console.log("<=-----USER NUMBER UPDATED-----=>");
       req.session.user.number = newData.phone;
-
     });
   },
+
 
   addAddress: (req, res, next) => {
     const address = req.body;
@@ -45,6 +48,7 @@ module.exports = {
     });
   },
 
+
   deleteAddress: (req, res, next) => {
     const id = req.params.id;
     const userId = req.session.user._id;
@@ -53,6 +57,7 @@ module.exports = {
       res.redirect("/profile");
     });
   },
+
 
   getAnAddrress: (req, res, next) => {
     try {
@@ -79,6 +84,7 @@ module.exports = {
     res.render("user/phone-change", { layout: false });
   },
 
+
   numExist: (req, res, next) => {
     const userData = req.body;
     phoneNumber = req.body.phone;
@@ -89,13 +95,12 @@ module.exports = {
         res.status(200).json(response);
       } else {
         otpController.sendOtp(userData).then((resp) => {
-         
           res.status(200).json(response);
-      
         });
       }
     });
   },
+
 
   resendOtp: (req, res) => {
     console.log("RESEND OTP", phnumber);
@@ -104,22 +109,20 @@ module.exports = {
     console.log("RESEND OTP userData : " + userData.phone);
     res.status(200).json(response);
   },
+
+  
   verifyProfOtp: (req, res) => {
     const userData = req.body;
-    const otp = userData.otp
-    const phoneNumber = userData.phone
+    const otp = userData.otp;
+    const phoneNumber = userData.phone;
     console.log(userData);
-    
+
     otpController.verifyOtp(userData).then((result) => {
-        
- 
-        if(result){
-          res.status(200).json(result);
-
-        } else {
-          res.status(200).json(result);
-
-        }
-    })
-},
+      if (result) {
+        res.status(200).json(result);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  },
 };
