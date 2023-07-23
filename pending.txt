@@ -6,7 +6,6 @@ Updations:-
 product search & catergory wise filter
                                                                                                           
 
-
 next week
 online payment
 product return with wallet
@@ -16,12 +15,6 @@ admin dashboard
 
 Task:7.5
 Coding: 7.5
-
-order no 
-amount 
-payment
-status
-view details
 
 --------------------------------------------------------------------
 

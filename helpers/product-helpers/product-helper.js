@@ -26,7 +26,7 @@ addProduct: async (productDetails, images) => {
       const processedImage = await sharp(image.path)
         .resize(800, 800, { fit: 'cover' })
         .jpeg()
-        .toFile(`public/images/${filename}.jpg`);
+        .toFile(`public/uploads/${filename}.jpg`);
       
       imageFiles.push(`${filename}.jpg`);
     }
@@ -200,7 +200,7 @@ showProductsUser: () => {
             const processedImage = await sharp(image.path)
               .resize(800, 800, { fit: 'cover' })
               .jpeg()
-              .toFile(`public/images/${filename}.jpg`);
+              .toFile(`public/uploads/${filename}.jpg`);
   
             imageFiles.push(`${filename}.jpg`);
           }

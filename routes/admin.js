@@ -37,7 +37,7 @@ router.delete('/admin/products/delete-image/:filename', (req, res, next) => {
     const filename = req.params.filename;
   
     // Use file system module to delete the image file
-    fs.unlink(`./public/images/${filename}`, (err) => {
+    fs.unlink(`./public/uploads/${filename}`, (err) => {
       if (err) {
         console.error(err);
         res.sendStatus(500);

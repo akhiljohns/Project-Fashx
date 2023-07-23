@@ -10,12 +10,12 @@
     <h5>No Product Found</h5>
   </div>
   <div class="container justify-content-start"> <!-- Added the class "justify-content-start" -->
-    <div class="row">
+    <div class="row" id="productsContainer">
       {{#if products}}
       {{#each products}}
       <div class="col-md-2">
         <div class="card mx-auto mt-3">
-          <img class="mx-auto img-thumbnail" src="/images/{{this.image.[0]}}" width="auto" height="auto" />
+          <img class="mx-auto img-thumbnail" src="/uploads/{{this.image.[0]}}" width="auto" height="auto" />
           <div class="card-body text-center">
             <div class="cvp">
               <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
@@ -38,6 +38,8 @@
     </div>
   </div>
 </section>
+
+<button onclick="test()">;kjm,ojkm,</button>
 </body>
 
 <style>
@@ -74,4 +76,46 @@
       }
     });
   });
+</script>
+
+
+<script>
+  function renderProductCards(products) {
+  const productsContainer = document.getElementById('productsContainer');
+  if (!productsContainer) {
+    console.error('Element with id "productsContainer" not found.');
+    return;
+  }
+
+  productsContainer.innerHTML = ''; // Clear the container before adding new cards
+
+  products.forEach((product) => {
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('col-md-2');
+
+    const cardContent = `
+      <div class="card mx-auto mt-3">
+        <img class="mx-auto img-thumbnail" src="/uploads/${product.image[0]}" width="auto" height="auto" />
+        <div class="card-body text-center">
+          <div class="cvp">
+            <h5 class="card-title font-weight-bold">${product.productName}</h5>
+            <p class="card-text">₹${product.regularPrice}</p>
+            <a href="/single-product/${product._id}" class="btn btn-outline-primary " style="margin-bottom: 15px; width: 120px;">View Details</a><br />
+          </div>
+        </div>
+      </div>
+    `;
+
+    cardDiv.innerHTML = cardContent;
+    productsContainer.appendChild(cardDiv);
+  });
+}
+
+
+
+function search(){
+  
+  renderProductCards(productsArray);
+}
+
 </script>

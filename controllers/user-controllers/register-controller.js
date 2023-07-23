@@ -4,7 +4,7 @@ const registerHelper = require("../../helpers/user-helpers/register-helper");
 const otpController = require("./otp-controller");
 
 let otpsent = false;
-let regUser = false;
+let regUser = false; 
 let phoneNumber = null;
 let otpValid = false;
 let inValidotp = false;
@@ -139,7 +139,7 @@ module.exports = {
     });
   },
 
-  
+
   verifyOtpsignup: (req, res) => {
     const userData = req.body;
     const otp = userData.otp;
