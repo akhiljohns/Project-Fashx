@@ -250,5 +250,27 @@ showProductsUser: () => {
     },
 
   
+    searchProduct: (keyword) => {
+      try {
+        return new Promise((resolve, reject) => {
+       
+          const query = product.find({ productName: { $regex: keyword, $options: 'i' } });
+
+          // Fetch the products for the current page
+          const productsPromise = query
+           .lean()
+            .exec();
   
+          Promise.all([productsPromise]).then(([products]) => {
+              resolve({ products });
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
+      } catch (error) {
+        console.log('Search product failed: ', error);
+        throw error;
+      }
+    },
 };

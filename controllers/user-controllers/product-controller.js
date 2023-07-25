@@ -66,4 +66,20 @@ module.exports = {
         console.log("Error in controller while getting stocks", error);
       });
   },
+
+  searchProduct: (req, res, next) => {
+    const customer = user = req.session.user;
+    const keyword = req.body.keyword;
+   
+  
+    productHelper.searchProduct(keyword)
+      .then(({ products }) => {
+       
+        res.status(200).json({products: products});
+      })
+      .catch(error => {
+        console.log('Search product failed: ', error);
+        // Handle the error appropriately
+      });
+  },  
 };

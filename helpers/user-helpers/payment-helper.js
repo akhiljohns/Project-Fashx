@@ -106,7 +106,7 @@ const paymentHelper = {
                     paymentMethod: paymentMethod,
                     address: address,
                     shippingCharge: shipping,
-                  },
+                  },  
                 },
               }
             )
@@ -201,7 +201,7 @@ const paymentHelper = {
   //         const cart = await  cart.findOne({ userId: userId }).populate('items.product');
   //         let date = Date.now();
   //         const coupon = couponCollection.findOne({ code: couponCode });
-  //         const orderCollection = await order.findOne({ userId: userId });
+  //         const orderCollection = await order.findOne({ userId: userId }); 
   //         //updating or creating order
   //         return new Promise((resolve, reject) => {
   //             if (orderCollection) {

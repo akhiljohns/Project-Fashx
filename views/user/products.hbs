@@ -1,13 +1,14 @@
 <section>
   <div class="search-bar">
     <div id="searchContainer">
-      <input type="text" id="searchInput" style="display: none;" placeholder="Search...">
-      <button type="button" class="btn btn-outline-success" style="display: none;" id="submitBtn">Submit</button>
+      <input type="text" oninput="performSearch()"  id="searchInput" style="display: none;" placeholder="Search...">
+      
     </div>
+  
     <i class="fa fa-search" id="searchIcon"></i>
   </div>
-  <div style="text-align: center; display: none;" id="xxx">
-    <h5>No Product Found</h5>
+  <div style="text-align: center; display: none;height: 40vh;" id="xxx">
+    <h5 style="font-size: xx-large;">No Product Found</h5>
   </div>
   <div class="container justify-content-start"> <!-- Added the class "justify-content-start" -->
     <div class="row" id="productsContainer">
@@ -39,7 +40,7 @@
   </div>
 </section>
 
-<button onclick="test()">;kjm,ojkm,</button>
+
 </body>
 
 <style>
@@ -50,6 +51,8 @@
     margin-right: 20px;
   }
 </style>
+
+
 
 <script>
   const searchInput = document.getElementById('searchInput');
@@ -62,7 +65,7 @@
     submitBtn.style.display = submitBtn.style.display === 'none' ? 'inline-block' : 'none';
   });
 
-  submitBtn.addEventListener('click', function() {
+  {{!-- submitBtn.addEventListener('click', function() {
     const searchTerm = searchInput.value.trim().toLowerCase();
     const cards = document.querySelectorAll('.card');
 
@@ -75,12 +78,48 @@
         card.style.display = 'none';
       }
     });
-  });
+  }); --}}
 </script>
 
 
 <script>
-  function renderProductCards(products) {
+	function performSearch() {
+		var keyword = document.getElementById('searchInput').value.trim();
+
+		// Perform AJAX request to searchProduct endpoint
+		$.ajax({
+			url: '/searchProduct',
+			method: 'POST',
+			data: { keyword: keyword },
+			success: function (response) {
+				// Handle the search results here
+				console.log(response);
+				// Update the UI with the search results
+				// ...
+
+				let searchResults = response.products;
+				if (searchResults.length == 0) {
+					document.getElementById('xxx').style.display = 'block';
+					updateUI(searchResults);
+				} else {
+					document.getElementById('xxx').style.display = 'none';
+					updateUI(searchResults);
+				}
+
+
+			},
+			error: function (xhr, status, error) {
+				// Handle the error case
+				console.log(error);
+			}
+		});
+	}
+
+</script>
+
+
+<script>
+  function updateUI(products) {
   const productsContainer = document.getElementById('productsContainer');
   if (!productsContainer) {
     console.error('Element with id "productsContainer" not found.');

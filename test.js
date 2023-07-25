@@ -25,3 +25,33 @@ setTimeout(function() {
   
   console.log(diff);
 }, 2000);
+
+
+
+
+// <script>
+//   const searchInput = document.getElementById('searchInput');
+//   const searchIcon = document.getElementById('searchIcon');
+//   const submitBtn = document.getElementById('submitBtn');
+//   const searchContainer = document.getElementById('searchContainer');
+
+//   searchIcon.addEventListener('click', function() {
+//     searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
+//     submitBtn.style.display = submitBtn.style.display === 'none' ? 'inline-block' : 'none';
+//   });
+
+//   submitBtn.addEventListener('click', function() {
+//     const searchTerm = searchInput.value.trim().toLowerCase();
+//     const cards = document.querySelectorAll('.card');
+
+//     cards.forEach(function(card) {
+//       const productName = card.querySelector('.card-title').textContent.toLowerCase();
+
+//       if (productName.includes(searchTerm)) {
+//         card.style.display = 'block';
+//       } else {
+//         card.style.display = 'none';
+//       }
+//     });
+//   });
+// </script>
