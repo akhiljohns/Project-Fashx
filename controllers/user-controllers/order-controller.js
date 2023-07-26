@@ -11,6 +11,7 @@ const orderManagement = {
     const userId = req.session.user._id;
 
     userHelper.getAddress(userId).then((user_address) => {
+      console.log(user_address,'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=')
       cart
         .findOne({ userId: req.session.user._id })
         .then((response) => {

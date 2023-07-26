@@ -10,8 +10,6 @@ next week
 
 online payment
 
-product return with wallet
-
 coupon management
 
 banner management
