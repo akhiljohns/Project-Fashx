@@ -1,41 +1,74 @@
 <section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-3">
+        <aside class="aside-box">
+  <div class="l_w_title">
+    <h3>Search Products</h3>
+  </div>
   <div class="search-bar">
     <div id="searchContainer">
-      <input type="text" oninput="performSearch()"  id="searchInput" style="display: none;" placeholder="Search...">
-      
+      <input type="text" oninput="performSearch()"  id="searchInput" style="display: block; border: 2px solid #ffffff; border-radius: 25px; padding: 8px; width: 100%; box-sizing: border-box;" placeholder="Search...">
     </div>
-  
     <i class="fa fa-search" id="searchIcon"></i>
   </div>
-  <div style="text-align: center; display: none;height: 40vh;" id="xxx">
-    <h5 style="font-size: xx-large;">No Product Found</h5>
-  </div>
-  <div class="container justify-content-start"> <!-- Added the class "justify-content-start" -->
-    <div class="row" id="productsContainer">
-      {{#if products}}
-      {{#each products}}
-      <div class="col-md-2">
-        <div class="card mx-auto mt-3">
-          <img class="mx-auto img-thumbnail" src="/uploads/{{this.image.[0]}}" width="auto" height="auto" />
-          <div class="card-body text-center">
-            <div class="cvp">
-              <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
-              <p class="card-text">₹{{this.regularPrice}}</p>
-              <a href="/single-product/{{this._id}}" class="btn btn-outline-primary " style="margin-bottom: 15px; width: 120px;">View Details</a><br />
+  <!-- Rest of the aside box content... -->
+</aside>
+
+          <div class="l_w_title">
+            <h3>Browse Categories</h3>
+          </div>
+          <div class="widgets_inner">
+            <ul class="list">
+              {{!-- {{#each categories}}
+              <li>
+                <a href="#">{{this.name}}</a>
+              </li>
+              {{/each}} --}}
+             <li>
+  <a onclick="categorise('men')">men</a>
+</li>
+
+            </ul>
+          </div>
+        </aside>
+      </div>
+      <div class="col-lg-9">
+
+        <div style="text-align: center; display: none; height: 40vh;" id="xxx">
+          <h5 style="font-size: xx-large;">No Product Found</h5>
+        </div>
+        <div class="container justify-content-start">
+          <div class="row" id="productsContainer">
+            {{#if products}}
+            {{#each products}}
+            <div class="col-md-2">
+              <div class="card mx-auto mt-3">
+                <img class="mx-auto img-thumbnail" src="/uploads/{{this.image.[0]}}" width="auto" height="auto" />
+                <div class="card-body text-center">
+                  <div class="cvp">
+                    <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
+                    <p class="card-text">₹{{this.regularPrice}}</p>
+                    <a href="/single-product/{{this._id}}" class="btn btn-outline-primary "
+                      style="margin-bottom: 15px; width: 120px;">View Details</a><br />
+                  </div>
+                </div>
+              </div>
             </div>
+            {{/each}}
+            {{else}}
+            <div class="card-body cart">
+              <div class="col-sm-12 empty-cart-cls text-center">
+                <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                <h3><strong>NO PRODUCTS AVAILABLE NOW, COME BACK LATER</strong></h3>
+                <a href="/" class="btn btn-success cart-btn-transform m-3" data-abc="true">GO HOME</a>
+              </div>
+            </div>
+            {{/if}}
+
           </div>
         </div>
       </div>
-      {{/each}}
-      {{else}}
-      <div class="card-body cart">
-        <div class="col-sm-12 empty-cart-cls text-center">
-          <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
-          <h3><strong>NO PRODUCTS AVAILABLE NOW, COME BACK LATER</strong></h3>
-          <a href="/" class="btn btn-success cart-btn-transform m-3" data-abc="true">GO HOME</a>
-        </div>
-      </div>
-      {{/if}}
     </div>
   </div>
 </section>
@@ -60,79 +93,117 @@
   const submitBtn = document.getElementById('submitBtn');
   const searchContainer = document.getElementById('searchContainer');
 
-  searchIcon.addEventListener('click', function() {
+  searchIcon.addEventListener('click', function () {
     searchInput.style.display = searchInput.style.display === 'none' ? 'block' : 'none';
     submitBtn.style.display = submitBtn.style.display === 'none' ? 'inline-block' : 'none';
   });
 
-  {{!-- submitBtn.addEventListener('click', function() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
-    const cards = document.querySelectorAll('.card');
+  {
+    {
+      !--submitBtn.addEventListener('click', function () {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.card');
 
-    cards.forEach(function(card) {
-      const productName = card.querySelector('.card-title').textContent.toLowerCase();
+        cards.forEach(function (card) {
+          const productName = card.querySelector('.card-title').textContent.toLowerCase();
 
-      if (productName.includes(searchTerm)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  }); --}}
+          if (productName.includes(searchTerm)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }); --}
+  }
 </script>
 
 
 <script>
-	function performSearch() {
-		var keyword = document.getElementById('searchInput').value.trim();
+  function performSearch() {
+    var keyword = document.getElementById('searchInput').value.trim();
 
-		// Perform AJAX request to searchProduct endpoint
-		$.ajax({
-			url: '/searchProduct',
-			method: 'POST',
-			data: { keyword: keyword },
-			success: function (response) {
-				// Handle the search results here
-				console.log(response);
-				// Update the UI with the search results
-				// ...
+    // Perform AJAX request to searchProduct endpoint
+    $.ajax({
+      url: '/searchProduct',
+      method: 'POST',
+      data: { keyword: keyword },
+      success: function (response) {
+        // Handle the search results here
+        console.log(response);
+        // Update the UI with the search results
+        // ...
 
-				let searchResults = response.products;
-				if (searchResults.length == 0) {
-					document.getElementById('xxx').style.display = 'block';
-					updateUI(searchResults);
-				} else {
-					document.getElementById('xxx').style.display = 'none';
-					updateUI(searchResults);
-				}
+        let searchResults = response.products;
+        if (searchResults.length == 0) {
+          document.getElementById('xxx').style.display = 'block';
+          updateUI(searchResults);
+        } else {
+          document.getElementById('xxx').style.display = 'none';
+          updateUI(searchResults);
+        }
 
 
-			},
-			error: function (xhr, status, error) {
-				// Handle the error case
-				console.log(error);
-			}
-		});
-	}
+      },
+      error: function (xhr, status, error) {
+        // Handle the error case
+        console.log(error);
+      }
+    });
+  }
+
+</script>
+
+
+<script>
+  function categorise(category) {
+
+    // Perform AJAX request to searchProduct endpoint
+    $.ajax({
+      url: '/categorise',
+      method: 'POST',
+      data: { category: category },
+      success: function (response) {
+        // Handle the search results here
+        console.log(response);
+        // Update the UI with the search results
+        // ...
+
+        let searchResults = response.products;
+        if (searchResults.length == 0) {
+          document.getElementById('xxx').style.display = 'block';
+          updateUI(searchResults);
+        } else {
+          document.getElementById('xxx').style.display = 'none';
+          updateUI(searchResults);
+        }
+
+
+      },
+      error: function (xhr, status, error) {
+        // Handle the error case
+        console.log(error);
+      }
+    });
+  }
 
 </script>
 
 
 <script>
   function updateUI(products) {
-  const productsContainer = document.getElementById('productsContainer');
-  if (!productsContainer) {
-    console.error('Element with id "productsContainer" not found.');
-    return;
-  }
+    const productsContainer = document.getElementById('productsContainer');
+    if (!productsContainer) {
+      console.error('Element with id "productsContainer" not found.');
+      return;
+    }
 
-  productsContainer.innerHTML = ''; // Clear the container before adding new cards
+    productsContainer.innerHTML = ''; // Clear the container before adding new cards
 
-  products.forEach((product) => {
-    const cardDiv = document.createElement('div');
-    cardDiv.classList.add('col-md-2');
+    products.forEach((product) => {
+      const cardDiv = document.createElement('div');
+      cardDiv.classList.add('col-md-2');
 
-    const cardContent = `
+      const cardContent = `
       <div class="card mx-auto mt-3">
         <img class="mx-auto img-thumbnail" src="/uploads/${product.image[0]}" width="auto" height="auto" />
         <div class="card-body text-center">
@@ -145,16 +216,16 @@
       </div>
     `;
 
-    cardDiv.innerHTML = cardContent;
-    productsContainer.appendChild(cardDiv);
-  });
-}
+      cardDiv.innerHTML = cardContent;
+      productsContainer.appendChild(cardDiv);
+    });
+  }
 
 
 
-function search(){
-  
-  renderProductCards(productsArray);
-}
+  function search() {
+
+    renderProductCards(productsArray);
+  }
 
 </script>

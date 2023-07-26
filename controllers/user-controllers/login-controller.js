@@ -18,7 +18,6 @@ module.exports = {
         if (response.status) {
           let user = response.user;
           if (user.blocked) {
-            console.log("USER IS BLOCKED");
 
             res.render("user/user-signin", {
               layout: false,

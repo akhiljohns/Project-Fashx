@@ -58,7 +58,6 @@ const orderhelper = {
   },
 
 
-
   stockUpdate: async (orderId, userId) => {
     try {
       const order = await orderCollection.findOne(
@@ -80,7 +79,7 @@ const orderhelper = {
         await orderhelper.incrementStock(productId, quantity);
       }
 
-      console.log("Product Stock Updated Successfully");
+      
     } catch (error) {
       console.error("Error while updating product stock:", error);
     }
@@ -99,7 +98,6 @@ const orderhelper = {
           { _id: productId },
           { $set: { stock: updatedStock } }
         );
-        console.log("Product stock updated successfully");
       }
     } catch (error) {
       console.error("Error while incrementing product stock:", error);
@@ -128,21 +126,40 @@ const orderhelper = {
 
   returnOrder: (orderId, userId) => {
     try {
-      return new Promise((resolve, reject) => {
-        orderCollection
-          .updateOne(
-            { userId: userId, "order._id": orderId },
-            { $set: { "order.$.status": "Returned" } }
-          )
-          .then((response) => {
-            resolve(response);
-          });
-      });
+        return new Promise(async (resolve, reject) => {
+            const orders = await orderCollection.findOne({ userId: userId, 'order._id': orderId }, { 'order.$': 1 });
+            console.log(orders.order[0].totalAmount, "|TOTAL AMOUNT");
+            totalAmount = orders.order[0].totalAmount;
+
+            // Fetch the user document to get the current wallet value
+            const user = await customerCollection.findOne({ _id: userId });
+            let walletValue = 0;
+
+            if (user && user.wallet !== undefined) {
+                walletValue = user.wallet;
+            }
+
+            // Increment the wallet value with the totalAmount if it's not zero
+            if (walletValue !== 0) {
+                totalAmount += walletValue;
+            }
+
+            // Update the user's wallet value
+            await customerCollection.updateOne({ _id: userId }, { $set: { wallet: totalAmount } });
+
+            orderCollection.updateOne({ userId: userId, "order._id": orderId }, { $set: { "order.$.status": "Returned" } })
+                .then((response) => {
+                    resolve(response);
+                });
+        });
     } catch (err) {
-      console.log("Error while canceling an Order:", err);
+        console.log('Error while canceling an Order:', err);
     }
-  },
+},
+
 
 };
+
+
 
 module.exports = orderhelper;

@@ -161,23 +161,42 @@ incrementStock: async (productId,quantity)=>{
             console.log('Error while canceling an Order:', err);
         }
     },
-   returnOrder: (orderId, userId) => {
-        try{
-            return new Promise(async (resolve, reject) => {
-                const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
-                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Returned" } }
-                ).then((response)=>{
+   returnOrder:(orderId, userId) => {
+    try {
+        return new Promise(async (resolve, reject) => {
+            const orders = await orderCollection.findOne({ userId: userId, 'order._id': orderId }, { 'order.$': 1 });
+            console.log(orders.order[0].totalAmount, "|TOTAL AMOUNT");
+            totalAmount = orders.order[0].totalAmount;
+
+            // Fetch the user document to get the current wallet value
+            const user = await customerCollection.findOne({ _id: userId });
+            let walletValue = 0;
+            
+            if (user && user.wallet !== undefined) {
+                walletValue = user.wallet;
+            }
+
+            // Increment the wallet value with the totalAmount if it's not zero
+            if (walletValue !== 0) {
+                totalAmount += walletValue;
+            }
+
+            // Update the user's wallet value
+            await customerCollection.updateOne({ _id: userId }, { $set: { wallet: totalAmount } });
+
+            orderCollection.updateOne({ userId: userId, "order._id": orderId }, { $set: { "order.$.status": "Returned" } })
+                .then((response) => {
                     resolve(response);
-                })
-            })
-        } catch(err){
-            console.log('Error while canceling an Order:', err);
-        }
-    },
+                });
+        });
+    } catch (err) {
+        console.log('Error while canceling an Order:', err);
+    }
+},
     
    
 
-
+    
 
     // //function to fetch no. of items in a cart and whishlist of a customer
     // getCartOrWishlistCount: (userId) => {

@@ -1,24 +1,20 @@
 const productHelper = require("../../helpers/product-helpers/product-helper");
 const carthelper = require("../../helpers/product-helpers/cart-helper");
 module.exports = {
-  showProducts: (req, res, next) => {
-
-
-    productHelper
-      .showProductsUser()
-      .then((products) => {
+  showProducts: async (req, res, next) => {
+    productHelper.showProductsUser().then((products,categories) => {
+      
         if (!products.length <= 0) {
-          res.render("user/products", { products, user: req.session.user });
+          res.render("user/products", { products, user: req.session.user ,categories});
         } else {
           products = false;
-          res.render("user/products", { products, user: req.session.user });
+          res.render("user/products", { products, user: req.session.user ,categories});
         }
       })
       .catch((err) => {
         console.log("prd rende err", err);
       });
   },
-
 
   getSinPro: (req, res, next) => {
     let prodid = req.params.id;
@@ -54,7 +50,6 @@ module.exports = {
     });
   },
 
-  
   getStock: (req, res) => {
     const productId = req.body.productId;
     productHelper
@@ -68,18 +63,31 @@ module.exports = {
   },
 
   searchProduct: (req, res, next) => {
-    const customer = user = req.session.user;
+    const customer = (user = req.session.user);
     const keyword = req.body.keyword;
-   
-  
-    productHelper.searchProduct(keyword)
+
+    productHelper
+      .searchProduct(keyword)
       .then(({ products }) => {
-       
-        res.status(200).json({products: products});
+        res.status(200).json({ products: products });
       })
-      .catch(error => {
-        console.log('Search product failed: ', error);
+      .catch((error) => {
+        console.log("Search product failed: ", error);
         // Handle the error appropriately
       });
-  },  
+  },
+  categorise: (req, res, next) => {
+    const customer = (user = req.session.user);
+    const category = req.body.category;  
+
+    productHelper
+      .categorise(category)
+      .then(({ products }) => {
+        res.status(200).json({ products: products });
+      })
+      .catch((error) => {
+        console.log("Search products on category failed: ", error);
+        // Handle the error appropriately
+      });
+  },
 };

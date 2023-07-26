@@ -3,14 +3,19 @@ FOR 13TH week
 Updations:-
 
 
-product search & catergory wise filter
+ catergory wise filter
                                                                                                           
 
 next week
+
 online payment
+
 product return with wallet
+
 coupon management
+
 banner management
+
 admin dashboard
 
 Task:7.5

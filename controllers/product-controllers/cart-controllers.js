@@ -15,7 +15,6 @@ const cartController = {
     const customer = req.session.user;
 
     if (customer) {
-      console.log(customer);
       cartHelper.addtoCart(customer, productId, quantity).then((cart) => {
         req.session.user.cart = cart;
 
@@ -44,10 +43,7 @@ const cartController = {
           let products = cart.items,
             total = [],
             subtotal = 0;
-          console.log(
-            "cart items__________________________________",
-            cart.items
-          );
+          
 
           for (let i = 0; i < products.length; i++) {
             products[i].amount =
@@ -57,7 +53,6 @@ const cartController = {
             subtotal += products[i].amount;
           }
 
-          console.log("<=---PRODUCT----=>", products);
           res.render("user/cart", {
             products,
             user: req.session.user,
@@ -83,7 +78,6 @@ const cartController = {
     const userId = req.session.user._id;
     const itemId = req.query.itemId;
     cartHelper.removeItem(userId, itemId).then((response) => {
-      console.log(response);
       // res.redirect('/cart')
       res.status(200).json({ response: response });
     });
@@ -97,7 +91,6 @@ const cartController = {
     cartHelper
       .addQuantity(itemId, userId, productId)
       .then((cart) => {
-        console.log("<=-----ADD QUANTITY RESULT-----=>", cart);
         res.status(200).json({ cart });
       })
       .catch((err) => {
@@ -113,7 +106,6 @@ const cartController = {
     cartHelper
       .reduceQuantity(itemId, userId, productId)
       .then((cart) => {
-        console.log("<=-----REDUCE QUANTITY RESULT-----=>", cart);
 
         res.status(200).json({ cart: cart });
       })

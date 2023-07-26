@@ -74,11 +74,8 @@ const orderManagement = {
     try {
       const orderId = req.query.itemId;
       const userId = req.session.user._id;
-      console.log("---===---==-==-=[][][]Order canceled:", orderId, userId);
       orderHelper.stockUpdate(orderId, userId);
-      orderHelper
-        .cancelOrder(orderId, userId)
-        .then((response) => {
+      orderHelper.cancelOrder(orderId, userId).then((response) => {
           res.status(200).json(response);
         })
         .catch((error) => {
@@ -97,10 +94,13 @@ const orderManagement = {
       const orderId = req.query.itemId;
       const userId = req.session.user._id;
       console.log("---===---==-==-=[][][]Order Returned:", orderId, userId);
+      orderHelper.stockUpdate(orderId, userId);
+
       orderHelper
         .returnOrder(orderId, userId)
         .then((response) => {
           res.status(200).json(response);
+          
         })
         .catch((error) => {
           res.status(400).json({ message: "Somethings wrong Returning order" });
@@ -109,23 +109,6 @@ const orderManagement = {
       console.log("error in controller while Returning the order", error);
     }
   },
-
-  // /* `returnOrder` is a method that handles a POST request to return an order. It first gets the
-  // order ID and user ID from the request query and session respectively. It then uses the
-  // `returnOrder` method from the `orderHelper` module to return the order. If the order is
-  // successfully returned, it sends a JSON response with a status code of 200 and the response data.
-  // If there is an error, it logs the error and redirects to the `/order` page. */
-  // returnOrder: (req, res, next) => {
-  //     const orderId = req.query.orderId;
-  //     const userId = req.session.user._id;
-
-  //     orderHelper.returnOrder(orderId, userId).then((response) => {
-  //         res.status(200).json(response);
-  //     }).catch((err) => {
-  //         console.log('Error in returnOrder Controller:', err);
-  //         res.redirect('/order');
-  //     })
-  // }
 
   getConfirm: (req, res, next) => {
     res.render("user/confirmation", {

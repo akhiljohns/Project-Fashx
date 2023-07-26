@@ -3,6 +3,7 @@ const { ObjectId } = require('mongoose').Types;
 const sharp = require('sharp');
 const mongoose = require('mongoose');
 const fs=require('fs');
+const categoryColl = require("../../models/category-model");
 
 
 module.exports = {
@@ -102,8 +103,11 @@ addProduct: async (productDetails, images) => {
 //       );
 //     });
 //   },
-showProductsUser: () => {
-  return new Promise((resolve, reject) => {
+showProductsUser:  () => {
+  return new Promise( async (resolve, reject) => {
+    let categories = await categoryColl.find().lean().exec();
+
+    
     product.find({ hidden: false }).populate('category').lean().then((products) => {
       console.log("SHOW PRODUCTS-----===>", products);
       
@@ -112,7 +116,9 @@ showProductsUser: () => {
         return product.category.hiddenstatus === false;
       });
       
-      resolve(filteredProducts);
+      
+      console.log("show categories",categories);
+      resolve(filteredProducts,categories);
     }).catch((err) => {
       console.log("show product err ", err);
       reject(err);
@@ -270,6 +276,30 @@ showProductsUser: () => {
         });
       } catch (error) {
         console.log('Search product failed: ', error);
+        throw error;
+      }
+    },
+
+    categorise: (category) => {
+      try {
+        return new Promise((resolve, reject) => {
+       
+          const query = product.find({ category: category });
+
+          // Fetch the products for the current page
+          const productsPromise = query
+           .lean()
+            .exec();
+  
+          Promise.all([productsPromise]).then(([products]) => {
+              resolve({ products });
+            })
+            .catch(error => {
+              reject(error);
+            });
+        });
+      } catch (error) {
+        console.log('Search product on category failed: ', error);
         throw error;
       }
     },

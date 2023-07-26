@@ -15,7 +15,6 @@ module.exports = {
   postAddproduct: async (req, res) => {
     let productDetails = req.body;
     let images = req.files;
-    console.log("---------------PRODUCTDETIALS------------", productDetails);
 
     try {
       await productHelper.addProduct(productDetails, images);
@@ -36,7 +35,6 @@ module.exports = {
   deleteImg: (req, res) => {
     const imgId = req.body.imgId;
     const productId = req.body.productId;
-    console.log("<=--=>", imgId + " " + productId);
     productHelper
       .deleteImg(imgId, productId)
       .then((response) => {

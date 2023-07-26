@@ -5,7 +5,6 @@ module.exports = {
   blockUnblockUser: async (req, res, next) => {
     try {
       const id = req.params.id;
-      console.log("id: " + id);
 
       const isBlocked = await userHelper.checkBlockStatus(id);
       console.log("block status: " + isBlocked);
@@ -21,7 +20,6 @@ module.exports = {
   deleteUser: async (req, res, next) => {
     try {
       const id = req.params.id;
-      console.log("id: " + id);
 
 
       res.redirect("/admin/users");

@@ -13,7 +13,6 @@ module.exports = {
 
   getEditProduct: (req, res, next) => {
     let id = req.params.id;
-    console.log(id);
     productHelper.findProductById(id).then((product) => {
       categoryHelper.allCategory().then((category) => {
         res.render("admin/edit-product", { product, category, admin: true });
@@ -44,7 +43,6 @@ module.exports = {
     product
       .findByIdAndDelete(productId)
       .then(() => {
-        console.log("Product deleted");
         res.redirect("/admin/products");
       })
       .catch((err) => {

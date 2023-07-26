@@ -314,9 +314,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
-                            onclick="cancel(true)">Cancel Order</button>
+                            onclick="cancel('true')">Cancel Order</button>
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                            onclick="cancel(false)">Close</button>
+                            onclick="cancel('false')">Close</button>
                     </div>
                 </div>
             </div>
@@ -341,7 +341,7 @@
 
         </script>
         <script>
-            { { !--ORDER STATUS-- } }
+          
             function cancel(cancel) {
                 if (cancel) {
                     $.ajax({
@@ -360,7 +360,8 @@
                 }
                 currentItem = null;
             }
-
+   </script>
+ <script>
             function deliver(cancel) {
                 if (cancel) {
                     $.ajax({
@@ -381,6 +382,7 @@
             }
 
         </script>
+    
         <!-- Popup Dialog Box Script END -->
         <script>
             let subtotal = 0;

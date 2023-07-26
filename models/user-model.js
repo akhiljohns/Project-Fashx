@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema({
     blocked: {
         type: Boolean,
         default: false
+    },
+       
+    wallet: {
+        type: Number,
+        default: 0
     }
 },{collection: 'user'});
 

@@ -8,13 +8,14 @@ const productColl = require("../../models/product-model");
 
 // HELPERS
 const orderHelper = require("../../helpers/admin-helpers/order-helpers");
+const userOrderHelper = require("../../helpers/user-helpers/order-helper");
 
 module.exports = {
 
   getOrders: (req, res) => {
     try {
       orderHelper.getOrdersadmin().then((orders) => {
-        console.log("orders are :::", orders);
+      
         if (orders) {
           for (let i = 0; i < orders.length; i++) {
             let today = orders[i].order.date;
@@ -45,7 +46,6 @@ module.exports = {
         });
       });
 
-      console.log("orderId and userId", orderId, userId);
     } catch (err) {
       console.log("error in controller while getting order details", err);
     }
@@ -56,11 +56,8 @@ module.exports = {
     try {
       const orderId = req.body.orderId;
       const custId = req.body.customer;
-      console.log("---===---==-==-=Order canceled Admin:", orderId, custId);
-      orderHelper.stockUpdate(orderId, custId);
-      orderHelper
-        .cancelOrder(orderId, custId)
-        .then((response) => {
+      userOrderHelper.stockUpdate(orderId, custId);
+      orderHelper.cancelOrder(orderId, custId).then((response) => {
           res.status(200).json(response);
         })
         .catch((error) => {
@@ -79,7 +76,6 @@ module.exports = {
       const previousUrl = req.get("Referer");
       const orderId = req.params.order_id;
       const custId = req.params.user_id;
-      console.log("---===---==-==-=Order delivered Admin:", orderId, custId);
 
       orderHelper
         .deliverOrder(orderId, custId)
@@ -100,7 +96,7 @@ module.exports = {
       const previousUrl = req.get("Referer");
       const orderId = req.params.order_id;
       const custId = req.params.user_id;
-      console.log("---===---==-==-=Order returned Admin:", orderId, custId);
+      userOrderHelper.stockUpdate(orderId, custId);
 
       orderHelper
         .returnOrder(orderId, custId)
