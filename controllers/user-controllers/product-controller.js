@@ -1,9 +1,11 @@
 const productHelper = require("../../helpers/product-helpers/product-helper");
+const categoryHelper = require("../../helpers/product-helpers/category-helper");
 const carthelper = require("../../helpers/product-helpers/cart-helper");
 module.exports = {
   showProducts: async (req, res, next) => {
-    productHelper.showProductsUser().then((products,categories) => {
-      
+    let categories = await categoryHelper.allCategory();
+
+    productHelper.showProductsUser().then((products) => {
         if (!products.length <= 0) {
           res.render("user/products", { products, user: req.session.user ,categories});
         } else {
@@ -80,8 +82,7 @@ module.exports = {
     const customer = (user = req.session.user);
     const category = req.body.category;  
 
-    productHelper
-      .categorise(category)
+    productHelper.categorise(category)
       .then(({ products }) => {
         res.status(200).json({ products: products });
       })
@@ -90,4 +91,5 @@ module.exports = {
         // Handle the error appropriately
       });
   },
+  
 };

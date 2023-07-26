@@ -107,7 +107,6 @@ showProductsUser:  () => {
   return new Promise( async (resolve, reject) => {
     let categories = await categoryColl.find().lean().exec();
 
-    
     product.find({ hidden: false }).populate('category').lean().then((products) => {
       console.log("SHOW PRODUCTS-----===>", products);
       
@@ -118,7 +117,7 @@ showProductsUser:  () => {
       
       
       console.log("show categories",categories);
-      resolve(filteredProducts,categories);
+      resolve(filteredProducts);
     }).catch((err) => {
       console.log("show product err ", err);
       reject(err);
@@ -283,9 +282,13 @@ showProductsUser:  () => {
     categorise: (category) => {
       try {
         return new Promise((resolve, reject) => {
-       
-          const query = product.find({ category: category });
+          let query
+          if(category === 'all'){
 
+             query = product.find({});
+          }else{
+           query = product.find({ category: category });
+          }
           // Fetch the products for the current page
           const productsPromise = query
            .lean()
