@@ -1,6 +1,8 @@
 const { response } = require("express");
 const cartHelper = require("../../helpers/product-helpers/cart-helper");
 const productHelper = require("../../helpers/product-helpers/product-helper");
+const couponManagement = require('../user-controllers/user-coupon-controller');
+
 
 const cartController = {
 
@@ -52,6 +54,7 @@ const cartController = {
           for (let i = 0; i < products.length; i++) {
             subtotal += products[i].amount;
           }
+          let coupons = await couponManagement.getActiveCoupons();
 
           res.render("user/cart", {
             products,

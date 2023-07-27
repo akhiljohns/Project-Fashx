@@ -1,0 +1,81 @@
+<style>
+    .imgRow img {
+        width: 7vw;
+        height: 8vh;
+    }
+
+    .toolEll {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+</style>
+
+<main class="main-wrap" id="main">
+
+
+    
+
+{{#if banner}}
+    <table class="table table-striped" style="color: #012970; text-align: center;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Banner</th>
+                <th scope="col">Banner Title</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each banner}}
+            <tr id="{{this._id}}">
+                <th scope="row" class="index"></th>
+                <td class="imgRow"><img src="/uploads/{{this.images}}" alt=""></td>
+                <td class="toolEll"><h6>{{this.title}}</h6></td>
+                <td><button onclick="removeBanner('{{this._id}}')" class="btn btn-danger">Remove</button></td>
+            </tr>
+            {{/each}}
+            
+        </tbody>
+    </table> 
+    <a class="btn btn-primary" id="addBtn" href="/admin/addBanner">Add Banner</a>
+    {{else}} 
+    <div style="text-align: center;" class="m-5">
+
+    <h5>No Banner To Show</h5>
+     <a id="addBtn" href="/admin/addBanner">Add Banner</a>
+    </div>
+    {{/if}}
+
+    
+
+
+</main>
+
+
+<script>
+    function removeBanner(bannerId){
+        $.ajax({
+            url: '/admin/removeBanner',
+            method: 'POST',
+            data: {
+                bannerId: bannerId
+            },
+            success: function(response){
+                if(response.status){
+                    document.getElementById(bannerId).style.display = 'none';
+                }
+            }
+        })
+    }
+</script>
+
+
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>

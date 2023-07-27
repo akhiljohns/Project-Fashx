@@ -15,6 +15,8 @@ const productController = require("../controllers/product-controllers/product-co
 const productManage = require('../controllers/admin-controllers/product-management');
 const userManage = require('../controllers/admin-controllers/userMang-controller');
 const orderController = require('../controllers/admin-controllers/order-controller');
+const couponManagement = require('../controllers/admin-controllers/coupon-management');
+const bannerManagement = require('../controllers/admin-controllers/banner-management');
 
 
 router.get("/dashboard", access.logStatus,  pageController.getDashboard)
@@ -87,6 +89,23 @@ router.get('/deliverorder/:order_id/:user_id', access.logStatus, orderController
 router.get('/returnorder/:order_id/:user_id', access.logStatus, orderController.returnOrder)
 
 
+// COUPON 
+
+router.get('/coupon',access.logStatus, couponManagement.getCoupon);
+router.post('/add-coupon', couponManagement.addCoupon );
+router.get('/removeCoupon', couponManagement.removeCoupon );
+
+
+//banner management
+router.get('/banner',access.logStatus, bannerManagement.getBanner);
+
+router.get('/addBanner',access.logStatus, (req, res)=> {
+    res.render('admin/addBanner',{admin:true})
+})
+
+router.post('/addBanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addBanner);
+
+router.post('/removeBanner',access.logStatus, bannerManagement.removeBanner);
 
 
 
