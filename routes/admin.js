@@ -29,8 +29,8 @@ router.post("/signin", loginController.postSignin);
 // PRODUCT ROUTES 
 router.get("/add-product", access.logStatus, productController.getAddproduct);
 
-router.post("/add-product",  upload.array('productImage'), productController.postAddproduct);
-router.post('/deleteimg', productController.deleteImg);
+router.post("/add-product", access.logStatus, upload.array('productImage'), productController.postAddproduct);
+router.post('/deleteimg', access.logStatus,productController.deleteImg);
 
 router.get("/products", access.logStatus, productManage.showProducts );
 

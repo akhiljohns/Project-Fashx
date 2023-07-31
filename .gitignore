@@ -1,5 +1,7 @@
 .env
 node_modules
-pending.txt
+Tasks.txt
 order v1.html
 public/uploads/
+public/img/
+package-lock.json

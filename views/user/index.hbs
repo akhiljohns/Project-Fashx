@@ -4,15 +4,22 @@
 <body>
 
   <!--================Home Banner Area =================-->
-  <section class="home_banner_area mb-40">
+ <section class="home_banner_area mb-40">
     <div class="banner_inner d-flex align-items-center">
       <div class="container">
         <div class="banner_content row">
           <div class="col-lg-12">
-           
-            <h3><span>Show</span> Your <br />Personal <span>Style</span></h3>
-            <h4>Fowl saw dry which a above together place.</h4>
-            <a class="main_btn mt-40" href="/products">View Collections</a>
+
+            {{!-- Start Handlebars Loop for Banners --}}
+            {{#each banners}}
+            <div class="single-banner">
+              <h3><span>{{title}}</span><br />Personal <span>{{subTitle}}</span></h3>
+              <h4>Fowl saw dry which a above together place.</h4>
+              <a class="main_btn mt-40" href="/products">{{buttonText}}</a>
+            </div>
+            {{/each}}
+            {{!-- End Handlebars Loop for Banners --}}
+
           </div>
         </div>
       </div>
