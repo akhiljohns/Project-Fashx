@@ -21,7 +21,8 @@ module.exports = {
     try {
       const id = req.params.id;
 
-
+ const deleted = await userHelper.deleteUser(id);
+     
       res.redirect("/admin/users");
     } catch (err) {
       console.log(err);
