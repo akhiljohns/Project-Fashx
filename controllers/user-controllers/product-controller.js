@@ -22,6 +22,14 @@ module.exports = {
     let prodid = req.params.id;
 
     productHelper.findProductByIdUser(prodid).then((product) => {
+      console.log(product.stock,"----------=========================--------------")
+      let noStock;
+      if(product.stock == '0'){
+
+       noStock = true;
+      }else{
+       noStock = false;   
+         }
       console.log("<=-------SINGLE PRODUCT PAGE---------=>", product);
       if (req.session.userloggedIn) {
         console.log(req.session.user);
@@ -33,12 +41,15 @@ module.exports = {
               product,
               oncart: true,
               user: req.session.user,
+              noStock,
             });
+
           } else {
             res.render("user/single-product", {
               product,
               oncart: false,
               user: req.session.user,
+              noStock,
             });
           }
         });
@@ -47,6 +58,7 @@ module.exports = {
           product,
           oncart: false,
           user: req.session.user,
+          noStock,
         });
       }
     });

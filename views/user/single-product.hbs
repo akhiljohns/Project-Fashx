@@ -74,7 +74,11 @@
                 <span>Category : </span>{{product.category.name}}</a>
             </li>
             <li>
-              <a href="#"> <span>Availibility :</span>{{product.stock}} Stocks</a>
+                          {{#if noStock}}
+              <a> <span>Availibility :</span> <span style="color: red;">Out Of Stock</span></a>
+{{else}}
+              <a href="#"> <span>Availibility :</span>{{product.stock}} Stock</a>
+              {{/if}}
             </li>
           </ul>
           <p>
@@ -85,21 +89,8 @@
 
           </p>
 
-          {{!-- <div class="product_count">
-            <label for="qty">Quantity:</label>
-            <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
-              class="input-text qty" readonly />
-            <button
-              onclick="var result = document.getElementById('quantity'); var quantity = result.value; if( !isNaN( quantity )) result.value++;return false;"
-              class="increase items-count" type="button">
-              <i class="lnr lnr-chevron-up"></i>
-            </button>
-            <button
-              onclick="var result = document.getElementById('quantity'); var quantity = result.value; if( !isNaN( quantity ) &amp;&amp; quantity > 1 ) result.value--;return false;"
-              class="reduced items-count" type="button">
-              <i class="lnr lnr-chevron-down"></i>
-            </button>
-          </div> --}}
+            {{#if noStock}}
+        {{else}}
           <div class="product_count">
             <label for="qty">Quantity:</label>
             <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
@@ -111,11 +102,13 @@
               <i class="lnr lnr-chevron-down"></i>
             </button>
           </div>
+          {{/if}}
       
-            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Products Available. Cant Add More Quantity</p>
+            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock Available. Cant Add More Quantity</p>
         
                        <div class="magnified-img"></div>
-
+        {{#if noStock}}
+        {{else}}
           {{#if user}}
           {{#if oncart}}
 
@@ -136,7 +129,7 @@
             Login To Add To Cart
           </a>
           {{/if}}
-
+{{/if}}
         </div>
         <div class="col-lg-4 col-md-9"> </div>
                        <div class="magnified-img"></div>
