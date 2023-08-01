@@ -106,11 +106,18 @@
               </li>
 
             </ul>
+            <div class="payment_item">
+              <div class="radion_btn">
+                <input type="radio" id="f-option5" name="selector" value="Razorpay" checked>
+                <label for="f-option5">Razorpay</label>
+                <div class="check"></div>
+              </div>
 
+            </div>
 
             <div class="payment_item active">
               <div class="radion_btn">
-                <input type="radio" id="f-option6" value="COD" checked name="selector" />
+                <input type="radio" id="f-option6" value="COD" name="selector" />
                 <label for="f-option6">Cash On Delivery</label>
 
                 <div class="check"></div>
@@ -154,46 +161,46 @@
       document.getElementById('addErr').innerHTML = "Enter a Valid First Name"
 
       return false;
-       }  else if (
+    } else if (
       lname === "" || !/^[A-Za-z]+$/.test(lname)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid Last Name"
+      document.getElementById('addErr').innerHTML = "Enter a Valid Last Name"
 
       return false;
 
-       }  else if (
+    } else if (
       city === "" || !/^[A-Za-z]+$/.test(city)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid City Name"
+      document.getElementById('addErr').innerHTML = "Enter a Valid City Name"
 
       return false;
 
-       }  else if (
+    } else if (
       district === "" || !/^[A-Za-z]+$/.test(district)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid District Name"
+      document.getElementById('addErr').innerHTML = "Enter a Valid District Name"
 
       return false;
 
-       }   else if (
+    } else if (
       state === "" || !/^[A-Za-z]+$/.test(state)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid State Name"
+      document.getElementById('addErr').innerHTML = "Enter a Valid State Name"
 
       return false;
 
-       }   else if (
+    } else if (
       country === "" || !/^[A-Za-z]+$/.test(country)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid Country Name"
+      document.getElementById('addErr').innerHTML = "Enter a Valid Country Name"
 
       return false;
 
-       } else if (pincode === "" || !/^[0-9]+$/.test(pincode)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid Pincode";
+    } else if (pincode === "" || !/^[0-9]+$/.test(pincode)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid Pincode";
       return false;
-        } else if (phone === "" || !/^[0-9]+$/.test(phone)) {
-       document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number";
+    } else if (phone === "" || !/^[0-9]+$/.test(phone)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number";
       return false;
-        } else if (/^(\d)\1+$/.test(phone)) {
-  document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number (No Repeating Digits)";
-  return false;
-} else {
+    } else if (/^(\d)\1+$/.test(phone)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid Phone Number (No Repeating Digits)";
+      return false;
+    } else {
       let address = {
         fname,
         lname,
@@ -207,11 +214,17 @@
         country
       }
 
-      let paymentMethod;
-      let radioBtn = document.getElementById('f-option6');
-      paymentMethod = radioBtn.value;
+  let paymentMethod ;
+        let radioBtn = document.getElementsByName('selector');
 
+        for (let i = 0; i < radioBtn.length; i++) {
+            if (radioBtn[i].checked) {
+                paymentMethod = radioBtn[i].value;
+                break;
+            }
+        }
 
+{{!-- alert(paymentMethod) --}}
 
 
       $.ajax({
@@ -240,6 +253,25 @@
             }).then(function (value) {
               if (value) {
                 window.location.href = '/confirm';
+              }
+            });
+          }else{
+            swal({
+              title: "Order Confirmation Failed",
+              text: "Out Of Stock",
+              icon: "error",
+              buttons: {
+                ok: {
+                  text: "OK",
+                  value: true,
+                  visible: true,
+                  className: "",
+                  closeModal: true
+                }
+              }
+            }).then(function (value) {
+              if (value) {
+                window.location.href = '/products';
               }
             });
           }

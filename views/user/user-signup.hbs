@@ -528,7 +528,8 @@
         let password2 = document.getElementById('password2').value.trim();
         let errmsg = document.getElementById('errmsg');
         
-         const alphabetsPattern = /^[A-Za-z]+$/;
+      const alphabetsPattern = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
+
 
         if (email == '' || number == '' || username == "" || password == '' || password2 == '') {
             errmsg.innerHTML = "ALL FIELDS ARE REQUIRED";

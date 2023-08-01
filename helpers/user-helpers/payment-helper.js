@@ -45,16 +45,39 @@ function genarateOrderNo() {
 shipping = 50;
 
 const paymentHelper = {
+
+checkStock: async (userId) => {
+  const scart = await cart.findOne({ userId: userId }).populate("items.product");
+  
+      let orderProds = scart.items;
+
+  for (let i = 0; i < orderProds.length; i++) {
+    let prodstock = orderProds[i].product.stock;
+    let cartquan = orderProds[i].quantity;
+    
+    console.log(cartquan)
+    console.log("-----------==========----------",prodstock)
+    if(cartquan > prodstock){
+return false;
+    }
+   
+  }
+  return true;
+
+},
+
+
   /* The `completeOrder` function is a helper function that takes in three parameters: `userId`,
     `address`, and `paymentMethod`. */
   completeOrder: async (userId, address, paymentMethod) => {
     try {
       console.log("payment method", paymentMethod);
       console.log("ADDRESS FOR ORDER CONFIRMATION AND PAYMENT----=>", address);
-      const scart = await cart
-        .findOne({ userId: userId })
-        .populate("items.product");
-      let totalAmount = 0,
+      const scart = await cart.findOne({ userId: userId }).populate("items.product");
+      let totalAmount = 0,                                                                                                                                                                                                                                                                                                                                                                                        
+
+
+      
         date = Date.now();
       console.log("ORDER PLACING ITEM.PRODUCT", scart.items);
       //genarating orderNo.

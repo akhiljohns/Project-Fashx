@@ -190,10 +190,10 @@ showProductsUser:  () => {
           productName: productDetails.prodtitle,
           description: productDetails.proddescr,
           regularPrice: productDetails.prodrprice,
-          discount: productDetails.proddiscount,
+          discount: productDetails.proddisc,
           stock: productDetails.prodstock,
           brand: productDetails.prodbrand,
-          category: productDetails.prodcategoryid // Use the existing category ObjectId value
+          category: productDetails.prodcategoryid
         };
   
         if (images && images.length) {

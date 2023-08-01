@@ -1,21 +1,33 @@
 const userHelper = require("../../helpers/user-helpers/user-helper");
 const paymentHelper = require("../../helpers/user-helpers/payment-helper");
 
+const cart = require("../../models/cart-model");
+
 const paymentController = {
 
 
-  doPayment: (req, res, next) => {
+  doPayment: async (req, res, next) => {
     try {
       const address = req.body.address;
       const paymentMethod = req.body.paymentMethod;
       const userId = req.session.user._id;
+ 
+      const stockExst = await paymentHelper.checkStock(userId) 
 
-      paymentHelper
-        .completeOrder(userId, address, paymentMethod)
-        .then((response) => {
+      console.log(stockExst,"--------===============----------")
+      if(stockExst){
+        paymentHelper.completeOrder(userId, address, paymentMethod).then((response) => {
           req.session.lastOrder = response.order[response.order.length - 1];
-          res.status(200).send({ codSuccess: "true" });
+          res.status(200).send({ codSuccess: true });
         });
+      }else{
+
+        // CART DELETION 
+        await cart.deleteOne({ userId: userId });
+
+        res.status(200).send({ codSuccess: false});
+
+      }
     } catch (err) {
       console.log("Payment Error: ", err);
     }
