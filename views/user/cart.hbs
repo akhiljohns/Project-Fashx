@@ -39,15 +39,14 @@
   }
 
 
-  #prodname {
-    font-size: 16px;
+#prodname{
+  font-size: 16px;
     font-weight: 900;
     line-height: 13px;
     margin-bottom: 6px;
     margin-left: 10px;
 
-  }
-
+}
   .card .card-body {
     padding: 30px;
     background-color: transparent;
@@ -60,7 +59,7 @@
     border-color: #4466f2 !important;
   }
 </style>
-{{#if emptyCart}}
+        {{#if emptyCart}}
 <div class="card-body cart">
   <div class="col-sm-12 empty-cart-cls text-center">
     <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
@@ -69,7 +68,7 @@
     <a href="/products" class="btn btn-success cart-btn-transform m-3" data-abc="true">Continue Shopping</a>
   </div>
 </div>
-{{else}}
+        {{else}}
 <section class="cart_area">
   <div class="container">
     <div class="cart_inner">
@@ -100,21 +99,20 @@
                 <h5>₹{{this.product.regularPrice}}</h5>
               </td>
               <td>
-                ̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥̥
                 <div class="product_count">
-                  <input type="text" name="qty" id="{{this._id}}" maxlength="12" value="{{this.quantity}}"
-                    title="Quantity:" class="input-text qty" readonly />
+                  <input type="text" name="qty" id="{{this._id}}" maxlength="12" value="{{this.quantity}}" title="Quantity:"
+                    class="input-text qty" readonly/>
 
-                  <button onclick="add_quantity('{{this._id}}','{{this.product._id}}')" class="increase items-count"
-                    type="button">
+                  <button onclick="add_quantity('{{this._id}}','{{this.product._id}}')"
+                     class="increase items-count" type="button">
                     <i class="lnr lnr-chevron-up"></i>
                   </button>
 
-                  <button onclick="less_quantity('{{this._id}}','{{this.product._id}}')" class="reduced items-count"
-                    type="button">
+                  <button onclick="less_quantity('{{this._id}}','{{this.product._id}}')"
+                    class="reduced items-count" type="button">
                     <i class="lnr lnr-chevron-down"></i>
                   </button>
-
+                  
                 </div>
               </td>
               <td>
@@ -135,9 +133,9 @@
                 <h4>Subtotal</h4>
               </td>
               <td>
-                <span>
-                  ₹<span id="subtotal">{{subtotal}}</span>
-                </span>
+              <span>
+                                ₹<span id="subtotal">{{subtotal}}</span>
+                            </span>
               </td>
               <td></td>
             </tr>
@@ -155,8 +153,7 @@
             </tr>
 
           </tbody>
-          <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Maximum Product Quantity
-            Reached. Can't Add More Quantity</p>
+            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Maximum Product Quantity Reached. Can't Add More Quantity</p>
         </table>
         {{/if}}
       </div>
@@ -241,55 +238,55 @@
 {{!-- script to add and minus quantity --}}
 <script>
 
+  
+    function update() {
 
-  function update() {
+        let subtotal = +document.getElementById('subtotal').innerText;
 
-    let subtotal = +document.getElementById('subtotal').innerText;
-
-    if (subtotal == 0) {
-    }
-  }; update();
-
-  function manageQuantity(productId) {
-    return new Promise((resolve, reject) => {
-      let stock;
-      $.ajax({
-        url: '/getQuantity',
-        method: 'POST',
-        data: { productId: productId },
-        success: function (response) {
-          stock = response.stock;
+        if (subtotal == 0) {
         }
-      }).then(() => {
-        resolve(stock)
-      })
-    })
-  }
+    }; update();
 
-  function add_quantity(itemId, productId) {
-    let quantity = document.getElementById(itemId).value;
-    manageQuantity(productId).then((stock) => {
-      if (quantity < stock) {
-        addQuantity(itemId, productId);
-        quantity++;
-      } else {
-        showQuantityMsg(); // Show the message when quantity reaches maxQuantity
-      }
-      document.getElementById(itemId).value = quantity;
-    })
-  }
+     function manageQuantity(productId) {
+        return new Promise((resolve, reject) => {
+            let stock;
+            $.ajax({
+                url: '/getQuantity',
+                method: 'POST',
+                data: { productId: productId },
+                success: function (response) {
+                    stock = response.stock;
+                }
+            }).then(() => {
+                resolve(stock)
+            })
+        })
+    }
 
-  function less_quantity(itemId, productId) {
-    let quantity = +document.getElementById(itemId).value;
-    if (quantity > 1) {
-      minusQuantity(itemId, productId);
-      quantity--;
+    function add_quantity(itemId, productId) {
+        let quantity = document.getElementById(itemId).value;
+        manageQuantity(productId).then((stock) => {
+            if (quantity < stock) {
+                addQuantity(itemId, productId);
+                quantity++;
+            }   else {
+      showQuantityMsg(); // Show the message when quantity reaches maxQuantity
+    }
+            document.getElementById(itemId).value = quantity;
+        })
+    }
+
+    function less_quantity(itemId, productId) {
+        let quantity = +document.getElementById(itemId).value;
+        if (quantity > 1) {
+            minusQuantity(itemId, productId);
+            quantity--;
       hideQuantityMsg(); // Hide the message when quantity is greater than 1
 
+        }
+        document.getElementById(itemId).value = quantity;
     }
-    document.getElementById(itemId).value = quantity;
-  }
-  function showQuantityMsg() {
+ function showQuantityMsg() {
     document.getElementById('quantitymsg').style.display = "block";
   }
 
@@ -298,55 +295,56 @@
   }
 
 
-  function addQuantity(itemId, productId) {
-    let subtotal = 0;
-    $.ajax({
-      url: "/addQuantity?itemId=" + itemId,
-      method: "POST",
-      data: { productId: productId },
-      success: function (res) {
-        console.log(res);
+     function addQuantity(itemId, productId) {
+        let subtotal = 0;
+        $.ajax({
+            url: "/addQuantity?itemId=" + itemId,
+            method: "POST",
+            data: { productId: productId },
+            success: function (res) {
+                console.log(res);
 
-        let total = document.getElementsByClassName('totalPrice')
-        let item = res.cart.items;
+                let total = document.getElementsByClassName('totalPrice')
+                let item = res.cart.items;
+                
+                console.log("ADD QUANTITY CART QUANTITY ",item[0].quantity);
+
+                for (let i = 0; i < item.length; i++) {
+                    console.log(item[i])
+                    total[i].innerHTML = "₹"+item[i].product.regularPrice * item[i].quantity;
+                    subtotal = subtotal + (item[i].product.regularPrice * item[i].quantity);
+                }
+                document.getElementById('subtotal').innerHTML = subtotal
+                update();
+                
+               
+            }
+        })
+    }
 
 
-        for (let i = 0; i < item.length; i++) {
-          console.log(item[i])
-          total[i].innerHTML = "₹" + item[i].product.regularPrice * item[i].quantity;
-          subtotal = subtotal + (item[i].product.regularPrice * item[i].quantity);
-        }
-        document.getElementById('subtotal').innerHTML = subtotal
-        update();
-
-
-      }
-    })
-  }
-
-
-  function minusQuantity(itemId, productId) {
-    let subtotal = 0;
-    $.ajax({
-      url: "/reduceQuantity?itemId=" + itemId,
-      method: "POST",
-      data: { productId: productId },
-      success: function (res) {
-        console.log('fff', res);
-        let total = document.getElementsByClassName('totalPrice')
-        let item = res.cart.items;
-        for (let i = 0; i < item.length; i++) {
-          console.log(item[i])
-          total[i].innerHTML = "₹" + item[i].product.regularPrice * item[i].quantity;
-          subtotal += (item[i].product.regularPrice * item[i].quantity)
-        }
-        console.log(subtotal)
-        document.getElementById('subtotal').innerHTML = subtotal;
-        update();
-
-      }
-    })
-  }
+    function minusQuantity(itemId, productId) {
+        let subtotal = 0;
+        $.ajax({
+            url: "/reduceQuantity?itemId=" + itemId,
+            method: "POST",
+            data: { productId: productId },
+            success: function (res) {
+              console.log('fff', res);
+                let total = document.getElementsByClassName('totalPrice')
+                let item = res.cart.items;
+                for (let i = 0; i < item.length; i++) {
+                    console.log(item[i])
+                    total[i].innerHTML ="₹"+item[i].product.regularPrice * item[i].quantity;
+                    subtotal += (item[i].product.regularPrice * item[i].quantity)
+                }
+                console.log(subtotal)
+                document.getElementById('subtotal').innerHTML = subtotal;
+                update();
+               
+            }
+        })
+    }
 
 
 </script>
