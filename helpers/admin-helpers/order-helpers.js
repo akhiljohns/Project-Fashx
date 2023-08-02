@@ -152,7 +152,9 @@ incrementStock: async (productId,quantity)=>{
         try{
             return new Promise(async (resolve, reject) => {
                 const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
-                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Delivered" } }
+                const date = new Date();
+          
+                orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Delivered" , "order.$.deliveryDate": date } }
                 ).then((response)=>{
                     resolve(response);
                 })

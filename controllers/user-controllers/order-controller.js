@@ -56,15 +56,17 @@ const orderManagement = {
   },
 
 
-  getOrderdetails: (req, res, next) => {
+  getOrderdetails:  (req, res, next) => {
     const orderId = req.query.orderId;
     const userId = req.session.user._id;
-    orderHelper.getOrderdetails(orderId, userId).then((order) => {
+    orderHelper.getOrderdetails(orderId, userId).then(async (order) => {
+        let returnPossible = await orderHelper.getDeliDate(orderId, userId); 
       if (order) {
         res.render("user/order-details", {
           order,
           customer: req.session.user,
           user: req.session.user,
+          returnPossible 
         });
       }
     });

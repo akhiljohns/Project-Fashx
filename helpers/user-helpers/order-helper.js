@@ -47,8 +47,6 @@ const orderhelper = {
           throw new Error("Order not found");
         }
 
-        // console.log('hello::', products);
-
         resolve(order);
       });
     } catch (error) {
@@ -56,6 +54,52 @@ const orderhelper = {
       throw error;
     }
   },
+  getDeliDate: (orderId, userId) => {
+    try {
+      return new Promise(async (resolve, reject) => {
+        // Get the user's order
+        const orderColle = await orderCollection
+          .findOne({ userId: userId, "order._id": orderId }, { "order.$": 1 })
+          .populate("order.items.product")
+          .lean();
+  
+        if (!orderColle) {
+          throw new Error("Order not found");
+        }
+  
+        // Check if the 'order' array has any elements
+        if (!orderColle.order || orderColle.order.length === 0) {
+          throw new Error("Order does not contain any items");
+        }
+  
+        const deliDate = orderColle.order[0].deliveryDate;
+      //  const deliDate = "2023-07-26T14:30:00.000Z" 
+        const maxReturnDays = 5;
+  
+        // Get the current date
+        const currentDate = new Date();
+  
+        // Calculate the time difference in milliseconds
+        const timeDifferenceMs = currentDate - deliDate;
+  
+        // Convert milliseconds to days
+        const daysElapsed = timeDifferenceMs / (1000 * 60 * 60 * 24);
+  
+        // Check if the return is within the allowed timeframe
+        if (daysElapsed <= maxReturnDays) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  
+
+
 
 
   stockUpdate: async (orderId, userId) => {
@@ -65,7 +109,6 @@ const orderhelper = {
         { "order.$": 1 }
       );
       const cancelledOrder = order.order[0]; // inside cancelledOrder -> items -> [{product-productid/quantity-quantity to add/totalAmount}]
-     
 
       if (!order) {
         throw new Error("Order not found");
@@ -78,8 +121,6 @@ const orderhelper = {
 
         await orderhelper.incrementStock(productId, quantity);
       }
-
-      
     } catch (error) {
       console.error("Error while updating product stock:", error);
     }
@@ -126,40 +167,46 @@ const orderhelper = {
 
   returnOrder: (orderId, userId) => {
     try {
-        return new Promise(async (resolve, reject) => {
-            const orders = await orderCollection.findOne({ userId: userId, 'order._id': orderId }, { 'order.$': 1 });
-            console.log(orders.order[0].totalAmount, "|TOTAL AMOUNT");
-            totalAmount = orders.order[0].totalAmount;
+      return new Promise(async (resolve, reject) => {
+        const orders = await orderCollection.findOne(
+          { userId: userId, "order._id": orderId },
+          { "order.$": 1 }
+        );
+        console.log(orders.order[0].totalAmount, "|TOTAL AMOUNT");
+        totalAmount = orders.order[0].totalAmount;
 
-            // Fetch the user document to get the current wallet value
-            const user = await customerCollection.findOne({ _id: userId });
-            let walletValue = 0;
+        // Fetch the user document to get the current wallet value
+        const user = await customerCollection.findOne({ _id: userId });
+        let walletValue = 0;
 
-            if (user && user.wallet !== undefined) {
-                walletValue = user.wallet;
-            }
+        if (user && user.wallet !== undefined) {
+          walletValue = user.wallet;
+        }
 
-            // Increment the wallet value with the totalAmount if it's not zero
-            if (walletValue !== 0) {
-                totalAmount += walletValue;
-            }
+        // Increment the wallet value with the totalAmount if it's not zero
+        if (walletValue !== 0) {
+          totalAmount += walletValue;
+        }
 
-            // Update the user's wallet value
-            await customerCollection.updateOne({ _id: userId }, { $set: { wallet: totalAmount } });
+        // Update the user's wallet value
+        await customerCollection.updateOne(
+          { _id: userId },
+          { $set: { wallet: totalAmount } }
+        );
 
-            orderCollection.updateOne({ userId: userId, "order._id": orderId }, { $set: { "order.$.status": "Returned" } })
-                .then((response) => {
-                    resolve(response);
-                });
-        });
+        orderCollection
+          .updateOne(
+            { userId: userId, "order._id": orderId },
+            { $set: { "order.$.status": "Returned" } }
+          )
+          .then((response) => {
+            resolve(response);
+          });
+      });
     } catch (err) {
-        console.log('Error while canceling an Order:', err);
+      console.log("Error while canceling an Order:", err);
     }
-},
-
-
+  },
 };
-
-
 
 module.exports = orderhelper;
