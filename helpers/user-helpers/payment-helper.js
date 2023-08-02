@@ -90,8 +90,7 @@ return false;
       for (let i = 0; i < orderProds.length; i++) {
         let prodstock = orderProds[i].product.stock;
         let cartquan = orderProds[i].quantity;
-        console.log("CART QUANTITY-----=>", i, cartquan);
-        console.log("CART PROD STOCK-----=>", i, prodstock);
+  
         let remainstock = prodstock - cartquan;
         let prodid = orderProds[i].product._id;
 

@@ -60,17 +60,7 @@ module.exports = {
     },
 
     
-// for (let i = 0; i < orderProds.length; i++) {
-//     let prodstock = orderProds[i].product.stock
-// let cartquan = orderProds[i].quantity
-// console.log("CART QUANTITY-----=>",i,cartquan)
-// console.log("CART PROD STOCK-----=>",i,prodstock)
-// let remainstock = prodstock - cartquan
-// let prodid = orderProds[i].product._id
 
-// await products.updateOne({_id: prodid}, {$set: {stock: remainstock}});
-// }
-   
 stockUpdate: async (orderId, userId) => {
     try {
       const order = await orderCollection.findOne({ _id: orderId, userId }).populate('order.items.product');

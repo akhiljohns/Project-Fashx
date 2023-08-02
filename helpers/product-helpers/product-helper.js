@@ -109,7 +109,7 @@ showProductsUser:  () => {
     let categories = await categoryColl.find().lean().exec();
 
     product.find({ hidden: false }).populate('category').lean().then((products) => {
-      console.log("SHOW PRODUCTS-----===>", products);
+      
       
       // Filter categories with hidden field value equal to true
       const filteredProducts = products.filter((product) => {
@@ -117,7 +117,7 @@ showProductsUser:  () => {
       });
       
       
-      console.log("show categories",categories);
+     
       resolve(filteredProducts);
     }).catch((err) => {
       console.log("show product err ", err);
