@@ -5,11 +5,16 @@ const fs = require("fs");
 
 module.exports = {
 
+
+  
   showProducts: (req, res, next) => {
     productHelper.showProducts().then((products) => {
       res.render("admin/products", { products, admin: true });
     });
   },
+
+
+
 
   getEditProduct: (req, res, next) => {
     let id = req.params.id;
@@ -19,6 +24,7 @@ module.exports = {
       });
     });
   },
+
 
 
   postEditProduct: (req, res, next) => {
@@ -37,21 +43,41 @@ module.exports = {
   },
 
 
-  softDeleteProduct: (req, res, next) => {
-    const productId = req.params.id;
 
-    product
-      .findByIdAndDelete(productId)
-      .then(() => {
-        res.redirect("/admin/products");
+
+  softDeleteProduct: (req, res, next) => {
+    const productId = req.body.productId;
+
+    productHelper
+      .hasPendingOrderWithProductId(productId)
+      .then((hasPending) => {
+        if (hasPending) {
+          res.status(200).json({ status: false });
+        } else {
+          product
+            .findByIdAndDelete(productId)
+            .then(() => {
+              res.status(200).json({ status: true });
+            })
+            .catch((err) => {
+              console.log("Error while deleting product: " + err);
+              res.redirect("/admin/products");
+            });
+        }
       })
       .catch((err) => {
-        console.log("Error while deleting product: " + err);
-        res.redirect("/admin/products");
+        console.error("Error checking pending order:", err);
       });
+
+    // product.findByIdAndDelete(productId).then(() => {
+    //   res.redirect("/admin/products");
+    // })
+    // .catch((err) => {
+    //   console.log("Error while deleting product: " + err);
+    //   res.redirect("/admin/products");
+    // })
   },
 
-  
   hideunhideproduct: (req, res) => {
     try {
       let id = req.params.id;

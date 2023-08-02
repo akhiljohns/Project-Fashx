@@ -83,3 +83,5 @@ if (daysElapsed <= maxReturnDays) {
 } else {
   console.log("Return is not allowed as it is after 5 days of delivery.");
 }
+
+db.orders.aggregate([{ $unwind: '$order' },{ $match: { 'order.items.product': ObjectId("64b63e9c843d8e4d8622f529") } },{$group: {_id: '$_id',userId: { $first: '$userId' },order: { $push: '$order' },},},]);

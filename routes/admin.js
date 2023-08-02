@@ -51,7 +51,7 @@ router.delete('/admin/products/delete-image/:filename', (req, res, next) => {
   
 router.post('/products/edit/:id', upload.array('productImage'), productManage.postEditProduct );
 
-router.get("/products/delete/:id", access.logStatus, productManage.softDeleteProduct);
+router.post("/products/delete", access.logStatus, productManage.softDeleteProduct);
 router.get("/products/delete/image/:id", access.logStatus, productManage.softDeleteProduct);
 router.get('/products/hide/:id',access.logStatus, productManage.hideunhideproduct);
 

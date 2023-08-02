@@ -4,6 +4,7 @@ const sharp = require('sharp');
 const mongoose = require('mongoose');
 const fs=require('fs');
 const categoryColl = require("../../models/category-model");
+const orderColl = require("../../models/order-model");
 
 
 module.exports = {
@@ -306,4 +307,23 @@ showProductsUser:  () => {
         throw error;
       }
     },
+
+
+
+hasPendingOrderWithProductId: async (productId)  => {
+  try {
+    const orders = await orderColl.aggregate([{ $unwind: '$order' },{  $match: {    'order.items.product': new ObjectId(productId),    'order.status': 'Pending',  },},{ $limit: 1 }]);
+   
+  if(orders.length){
+return true;
+  }else{
+return false;
+  }
+  } catch (err) {
+    // Handle any errors here
+    console.error(err);
+    throw err;
+  }
+}
+
 };

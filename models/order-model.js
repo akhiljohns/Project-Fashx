@@ -74,4 +74,4 @@ const order = mongoose.model('order', orderSchema);
 
 module.exports = order;
 
-``
+// db.orders.find({"order.items.product": "64b63e89843d8e4d8622f524","order.status": "Pending",})
