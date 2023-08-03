@@ -53,10 +53,9 @@ checkStock: async (userId) => {
 
   for (let i = 0; i < orderProds.length; i++) {
     let prodstock = orderProds[i].product.stock;
-    let cartquan = orderProds[i].quantity;
+    let cartquan = orderProds[i].quantity;  
     
-    console.log(cartquan)
-    console.log("-----------==========----------",prodstock)
+   
     if(cartquan > prodstock){
 return false;
     }
@@ -65,10 +64,23 @@ return false;
   return true;
 
 },
+checkWallet: async (userId,totalAmount) => {
+  const user = await customer.findOne({ _id: userId })
+  
 
 
-  /* The `completeOrder` function is a helper function that takes in three parameters: `userId`,
-    `address`, and `paymentMethod`. */
+  if(user.wallet < totalAmount){
+    return false;
+  }else{
+    return true;
+  }
+   
+   
+
+},
+
+
+
   completeOrder: async (userId, address, paymentMethod) => {
     try {
       console.log("payment method", paymentMethod);
@@ -107,6 +119,29 @@ return false;
       }
       //discount applying and tax towards total amount (pending)
       totalAmount += shipping;
+
+      if(paymentMethod == 'Wallet'){
+        const user = await customer.findOne({ _id: userId });
+        let walletValue = 0;
+
+        if (user && user.wallet !== undefined) {
+          walletValue = user.wallet;
+        }
+
+        // Increment the wallet value with the totalAmount if it's not zero
+        if (walletValue !== 0) {
+          walletValue -= totalAmount;
+        }
+
+        // Update the user's wallet value
+        await customer.updateOne(
+          { _id: userId },
+          { $set: { wallet: walletValue } }
+        );
+
+        // req.session.user.wallet = walletValue;
+
+      }
 
       //getting order collection
       const orderCollection = await order.findOne({ userId: userId });

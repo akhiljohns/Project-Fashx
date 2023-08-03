@@ -32,7 +32,6 @@ module.exports = {
          }
       console.log("<=-------SINGLE PRODUCT PAGE---------=>", product);
       if (req.session.userloggedIn) {
-        console.log(req.session.user);
         let userId = req.session.user._id;
         carthelper.checkProduct(userId, product).then((response) => {
           console.log("Product On Cart: ", response);

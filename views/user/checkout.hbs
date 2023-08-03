@@ -31,6 +31,38 @@
   border-color: #71cd7a;
   box-shadow: 0 0 5px #71cd7a;
 }
+/* Style for the unselectable input */
+.hideradio input[type="radio"]:not(:checked) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+/* Style for the unselectable label */
+.disabled-label {
+  color: #999; /* Dim the color to indicate unselectable state */
+}
+
+/* Style for the hover message */
+.hideradio input[type="radio"]:disabled + label::before {
+  content: "This option is not selectable";
+  position: absolute;
+  top: -30px;
+  left: 0;
+  background-color: #ffcccc;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #ff0000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.hideradio input[type="radio"]:disabled + label:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 </style>
 
 <!--================Checkout Area =================-->
@@ -50,7 +82,7 @@
                 {{#each address}}
                 <option value="{{this._id}}">{{this.fname}} {{this.lname}}, {{this.houseName}}, {{this.city}},
                   {{this.pincode}}</option>
-                {{/each}}
+                {{/each}} 
               </select>
             </div>
             {{/if}}
@@ -139,6 +171,11 @@
                   <span>₹<span id="total"></span></span>
                 </a>
               </li>
+              <li>
+                <a href="#" style="font-size: large; font-weight: bold;">Wallet Balance
+                  <span>₹{{wallet}}<span id="walletto"></span></span>
+                </a>
+              </li>
 
             </ul>
             <div class="payment_item">
@@ -159,16 +196,16 @@
               </div>
 
               </div>
-            <div class="payment_item active">
-              <div class="radion_btn">
-                <input type="radio
-                
-                " id="f-option6" value="COD" name="selector" />
-                <label for="f-option6">Cash On Delivery</label>
+          <div class="payment_item active">
+  <div class="radion_btn">
+    <input type="radio" id="f-option7" value="Wallet" name="selector" />
+    <label for="f-option7">Wallet</label>
+    <div class="check"></div>
+  </div>
+</div>
 
-                <div class="check"></div>
-              </div>
-              </div>
+  
+
 
             <a class="main_btn" onclick="return payment()">Place Order</a>
             <span id="addErr" style="color: #ff0000;margin: 15.3rem -0.3remrem;font-size: medium;"></span>
@@ -268,8 +305,8 @@
                 break;
             }
         }
-
-{{!-- alert(paymentMethod) --}}
+let totalAm = document.getElementById("total").innerHTML;
+{{!-- alert(totalAm) --}}
 
 
       $.ajax({
@@ -277,7 +314,8 @@
         method: 'POST',
         data: JSON.stringify({
           address: address,
-          paymentMethod: paymentMethod
+          paymentMethod: paymentMethod,
+          totalAmount: totalAm
         }),
         contentType: 'application/json',
         success: function (response) {
@@ -300,7 +338,7 @@
                 window.location.href = '/confirm';
               }
             });
-          }else{
+          }else if(response.noStock){
             swal({
               title: "Order Confirmation Failed",
               text: "Out Of Stock",
@@ -317,6 +355,25 @@
             }).then(function (value) {
               if (value) {
                 window.location.href = '/products';
+              }
+            });
+          }else if(!response.walletPossible){
+            swal({
+              title: "Order Confirmation Failed",
+              text: "Not Enough Balance In Wallet To Place Order",
+              icon: "error",
+              buttons: {
+                ok: {
+                  text: "OK",
+                  value: true,
+                  visible: true,
+                  className: "",
+                  closeModal: true
+                }
+              }
+            }).then(function (value) {
+              if (value) {
+                window.location.href = '/checkout';
               }
             });
           }
