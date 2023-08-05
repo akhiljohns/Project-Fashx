@@ -22,7 +22,6 @@ module.exports = {
     let prodid = req.params.id;
 
     productHelper.findProductByIdUser(prodid).then((product) => {
-      console.log(product.stock,"----------=========================--------------")
       let noStock;
       if(product.stock == '0'){
 

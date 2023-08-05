@@ -220,6 +220,7 @@
 
 
 <!--================End Checkout Area =================-->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
   function payment() {
@@ -306,8 +307,6 @@
             }
         }
 let totalAm = document.getElementById("total").innerHTML;
-{{!-- alert(totalAm) --}}
-
 
       $.ajax({
         url: '/payment',
@@ -357,7 +356,7 @@ let totalAm = document.getElementById("total").innerHTML;
                 window.location.href = '/products';
               }
             });
-          }else if(!response.walletPossible){
+          }else if(response.walletPossible == false){
             swal({
               title: "Order Confirmation Failed",
               text: "Not Enough Balance In Wallet To Place Order",
@@ -376,11 +375,109 @@ let totalAm = document.getElementById("total").innerHTML;
                 window.location.href = '/checkout';
               }
             });
+          }else{
+                    razorpayPayment(response,JSON.stringify(response.address));
           }
         }
       });
     }
   }
+
+
+
+  
+    function verifyPayment(payment, orderDetails , address) {
+        $.ajax({
+            url: '/rzpPayment',
+            method: "POST",
+            data: {
+                payment,
+                orderDetails,
+                address: address,
+                amount: orderDetails.finalAmount,
+                orderNo: orderDetails.receipt
+            },
+            success: function(response) {
+                if (response.rzpStatus){
+                    window.location.href = '/confirm';
+                } else {
+                   
+                     swal({
+              title: "Order Confirmation Failed",
+              text: "Something went wrong",
+              icon: "error",
+              buttons: {
+                ok: {
+                  text: "OK",
+                  value: true,
+                  visible: true,
+                  className: "",
+                  closeModal: true
+                }
+              }
+            }).then(function (value) {
+              if (value) {
+                window.location.href = '/checkout';
+              }
+            });
+                }
+            }
+        })
+    }
+
+    function rejectOrder(payment, order) {
+        $.ajax({
+            url: '/rejectPayment',
+            method: "POST",
+            data: {
+                payment,
+                order
+            }
+        })
+    }
+
+
+    function razorpayPayment(order, address) {
+
+        var options = {
+            "key": "rzp_test_EC0sGmKLPTm81K", // Enter the Key ID generated from the Dashboard
+            "amount": order.finalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "FashX Fashion Store",
+            "description": "Product Payment",
+            "image": 'public/assets/imgs/theme/shopping-cart.png',
+            "order_Id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                if (response.razorpay_payment_id) {
+         
+
+                    verifyPayment(response, order ,address);
+                } else {
+                 
+                  
+                    rejectOrder(response, order);
+                }
+
+            },
+            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                "name": "Akhil Johns", //your customer's name
+                "email": "akhiljohns@gmail.com",
+                "contact": "+91 1234567890"  //Provide the customer's phone number for better conversion rates 
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#bf1313"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+
+        rzp1.open();
+    }
+
+
+
 </script>
 
 <script>

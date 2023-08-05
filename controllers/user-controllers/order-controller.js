@@ -24,7 +24,8 @@ console.log(cartUser,'cart user -==-=-=-=-=-=-=-')
           res.render("user/checkout", {
             address: address,
             totalAmount: response.totalAmount,
-            wallet:cartUser.wallet
+            wallet:cartUser.wallet,
+            user: req.session.user,
           });
         }
         })
@@ -50,9 +51,9 @@ console.log(cartUser,'cart user -==-=-=-=-=-=-=-')
           for (let i = 0; i < orders.length; i++) {
             orders[i].no = orders[i].items.length;
           }
-          res.render("user/orders", { orders, customer });
+          res.render("user/orders", { orders, customer ,user: req.session.user,  });
         } else {
-          res.render("user/orders", { noOrders: true, customer });
+          res.render("user/orders", { noOrders: true, customer,user: req.session.user, });
         }
       })
       .catch((error) => {

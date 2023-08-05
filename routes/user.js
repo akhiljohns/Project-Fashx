@@ -101,6 +101,12 @@ router.post('/updatePassword', passwordController.changePassword)
 router.get('/orders', access.check, access.checkBlockedStatus, orderController.getOrders )
 router.get('/order/details', access.check, access.checkBlockedStatus, orderController.getOrderdetails )
 router.post('/payment', access.check, access.checkBlockedStatus, paymentController.doPayment)
+router.post('/rzpPayment', access.check,  access.checkBlockedStatus ,paymentController.doRzpPayment)
+
+router.post('/rejectPayment', (req, res) => {
+    console.log('payment rejected');
+    res.redirect('/checkout')
+})
 router.post('/cancelorder', access.check, access.checkBlockedStatus, orderController.postCancelOrder)
 router.post('/returnorder', access.check, access.checkBlockedStatus, orderController.postReturnOrder)
 router.get('/confirm', access.check, access.checkBlockedStatus, orderController.getConfirm)
