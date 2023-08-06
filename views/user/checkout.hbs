@@ -61,7 +61,15 @@
   visibility: visible;
   opacity: 1;
 }
+.hov-btn3:hover {
+  border-color: #00010b;
+  background-color: #717fe0;
+  color: #fff;
+}
 
+.hov-btn3:hover i {
+  color: #ff0000;
+}
 
 </style>
 
@@ -167,10 +175,65 @@
                 </a>
               </li>
               <li>
+                <a href="#">Coupons
+
+                </a>
+              </li>
+            <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{#each coupons}}
+                                    <p style="cursor: pointer; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        onclick="setCoupon('{{this.code}}')">Use <strong
+                                            style="color: rgba(9, 32, 162, 0.91);">{{this.code}}</strong> for purchase
+                                        more than Rs. {{this.minAmount}}</p>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             <div class="flex-w flex-m m-r-20 m-tb-5">
+                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
+                            placeholder="Coupon Code" id="couponCode" {{#if couponActive}} value="{{couponActive.code}}"
+                            {{/if}}>
+
+                        <div onclick="checkCoupon()" {{#if couponActive}} style="display: none;" {{else}}
+                            style="display: flex;" {{/if}} id="apply"
+                            class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                            Apply coupon
+                        </div>
+                        <div onclick="cancelCoupon()" style="display: none;" id="cancel"
+                            class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                            Cancel coupon
+                        </div>
+
+                        <span id="couponErr"
+                            style="{{#if couponActive}} color: green; {{else}} color: rgb(177, 9, 9); {{/if}}  margin-left: 10px;">{{#if
+                            couponActive}} Applied {{/if}} </span>
+
+                    </div>
+             
+
+                       
+              <li>
+                <a href="#" {{#if couponActive}} style="font-size: large; font-weight: bold; display: none;" {{else}} style="display: none;" {{/if}}>
+                  <span>₹<span id="discN">Discount</span></span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="disc" {{#if couponActive}} style=" display: block;font-size: large; font-weight: bold;" {{else}} style="display: none;" {{/if}}>Discount
+                  <span>₹-<span id="discount"> {{#if couponActive}} {{couponActive.discount}} {{/if}} </span></span>
+                </a>
+              </li>
+              <li>
                 <a href="#" style="font-size: large; font-weight: bold;">Total
                   <span>₹<span id="total"></span></span>
                 </a>
               </li>
+
               <li>
                 <a href="#" style="font-size: large; font-weight: bold;">Wallet Balance
                   <span>₹{{wallet}}<span id="walletto"></span></span>
@@ -178,6 +241,7 @@
               </li>
 
             </ul>
+            <span id="addErr" style="color: #ff0000;margin: 15.3rem -0.3remrem;font-size: medium;"></span>
             <div class="payment_item">
               <div class="radion_btn">
                 <input type="radio" id="f-option5" name="selector" value="Razorpay" checked>
@@ -208,7 +272,6 @@
 
 
             <a class="main_btn" onclick="return payment()">Place Order</a>
-            <span id="addErr" style="color: #ff0000;margin: 15.3rem -0.3remrem;font-size: medium;"></span>
 
           </div>
         </div>
@@ -237,7 +300,7 @@
     country = document.getElementById("country").value.trim();
 
     if (fname == "" || fname == "" || phone == "" || houseName == "" || city == "" || landmark == "" || district == "" || pincode == "" || state == "" || country == "") {
-      document.getElementById('addErr').innerHTML = 'All fields Are Required'
+      document.getElementById('addErr').innerHTML = 'All Address Fields Are Required'
       return false;
     } else if (
       fname === "" || !/^[A-Za-z]+$/.test(fname)) {
@@ -394,6 +457,7 @@ let totalAm = document.getElementById("total").innerHTML;
                 payment,
                 orderDetails,
                 address: address,
+                coupon: orderDetails.coupon,
                 amount: orderDetails.finalAmount,
                 orderNo: orderDetails.receipt
             },
@@ -517,3 +581,105 @@ let totalAm = document.getElementById("total").innerHTML;
 </script>
 
 <!--===============================================================================================-->
+
+{{!-- script contains checkCoupon and cancelCoupon functions --}}
+<script>
+    let coupon = {
+        code: '',
+        discount: 0
+    };
+    function checkCoupon() {
+        let code = document.getElementById('couponCode').value.trim();
+
+        if (code === '') {
+            document.getElementById('couponErr').innerHTML = ''
+            document.getElementById('couponErr').style.color = 'red';
+            document.getElementById('discount').innerText = '';
+            document.getElementById('disc').style.display = 'none';
+            document.getElementById('discN').style.display = 'none';
+            coupon.discount = 0;
+            coupon.code = '';
+        } else {
+            $.ajax({
+                url: '/check-coupon',
+                method: 'POST',
+                data: {
+                    code: code
+                },
+                success: function (res) {
+                    if (res.valid) {
+                        document.getElementById('disc').style.display = '';
+                        document.getElementById('discN').style.display = '';
+                        //document.getElementById('couponCode').style.cursor = not-allowed;
+                        document.getElementById('discount').innerText = res.discount;
+                        document.getElementById('cancel').style.display = 'flex';
+                        document.getElementById('apply').style.display = 'none';
+                        document.getElementById('couponErr').innerHTML = 'Applied';
+                        document.getElementById('couponErr').style.color = 'green';
+                        coupon.discount = res.discount;
+                        coupon.code = res.code;
+                        update();
+                    } else {
+                        document.getElementById('couponErr').innerHTML = res.message;
+                        document.getElementById('couponErr').style.color = 'red';
+                        document.getElementById('discount').innerText = '';
+                        document.getElementById('disc').style.display = 'none';
+                        document.getElementById('discN').style.display = 'none';
+                        coupon.discount = 0;
+                        coupon.code = '';
+                    }
+                },
+            })
+        }
+    };
+
+    function cancelCoupon() {
+        $.ajax({
+            url: '/cancel-coupon',
+            method: 'POST',
+            data: {},
+            success: function (res) {
+                let code = document.getElementById('couponCode').value;
+                document.getElementById('couponErr').style.color = 'red';
+                document.getElementById('couponErr').innerText = '';
+
+                document.getElementById('couponCode').value = '';
+                //document.getElementById('couponCode').style.cursor = allowed;
+                document.getElementById('discount').innerText = '';
+                update();
+                document.getElementById('cancel').style.display = 'none';
+                document.getElementById('apply').style.display = 'flex';
+                document.getElementById('disc').style.display = 'none';
+                document.getElementById('discN').style.display = 'none';
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        checkCoupon();
+    });
+
+
+
+     function update() {
+
+        let discount = +document.getElementById('discount').innerText;
+        let shipping = +document.getElementById('shipping').innerText;
+        let subtotal = +document.getElementById('carttotal').innerText;
+
+        if (subtotal == 0) {
+            window.location.reload();
+        }
+
+        let finalAmount = (subtotal + shipping) - discount;
+
+        document.getElementById('total').innerText = finalAmount
+    }; update();
+</script>
+
+{{!-- script contains setCoupon function --}}
+<script>
+    function setCoupon(couponCode) {
+        document.getElementById('couponCode').value = couponCode;
+    }
+</script>

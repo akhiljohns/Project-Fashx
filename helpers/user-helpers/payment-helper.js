@@ -82,7 +82,7 @@ checkWallet: async (userId,totalAmount) => {
 
 
 
-  completeOrder: async (userId, address, paymentMethod) => {
+  completeOrder: async (userId, address, paymentMethod ,coupon) => {
     try {
       console.log("payment method", paymentMethod);
       console.log("ADDRESS FOR ORDER CONFIRMATION AND PAYMENT----=>", address);
@@ -120,6 +120,12 @@ checkWallet: async (userId,totalAmount) => {
       }
       //discount applying and tax towards total amount (pending)
       totalAmount += shipping;
+      if(coupon)
+
+            {
+                totalAmount = totalAmount - coupon.discount;
+                await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
+            }
 
       if(paymentMethod == 'Wallet'){
         const user = await customer.findOne({ _id: userId });
@@ -163,12 +169,16 @@ checkWallet: async (userId,totalAmount) => {
                     date: date,
                     paymentMethod: paymentMethod,
                     address: address,
+                    discount: coupon ? coupon.discount : 0,
                     shippingCharge: shipping,
                   },  
                 },
               }
             )
             .then(async (response) => {
+              if(coupon){
+                await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
+            }
               order
                 .findOne({ userId: userId })
                 .populate("order.items.product")
@@ -192,11 +202,13 @@ checkWallet: async (userId,totalAmount) => {
                   date: date,
                   paymentMethod: paymentMethod,
                   address: address,
+                  discount: coupon ? coupon.discount : 0,
                   shippingCharge: shipping,
                 },
               ],
             })
             .then((response) => {
+             
               order
                 .findOne({ userId: userId })
                 .populate("order.items.product")
@@ -233,11 +245,16 @@ checkWallet: async (userId,totalAmount) => {
     })
 },
 
-  getTotalAmount: (userId) => {
+  getTotalAmount: (userId ,coupon) => {
       return new Promise(async(resolve, reject) => {
           const orderNo = genarateOrderNo();
+          let usedCoupon
+          if(coupon){
+           usedCoupon = await couponCollection.findOne({code: coupon.code});
+          }
+       
            cart.findOne({userId: userId}).then((res) => {
-              let finalAmount = (res.totalAmount + shipping);
+              let finalAmount = (res.totalAmount + shipping) - (usedCoupon? usedCoupon.discount : 0) ;
               const response = {finalAmount: finalAmount, orderNo: orderNo,}
              
               resolve(response);
@@ -248,11 +265,12 @@ checkWallet: async (userId,totalAmount) => {
       })
   },
 
-  rzpPayment: async (userId, address, paymentMethod, orderNo, totalAmount) => {
+  rzpPayment: async (userId, address, paymentMethod, orderNo, totalAmount,couponCode) => {
 
       try {
           const shopcart = await cart.findOne({ userId: userId }).populate('items.product');
           let date = Date.now();
+          const coupon = couponCollection.findOne({ code: couponCode });
         let parseAddress =   JSON.parse(address);
          
           const orderCollection = await order.findOne({ userId: userId }); 
@@ -288,11 +306,14 @@ checkWallet: async (userId,totalAmount) => {
                             date: date,
                             paymentMethod: paymentMethod,
                             address: parseAddress,
+                            discount: coupon ? coupon.discount : 0,
                             shippingCharge: shipping,
                           }
                       }
                   }).then(async (response) => {
-                     
+                    if (coupon) {
+                      await customer.updateOne({ userId: userId }, { $push: { usedCoupons: coupon._id } });
+                  }
                       order.findOne({ userId: userId }).populate('order.items.product').lean().then(async (order) => {
                           await  cart.deleteOne({ userId: userId });
                           resolve({ status: true, ...order });
@@ -312,6 +333,7 @@ checkWallet: async (userId,totalAmount) => {
                         date: date,
                         paymentMethod: paymentMethod,
                         address: parseAddress,
+                        discount: coupon ? coupon.discount : 0,
                         shippingCharge: shipping,
                       }]
                   }).then((response) => {

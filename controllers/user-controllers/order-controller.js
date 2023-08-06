@@ -3,6 +3,9 @@ const userHelper = require("../../helpers/user-helpers/user-helper");
 const cart = require("../../models/cart-model");
 const customerColl = require("../../models/user-model");
 
+const couponManagement = require('../user-controllers/user-coupon-controller');
+
+
 //importing helpers
 const orderHelper = require("../../helpers/user-helpers/order-helper");
 
@@ -11,6 +14,9 @@ const orderManagement = {
   showAddress: async (req, res, next) => {
     const userId = req.session.user._id;
     const cartUser = await customerColl.findOne({ _id: userId });
+    let coupons = await couponManagement.getActiveCoupons();
+    const couponActive = req.session.couponActive || false;
+
 console.log(cartUser,'cart user -==-=-=-=-=-=-=-')
     userHelper.getAddress(userId).then((user_address) => {
       cart
@@ -21,11 +27,14 @@ console.log(cartUser,'cart user -==-=-=-=-=-=-=-')
             res.redirect('/cart') 
           }
           else{
+
           res.render("user/checkout", {
             address: address,
             totalAmount: response.totalAmount,
             wallet:cartUser.wallet,
             user: req.session.user,
+            coupons,
+            couponActive
           });
         }
         })

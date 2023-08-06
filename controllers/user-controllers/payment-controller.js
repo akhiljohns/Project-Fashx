@@ -10,8 +10,8 @@ const paymentController = {
       const paymentMethod = req.body.paymentMethod;
       const userId = req.session.user._id;
       const totalAmount = req.body.totalAmount;
+      const coupon = req.session.couponActive ? req.session.couponActive : null;
       const stockExst = await paymentHelper.checkStock(userId);
-
       
       if (stockExst) 
       {
@@ -19,10 +19,10 @@ const paymentController = {
 
             if(paymentMethod == "Razorpay")
             {
-            paymentHelper.getTotalAmount(userId).then((response) => {
+            paymentHelper.getTotalAmount(userId , coupon).then((response) => {
                 if(!response.error){
                     paymentHelper.generateRazorpay(response.orderNo, response.finalAmount).then((resp) => {
-                      res.status(200).json({...resp, address, finalAmount:response.finalAmount});
+                      res.status(200).json({...resp, address, coupon ,finalAmount:response.finalAmount});
                     }).catch((err) => {
                         console.log('Error in controller while generatingazorpay', err);
                     })
@@ -34,7 +34,7 @@ const paymentController = {
 
              
               paymentHelper
-                .completeOrder(userId, address, paymentMethod)
+                .completeOrder(userId, address, paymentMethod ,coupon)
                 .then((response) => {
                   req.session.lastOrder = response.order[response.order.length - 1];
                   res.status(200).send({ codSuccess: true });
@@ -63,12 +63,12 @@ const paymentController = {
   doRzpPayment: (req, res, next) => {
       try {
           let address = req.body.address;
-        
+          const couponCode = req.body.coupon;
           const paymentMethod = 'Razorpay'
           const userId = req.session.user._id;
           const amount = req.body.amount;
           const orderNo = req.body.orderNo;
-          paymentHelper.rzpPayment(userId, address, paymentMethod, orderNo, amount).then((response)=> {
+          paymentHelper.rzpPayment(userId, address, paymentMethod, orderNo, amount,couponCode).then((response)=> {
          
 
               req.session.lastOrder = response.order[response.order.length-1];

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const coupon = require('./coupon-model');
+const { ObjectId } = require('mongodb');
 
 
 const userSchema = new mongoose.Schema({
@@ -27,11 +29,17 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    usedCoupons: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: coupon
+    }],
     blocked: {
         type: Boolean,
         default: false
+    },createdAt: {
+        type: Date,
+        default: new Date()
     },
-       
     wallet: {
         type: Number,
         default: 0

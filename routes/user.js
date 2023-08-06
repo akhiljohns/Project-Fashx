@@ -13,6 +13,7 @@ const cartController = require('../controllers/product-controllers/cart-controll
 const orderController = require('../controllers/user-controllers/order-controller');
 const profileManager = require('../controllers/user-controllers/profile-manager');
 const paymentController = require('../controllers/user-controllers/payment-controller');
+const couponManagement = require('../controllers/user-controllers/coupon-controller')
 
 // importing middlewares
 const access = require('../middlewares/loginCheck');
@@ -66,7 +67,7 @@ router.post("/categorise",  productManage.categorise)
 // CART 
 router.get('/cart', access.check, access.checkBlockedStatus, cartController.showCart)
 router.post('/addtocart', cartController.addtoCart);
-router.post('/removeFromCart', cartController.removeItem );
+router.post('/removeFromCart', cartController.removeItem);
 router.post('/getQuantity', productManage.getStock);
 router.post('/addQuantity', cartController.addQuantity);
 router.post('/reduceQuantity', cartController.reduceQuantity);
@@ -74,6 +75,11 @@ router.post('/reduceQuantity', cartController.reduceQuantity);
 
 // CHECKOUT 
 router.get('/checkout', access.check, access.checkBlockedStatus,orderController.showAddress);
+
+//COUPON
+router.post('/check-coupon', couponManagement.checkCoupon);
+
+router.post('/cancel-coupon', couponManagement.cancelCoupon );
 
 
 // PROFILE 

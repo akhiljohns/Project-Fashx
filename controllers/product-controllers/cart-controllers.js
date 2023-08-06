@@ -56,12 +56,7 @@ const cartController = {
           }
           let coupons = await couponManagement.getActiveCoupons();
 
-          res.render("user/cart", {
-            products,
-            user: req.session.user,
-            subtotal,
-            emptyCart: false,
-          });
+          res.render("user/cart", {products,user: req.session.user,subtotal,emptyCart: false,coupons});
         } else {
           let products = null;
           res.render("user/cart", {
