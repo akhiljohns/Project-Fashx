@@ -14,7 +14,7 @@ const paymentController = {
       const stockExst = await paymentHelper.checkStock(userId);
       
       if (stockExst) 
-      {
+  {
         const walletPossible = await paymentHelper.checkWallet(userId,totalAmount);
 
             if(paymentMethod == "Razorpay")

@@ -5,11 +5,24 @@ const mongoose = require('mongoose');
 const fs=require('fs');
 const categoryColl = require("../../models/category-model");
 const orderColl = require("../../models/order-model");
+const reviewColl = require("../../models/review-model");
 
 
 module.exports = {
  
-
+   hasProductInOrder: async (userId, productId) => {
+    try {
+      const order = await orderColl.findOne({
+        userId,
+        'order.items.product': productId
+      });
+  
+      return !!order; // Return true if order is found, false if not
+    } catch (error) {
+      console.error('Error checking for product in order:', error);
+      return false; // In case of error, return false
+    }
+  },
 
 
 addProduct: async (productDetails, images) => {
@@ -226,7 +239,33 @@ showProductsUser:  () => {
       }
     });
   },
+saveProductReview: async (userId, productId, reviewName, reviewMessage) => {
+    try {
+      const newReview = {
+        product: productId,
+        name: reviewName,
+        message: reviewMessage
+      };
   
+      const existingReview = await reviewColl.findOne({ userId });
+  
+      if (existingReview) {
+        existingReview.reviews.push(newReview);
+        await existingReview.save();
+      } else {
+        const review = new reviewColl({
+          userId,
+          reviews: [newReview]
+        });
+        await review.save();
+      }
+  
+      console.log('Product review saved successfully.');
+    
+    } catch (error) {
+      console.error('Error saving product review:', error);
+    }
+  },
   
   getStock: (productId) => {
     return new Promise ((resolve, reject) => {

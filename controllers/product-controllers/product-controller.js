@@ -4,7 +4,9 @@ const categoryHelper = require("../../helpers/product-helpers/category-helper");
 
 module.exports = {
 
-
+getCrop:(req,res)=>{
+res.render('admin/cropping', {admin:true})
+},
   getAddproduct: (req, res, next) => {
     categoryHelper.allCategory().then((category) => {
       res.render("admin/add-product", { admin: true, category });

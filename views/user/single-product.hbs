@@ -1,143 +1,229 @@
-
 <style>
-  
-.magnifier-lens {
-	position: absolute;
-	width :100px;
-	height: 150px;
-	background-color: #46464633;
-	border: .1px solid #29292963;
-	opacity: 0;
-}
+  .magnifier-lens {
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    background-color: #46464633;
+    border: .1px solid #29292963;
+    opacity: 0;
+  }
 
-.magnifier-lens.active {
-	opacity: 1;
-}
+  .magnifier-lens.active {
+    opacity: 1;
+  }
 
-.magnified-img{
-	height : 100%;
-	width : 100%;
-	background-color: #0173b2;
-	transform: scale(0.5);
-	opacity: 0;
-}
-.magnified-img.active {
-	opacity: 1;
-	transform: scale(1);
+  .magnified-img {
+    height: 100%;
+    width: 100%;
+    background-color: #0173b2;
+    transform: scale(0.5);
+    opacity: 0;
+  }
 
-}
+  .magnified-img.active {
+    opacity: 1;
+    transform: scale(1);
+
+  }
+
 </style>
 
 <!--================Single Product Area =================-->
 
-  <div class="container">
-    <div class="row s_product_inner">
-       <div class="product__details__pic">
-            <div class="container">
-                
-                </div>
-                <div class="row">
-               
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">
-                                    <div class="product__thumb__pic set-bg" data-setbg={{single_product.image.url}}>
-                                    </div>
-                                </a>
-                            </li>
-                             </ul>
-                   
-                    <div class="col-lg-6 col-md-9">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <div class="product__details__pic__item">
-                                    <img src="/uploads/{{product.image.[0]}}" alt="">
-                                    <div class="magnifier-lens"></div> 
-                                </div>
-                            </div>
-                           
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-9">
-                       <div class="magnified-img"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      <div class="col-lg-5 offset-lg-1">
-        <div class="s_product_text">
-          <h3>{{product.productName}}</h3>
-          <h2>₹{{product.regularPrice}}</h2>
-          <ul class="list">
-            <li>
-              <a class="active" href="#">
-                <span>Category : </span>{{product.category.name}}</a>
-            </li>
-            <li>
-                          {{#if noStock}}
-              <a> <span>Availibility :</span> <span style="color: red;">Out Of Stock</span></a>
-{{else}}
-              <a href="#"> <span>Availibility :</span>{{product.stock}} Stock</a>
-              {{/if}}
-            </li>
-          </ul>
-          <p>
-
-
-            A T-shirt (also spelled tee shirt), or tee for short, is a style of fabric shirt named after the T shape
-            of its body and sleeves.
-
-          </p>
-
-            {{#if noStock}}
-        {{else}}
-          <div class="product_count">
-            <label for="qty">Quantity:</label>
-            <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
-              class="input-text qty" readonly />
-            <button onclick="increaseQuantity()" class="increase items-count" type="button">
-              <i class="lnr lnr-chevron-up"></i>
-            </button>
-            <button onclick="decreaseQuantity()" class="reduced items-count" type="button">
-              <i class="lnr lnr-chevron-down"></i>
-            </button>
-          </div>
-          {{/if}}
-      
-            <p  id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock Available. Cant Add More Quantity</p>
-        
-                       <div class="magnified-img"></div>
-        {{#if noStock}}
-        {{else}}
-          {{#if user}}
-          {{#if oncart}}
-
-
-
-          <button onclick="window.location.href = '/cart';" id="viewCartBtn" style="display: block;"
-            class="btn btn-success">
-            View Cart
-          </button>
-          {{else}}
-          <button onclick="addtocart('{{product._id}}')" id="addToCartBtn" style="display: block;"
-            class="btn btn-outline-success  js-addcart-detail">
-            Add to cart
-          </button>
-          {{/if}}
-          {{else}}
-          <a href="/signin" id="addToCartBtn" style="display: block;" class="btn btn-outline-success">
-            Login To Add To Cart
-          </a>
-          {{/if}}
-{{/if}}
-        </div>
-        <div class="col-lg-4 col-md-9"> </div>
-                       <div class="magnified-img"></div>
+<div class="container">
+  <div class="row s_product_inner">
+    <div class="product__details__pic">
+      <div class="container">
 
       </div>
+      <div class="row">
+
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">
+              <div class="product__thumb__pic set-bg" data-setbg={{single_product.image.url}}>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="col-lg-6 col-md-9">
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+              <div class="product__details__pic__item">
+                <img src="/uploads/{{product.image.[0]}}" alt="">
+                <div class="magnifier-lens"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-9">
+          <div class="magnified-img"></div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="col-lg-5 offset-lg-1">
+    <div class="s_product_text">
+      <h3>{{product.productName}}</h3>
+      <h2>₹{{product.regularPrice}}</h2>
+      <ul class="list">
+        <li>
+          <a class="active" href="#">
+            <span>Category : </span>{{product.category.name}}</a>
+        </li>
+        <li>
+          {{#if noStock}}
+          <a> <span>Availibility :</span> <span style="color: red;">Out Of Stock</span></a>
+          {{else}}
+          <a href="#"> <span>Availibility :</span>{{product.stock}} Stock</a>
+          {{/if}}
+        </li>
+      </ul>
+      <p>
+
+
+        A T-shirt (also spelled tee shirt), or tee for short, is a style of fabric shirt named after the T shape
+        of its body and sleeves.
+
+      </p>
+
+      {{#if noStock}}
+      {{else}}
+      <div class="product_count">
+        <label for="qty">Quantity:</label>
+        <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text qty"
+          readonly />
+        <button onclick="increaseQuantity()" class="increase items-count" type="button">
+          <i class="lnr lnr-chevron-up"></i>
+        </button>
+        <button onclick="decreaseQuantity()" class="reduced items-count" type="button">
+          <i class="lnr lnr-chevron-down"></i>
+        </button>
+      </div>
+      {{/if}}
+
+      <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock
+        Available. Cant Add More Quantity</p>
+
+      <div class="magnified-img"></div>
+      {{#if noStock}}
+      {{else}}
+      {{#if user}}
+      {{#if oncart}}
+
+
+
+      <button onclick="window.location.href = '/cart';" id="viewCartBtn" style="display: block;"
+        class="btn btn-success">
+        View Cart
+      </button>
+      {{else}}
+      <button onclick="addtocart('{{product._id}}')" id="addToCartBtn" style="display: block;"
+        class="btn btn-outline-success  js-addcart-detail">
+        Add to cart
+      </button>
+      {{/if}}
+      {{else}}
+      <a href="/signin" id="addToCartBtn" style="display: block;" class="btn btn-outline-success">
+        Login To Add To Cart
+      </a>
+      {{/if}}
+      {{/if}}
+    </div>
+    <div class="col-lg-4 col-md-9"> </div>
+    <div class="magnified-img"></div>
+
+  </div>
+</div>
 
 </div>
+
+<section class="product_description_area">
+  <div class="container">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+      <li class="nav-item">
+        <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+          aria-selected="false">Reviews</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+
+      <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row total_rate">
+
+              <div class="col-6">
+
+              </div>
+            </div>
+          <div class="review_list">
+  <h2>Product Reviews</h2>
+{{#if reviews.length}}
+  {{#each reviews}}
+    <div class="review_item">
+      <div class="media">
+        <div class="d-flex">
+          <!-- Add any user image/avatar if needed -->
+        </div>
+        <div class="media-body">
+          <p>User Name : {{this.name}}</p>
+        </div>
+      </div>
+      <p>User Review : {{this.message}}
+      </p>
+    </div>
+  {{/each}}
+{{else}}
+  <p>No reviews available for this product.</p>
+{{/if}}
+
+
+
+</div>
+
+          </div>
+          {{#if productPurchased}}
+         {{#if userReviewed}}
+       {{else}}
+          <div class="col-lg-6">
+            <div class="review_box">
+              <h4>Add a Review</h4>
+
+ <p id="reviewmsg" style="display: block;color: red;font-size: medium;" class="md-3"></p>
+              <form class="row contact_form"  id="contactForm"
+                novalidate="novalidate">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="revname" name="revname" placeholder="Your Full name" required />
+                  </div>
+                </div>
+               
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <textarea class="form-control" name="revmessage" id="revmessage" rows="1" placeholder="Review" required></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12 text-right">
+                  <button onclick="return postReview('{{product._id}}')" value="submit" class="btn btn-outline-success">
+                    Submit Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+         {{/if}}
+       
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!--================End Single Product Area =================-->
 
 
@@ -145,7 +231,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('.zoom-image').elevateZoom({
       zoomType: 'inner',
       cursor: 'crosshair'
@@ -153,28 +239,68 @@
   });
 </script>
 
-{{!-- <!--===============================================================================================-->
-	<script src="/vendor2/sweetalert/sweetalert.min.js"></script>
-	<script>
-
-
-		/*---------------------------------------------*/ 
-
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart", "success");
-			});
-		});
-	
-	</script>
-<!--===============================================================================================--> --}}
 
 <!--===============================================================================================-->
 <script src="/vendor2/sweetalert/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <!--===============================================================================================-->
 
+<script>
+  function postReview(productId) {
+    let revmessage = document.getElementById('revmessage').value;
+    let revname = document.getElementById('revname').value;
+
+ if (revmessage == "" || revname == "" ) {
+      document.getElementById('reviewmsg').innerHTML = 'All Fields Are Required'
+      return false;
+    } else if (
+      revmessage === "" || !/^[A-Za-z0-9]+$/.test(revmessage)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid Review Message"
+
+      return false;
+      
+    } else if (
+      revname === "" || !/^[A-Za-z0-9]+$/.test(revname)) {
+      document.getElementById('addErr').innerHTML = "Enter a Valid Name"
+
+      return false;
+      }
+    $.ajax({
+      url: '/postreview',
+      method: 'POST',
+      data: {
+        productId: productId,
+        revmessage: revmessage,
+        revname: revname
+      },
+      success: function (response) {
+        if (response.status) {
+          
+         swal({
+            title: "Review Has Been Added",
+            text: "",
+            icon: "success",
+            buttons: {
+              ok: {
+                text: "OK",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+              }
+            }
+          }).then(function (value) {
+            if (value) {
+              window.location.reload();
+            }
+          });
+        } else {
+           
+        }
+      }
+    });
+  }
+</script>
 <script>
   function addtocart(productId) {
     let quantity = document.getElementById('quantity').value;
@@ -251,55 +377,55 @@
     document.getElementById('quantitymsg').style.display = "none";
   }
 </script>
-  <script>
-        const lens= document.querySelector('.magnifier-lens');
-        const product_img= document.querySelector('.product__details__pic__item img');
-        const magnified_img= document.querySelector('.magnified-img');
+<script>
+  const lens = document.querySelector('.magnifier-lens');
+  const product_img = document.querySelector('.product__details__pic__item img');
+  const magnified_img = document.querySelector('.magnified-img');
 
-        function magnify(product_img,magnified_img){
-            product_img.addEventListener('mousemove',moveLens)
-            lens.addEventListener('mousemove',moveLens)                     
+  function magnify(product_img, magnified_img) {
+    product_img.addEventListener('mousemove', moveLens)
+    lens.addEventListener('mousemove', moveLens)
 
-            lens.addEventListener('mouseout',leaveLens)
-        }
-        magnify(product_img,magnified_img);
+    lens.addEventListener('mouseout', leaveLens)
+  }
+  magnify(product_img, magnified_img);
 
-        function moveLens(e){
-            let x,y,cx,cy;
-            //console.log("X : "+  e.pageX + " Y : "+e.pageY);
-            const product_img_rect = product_img.getBoundingClientRect();
-            
-            x = e.pageX - product_img_rect.left-lens.offsetWidth/2;
-            y = e.pageY - product_img_rect.top-lens.offsetHeight/2;
+  function moveLens(e) {
+    let x, y, cx, cy;
+    //console.log("X : "+  e.pageX + " Y : "+e.pageY);
+    const product_img_rect = product_img.getBoundingClientRect();
 
-            let max_xpos = product_img_rect.width - lens.offsetWidth;
-            let max_ypos = product_img_rect.height - lens.offsetHeight;
+    x = e.pageX - product_img_rect.left - lens.offsetWidth / 2;
+    y = e.pageY - product_img_rect.top - lens.offsetHeight / 2;
 
-            if(x > max_xpos) x = max_xpos;
-            if(x < 0) x = 0;    
-            
-            if(y > max_ypos) y = max_ypos;
-            if(y < 0) y = 0;
+    let max_xpos = product_img_rect.width - lens.offsetWidth;
+    let max_ypos = product_img_rect.height - lens.offsetHeight;
 
-            lens.style.cssText = `top:${y}px; left:${x}px`;
+    if (x > max_xpos) x = max_xpos;
+    if (x < 0) x = 0;
 
-            cx = magnified_img.offsetWidth/lens.offsetWidth;
-            cy = magnified_img.offsetHeight/lens.offsetHeight;
+    if (y > max_ypos) y = max_ypos;
+    if (y < 0) y = 0;
 
-            magnified_img.style.cssText = `background: url('${product_img.src}')
+    lens.style.cssText = `top:${y}px; left:${x}px`;
+
+    cx = magnified_img.offsetWidth / lens.offsetWidth;
+    cy = magnified_img.offsetHeight / lens.offsetHeight;
+
+    magnified_img.style.cssText = `background: url('${product_img.src}')
                                             -${x * cx}px -${y * cy}px /
-                                            ${product_img_rect.width *cx}px ${product_img_rect.height *cy}px
+                                            ${product_img_rect.width * cx}px ${product_img_rect.height * cy}px
                                             no-repeat
             `;
-            lens.classList.add('active');
-            magnified_img.classList.add('active'); 
+    lens.classList.add('active');
+    magnified_img.classList.add('active');
 
-        }
-        
-        function leaveLens(){
-            lens.classList.remove('active');
-            magnified_img.classList.remove('active');
+  }
 
-        }
+  function leaveLens() {
+    lens.classList.remove('active');
+    magnified_img.classList.remove('active');
 
-    </script>
+  }
+
+</script>

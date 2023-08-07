@@ -60,6 +60,8 @@ router.post('/resetpass', passwordController.updatePassword )
 // PRODUCTS 
 router.get("/products", access.checkBlockedStatus, productManage.showProducts );
 router.get('/single-product/:id', access.checkBlockedStatus, productManage.getSinPro);
+
+router.post("/postreview",  productManage.saveProductReview)
 router.post("/searchProduct",  productManage.searchProduct)
 router.post("/categorise",  productManage.categorise)
 

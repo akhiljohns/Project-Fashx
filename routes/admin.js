@@ -17,6 +17,7 @@ const userManage = require('../controllers/admin-controllers/userMang-controller
 const orderController = require('../controllers/admin-controllers/order-controller');
 const couponManagement = require('../controllers/admin-controllers/coupon-management');
 const bannerManagement = require('../controllers/admin-controllers/banner-management');
+const salesManageController = require('../controllers/admin-controllers/sales-management');
 
 
 router.get("/dashboard", access.logStatus,  pageController.getDashboard)
@@ -28,6 +29,7 @@ router.post("/signin", loginController.postSignin);
  
 // PRODUCT ROUTES 
 router.get("/add-product", access.logStatus, productController.getAddproduct);
+router.get('/add-product/cropimage',access.logStatus, productController.getCrop);
 
 router.post("/add-product", access.logStatus, upload.array('productImage'), productController.postAddproduct);
 router.post('/deleteimg', access.logStatus,productController.deleteImg);
@@ -54,7 +56,6 @@ router.post('/products/edit/:id', upload.array('productImage'), productManage.po
 router.post("/products/delete", access.logStatus, productManage.softDeleteProduct);
 router.get("/products/delete/image/:id", access.logStatus, productManage.softDeleteProduct);
 router.get('/products/hide/:id',access.logStatus, productManage.hideunhideproduct);
-
 
 
 
@@ -106,6 +107,14 @@ router.get('/addBanner',access.logStatus, (req, res)=> {
 router.post('/addBanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addBanner);
 
 router.post('/removeBanner',access.logStatus, bannerManagement.removeBanner);
+
+//SALES
+router.post('/getSales', salesManageController.getSales )
+
+router.post('/getPaymentMethod', salesManageController.getPaymentMethod);
+
+router.post('/updateGraph', salesManageController.salesForGraph);
+
 
 
 
