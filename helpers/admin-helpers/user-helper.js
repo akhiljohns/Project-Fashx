@@ -1,5 +1,5 @@
-var db = require('../../config/connection');
-var user = require("../../models/user-model");
+const db = require('../../config/connection');
+const user = require("../../models/user-model");
 const loginHelper = require('../../helpers/user-helpers/login-helper')
 const user_address = require('../../models/address-model');
 const cart = require('../../models/cart-model');

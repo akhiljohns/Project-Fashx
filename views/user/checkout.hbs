@@ -503,7 +503,7 @@ let totalAm = document.getElementById("total").innerHTML;
 
     function razorpayPayment(order, address) {
 
-        var options = {
+        const options = {
             "key": "rzp_test_EC0sGmKLPTm81K", // Enter the Key ID generated from the Dashboard
             "amount": order.finalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
@@ -535,7 +535,7 @@ let totalAm = document.getElementById("total").innerHTML;
                 "color": "#bf1313"
             }
         };
-        var rzp1 = new Razorpay(options);
+        const rzp1 = new Razorpay(options);
 
         rzp1.open();
     }

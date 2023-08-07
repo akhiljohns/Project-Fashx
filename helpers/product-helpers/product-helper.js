@@ -19,6 +19,7 @@ module.exports = {
   
       return !!order; // Return true if order is found, false if not
     } catch (error) {
+      res.redirect('/products')
       console.error('Error checking for product in order:', error);
       return false; // In case of error, return false
     }
@@ -158,6 +159,8 @@ showProductsUser:  () => {
       product.findOne({_id: id}).populate('category').lean().exec().then((product) => {
         resolve(product);
       }).catch((err)=> {
+    Reject(err);
+
         console.log('Error in singl:::::', err);
       })
     });

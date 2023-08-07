@@ -46,9 +46,9 @@
         });
 
         document.getElementById('cropImageBtn').addEventListener('click', function() {
-            var croppedCanvas = cropper.getCroppedCanvas();
+            const croppedCanvas = cropper.getCroppedCanvas();
             if (croppedCanvas) {
-                var croppedImage = croppedCanvas.toDataURL("image/png");
+                const croppedImage = croppedCanvas.toDataURL("image/png");
                 console.log('hiiiiiiiiiiiiiii      ',croppedImage)
                 document.getElementById('output').src = croppedImage;
             }

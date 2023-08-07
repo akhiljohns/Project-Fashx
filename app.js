@@ -1,17 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var hbs = require('express-handlebars');
-var db = require('./config/connection');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const hbs = require('express-handlebars');
+const db = require('./config/connection');
 db.connect();
-var userRouter = require('./routes/user');
-var adminRouter = require('./routes/admin');
+const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
 const session = require('express-session');
 const backButtonMiddleware = require('./middlewares/backButtonMiddleware');
+const errormiddleware = require('./middlewares/errormiddleware');
 const  handlebars = require('handlebars');
-
+const dotenv = require('dotenv');
+dotenv.config();
+const secretKey = process.env.SESSION_SECRET;
 handlebars.registerHelper('eq', function (a, b) {
   return a === b;
 });
@@ -33,7 +36,7 @@ handlebars.registerHelper('break', function (options) {
   return '';
 });
 
-var app = express();
+const app = express();
 
 // Use backButtonMiddleware before any other middleware or routes
 
@@ -50,7 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: secretKey,
     saveUninitialized: false,
     cookie: { maxAge: 6000000 },
     resave: false,
@@ -73,14 +76,6 @@ app.use(function(req, res, next) {
 
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error', { layout: false });
-});
+app.use(errormiddleware);
 
 module.exports = app;

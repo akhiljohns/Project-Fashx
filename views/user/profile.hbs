@@ -529,10 +529,10 @@
 </script> --}}
 <script>
    function profedit() {
-    var name = document.getElementById("name").value.trim();
-    var email = document.getElementById("email").value.trim();
-    var phone = document.getElementById("phone").value.trim();
-    var otp = document.getElementById("otp").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const otp = document.getElementById("otp").value.trim();
    
     if (name === "" || email === "" || phone === "") {
       document.getElementById('proferr').innerText = 'All Fields Are Mandatory';

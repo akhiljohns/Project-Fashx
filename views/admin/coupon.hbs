@@ -68,8 +68,8 @@
                                     <td>{{this.discount}}</td>
                                     <td>{{this.minAmount}}</td>
                                     <td>{{this.maxAmount}}</td>
-                                    <td>{{this.startDate}}</td>
-                                    <td>{{this.expireDate}}</td>
+                                    <td id="start">{{this.startDate}}</td>
+                                    <td id="expire">{{this.expireDate}}</td>
                                     <td><a class="btn btn-danger" href="/admin/removeCoupon?couponId={{this._id}}" >Remove</a></td>
                                 </tr>
                                 {{/each}}
@@ -83,7 +83,6 @@
             </div>
         </div>
     </section>
-
 </main>
 
 
@@ -99,5 +98,21 @@
         document.getElementById('coupBtn').style.display = 'flex';
     }
 </script>
+<script>
+    const startDateElements = document.querySelectorAll('#start');
+    const expireDateElements = document.querySelectorAll('#expire');
 
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
 
+    startDateElements.forEach(element => {
+        const timestamp = element.innerText;
+        const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+        element.innerText = formattedDate;
+    });
+
+    expireDateElements.forEach(element => {
+        const timestamp = element.innerText;
+        const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
+        element.innerText = formattedDate;
+    });
+</script>

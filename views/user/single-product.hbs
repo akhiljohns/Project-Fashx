@@ -347,9 +347,9 @@
 
 <script>
   function increaseQuantity() {
-    var quantityInput = document.getElementById('quantity');
-    var currentQuantity = parseInt(quantityInput.value);
-    var maxQuantity = parseInt("{{product.stock}}");
+    const quantityInput = document.getElementById('quantity');
+    const currentQuantity = parseInt(quantityInput.value);
+    const maxQuantity = parseInt("{{product.stock}}");
 
     if (currentQuantity < maxQuantity) {
       quantityInput.value = currentQuantity + 1;
@@ -360,8 +360,8 @@
   }
 
   function decreaseQuantity() {
-    var quantityInput = document.getElementById('quantity');
-    var currentQuantity = parseInt(quantityInput.value);
+    const quantityInput = document.getElementById('quantity');
+    const currentQuantity = parseInt(quantityInput.value);
 
     if (currentQuantity > 1) {
       quantityInput.value = currentQuantity - 1;

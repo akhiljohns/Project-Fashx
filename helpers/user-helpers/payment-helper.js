@@ -4,7 +4,7 @@ dotenv.config();
 const secretKey = process.env.RZP_SECRET_KEY;
 const keyid = process.env.RZP_KEY_ID;
 const Razorpay = require('razorpay');
-var instance = new Razorpay({
+const instance = new Razorpay({
     key_id: keyid,
     key_secret: secretKey,
   });
@@ -41,7 +41,7 @@ function genarateOrderNo() {
   }
 }
 
-//additional variables
+//additional constiables
 //tax and shipping charges
 shipping = 50;
 
