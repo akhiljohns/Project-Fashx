@@ -20,11 +20,15 @@ const bannerManagement = require('../controllers/admin-controllers/banner-manage
 const salesManageController = require('../controllers/admin-controllers/sales-management');
 
 
-router.get("/dashboard", access.logStatus,  pageController.getDashboard)
-  
-router.get("/signin", access.check, loginController.getSignin )
+router.get("/",(req, res, next) => { res.redirect('/admin/signin')});
 
+router.get("/login",(req, res, next) => {res.redirect('/admin/signin')});
+
+router.get("/signin", access.check, loginController.getSignin )
 router.post("/signin", loginController.postSignin);
+
+router.get("/dashboard", access.logStatus,  pageController.getDashboard)
+
 
  
 // PRODUCT ROUTES 
@@ -93,27 +97,25 @@ router.get('/returnorder/:order_id/:user_id', access.logStatus, orderController.
 // COUPON 
 
 router.get('/coupon',access.logStatus, couponManagement.getCoupon);
-router.post('/add-coupon', couponManagement.addCoupon );
-router.get('/removeCoupon', couponManagement.removeCoupon );
+router.post('/add-coupon', access.logStatus, couponManagement.addCoupon );
+router.get('/removeCoupon',  access.logStatus,couponManagement.removeCoupon );
 
 
 //banner management
 router.get('/banner',access.logStatus, bannerManagement.getBanner);
 
-router.get('/addBanner',access.logStatus, (req, res)=> {
-    res.render('admin/addBanner',{admin:true})
-})
+router.get('/addBanner',access.logStatus, (req, res)=> { res.render('admin/addBanner',{admin:true})})
 
 router.post('/addBanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addBanner);
 
 router.post('/removeBanner',access.logStatus, bannerManagement.removeBanner);
 
 //SALES
-router.post('/getSales', salesManageController.getSales )
+router.post('/getSales', access.logStatus, salesManageController.getSales )
 
-router.post('/getPaymentMethod', salesManageController.getPaymentMethod);
+router.post('/getPaymentMethod', access.logStatus, salesManageController.getPaymentMethod);
 
-router.post('/updateGraph', salesManageController.salesForGraph);
+router.post('/updateGraph', access.logStatus, salesManageController.salesForGraph);
 
 
 

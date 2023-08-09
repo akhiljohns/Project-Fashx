@@ -32,6 +32,9 @@ router.get('/elements', access.check, access.checkBlockedStatus, access.checkBlo
 
 
 // SIGNIN
+router.get("/login",(req, res, next) => {res.redirect('/signin')});
+router.get("/register",(req, res, next) => {res.redirect('/signup')});
+
 router.get('/signin', access.logStatus, loginController.getLogin)
 router.post('/signin', loginController.postLogin)
 
