@@ -147,7 +147,7 @@
           </div> &nbsp;
 
           <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text qty"
-            readonly /> &nbsp;
+           /> &nbsp;
 
             <div onclick="increaseQuantity()" class="increase items-count" type="button">
             <i class="lnr lnr-chevron-right"></i>
@@ -159,6 +159,7 @@
 
       <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}}Stock
         Available. Can't Add More Quantity</p>
+      <p id="quantitymsg2" style="display: none;color: red;font-size: medium;" class="md-3">Quantity Should Be Greater Than 0</p>
 
       <div class="magnified-img"></div>
       {{#if noStock}}
@@ -173,7 +174,7 @@
         View Cart
       </button>
       {{else}}
-      <button onclick="addtocart('{{product._id}}')" id="addToCartBtn" style="display: block;"
+      <button onclick="return addtocart('{{product._id}}')" id="addToCartBtn" style="display: block;"
         class="btn btn-outline-success  js-addcart-detail">
         Add to cart
       </button>
@@ -367,6 +368,11 @@
   function addtocart(productId) {
     let quantity = document.getElementById('quantity').value;
 
+if(quantity <= 0){
+    document.getElementById('quantitymsg2').style.display = "block";
+    return false;
+
+}
     $.ajax({
       url: '/addtocart',
       method: 'POST',
