@@ -20,7 +20,7 @@ res.render('admin/cropping', {admin:true})
 
     try {
       await productHelper.addProduct(productDetails, images);
-      res.redirect("/admin/productS");
+      res.redirect("/admin/products");
     } catch (err) {
       console.log(err);
     }

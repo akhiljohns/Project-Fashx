@@ -20,10 +20,6 @@ const bannerManagement = require('../controllers/admin-controllers/banner-manage
 const salesManageController = require('../controllers/admin-controllers/sales-management');
 
 
-router.get("/",(req, res, next) => { res.redirect('/admin/signin')});
-
-router.get("/login",(req, res, next) => {res.redirect('/admin/signin')});
-
 router.get("/signin", access.check, loginController.getSignin )
 router.post("/signin", loginController.postSignin);
 
