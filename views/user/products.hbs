@@ -1,3 +1,12 @@
+<style>
+  .ellipsis {
+    max-width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
+
 <section>
   <div class="container-fluid">
     <div class="row">
@@ -51,7 +60,7 @@
                 <img class="mx-auto img-thumbnail" src="/uploads/{{this.image.[0]}}" width="auto" height="auto" />
                 <div class="card-body text-center">
                   <div class="cvp">
-                    <h5 class="card-title font-weight-bold">{{this.productName}}</h5>
+                    <h5 class="card-title ellipsis font-weight-bold">{{this.productName}}</h5>
                     <p class="card-text">₹{{this.regularPrice}}</p>
                     <a href="/single-product/{{this._id}}" class="btn btn-outline-primary "
                       style="margin-bottom: 15px; width: 120px;">View Details</a><br />
@@ -113,6 +122,8 @@
     font-weight: 600; 
    color: rgb(18, 19, 19);
   }
+
+  
 </style>
 
 

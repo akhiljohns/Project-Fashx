@@ -13,9 +13,10 @@
   }
 
   .magnified-img {
+    z-index: 1;
     height: 100%;
     width: 100%;
-    background-color: #0173b2;
+    //background-color: #0173b2;
     transform: scale(0.5);
     opacity: 0;
   }
@@ -26,11 +27,57 @@
 
   }
 
+  .prdctContainer {
+    top: 1rem;
+    display: flex;
+    width: 90%;
+  }
+
+  #showIt {
+    margin-top: 1rem;
+    width: 50%;
+    display: none;
+  }
+
+  .product_count_div {
+    width: 11rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .quantityDiv {
+    margin-left: 35%;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .quantityDiv input {
+    align-items: center;
+    text-align: center;
+    width: 2rem;
+    transition: 200ms;
+  }
+
+  .quantityDiv div{
+    width: 3rem;
+    border: 0.5px solid #000;
+    border-radius: 1%;
+  }
+
+  .quantityDiv div:hover{
+    transition: 300ms;
+    transform: scale(1.13);
+  }
+
 </style>
 
 <!--================Single Product Area =================-->
 
-<div class="container">
+<div class="container d-flex">
   <div class="row s_product_inner">
     <div class="product__details__pic">
       <div class="container">
@@ -38,33 +85,36 @@
       </div>
       <div class="row">
 
-        <ul class="nav nav-tabs" role="tablist">
+        {{!-- <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab">
               <div class="product__thumb__pic set-bg" data-setbg={{single_product.image.url}}>
               </div>
             </a>
           </li>
-        </ul>
+        </ul> --}}
 
-        <div class="col-lg-6 col-md-9">
+        <div class="col-lg-6 col-md-9 prdctContainer">
           <div class="tab-content">
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-              <div class="product__details__pic__item">
-                <img src="/uploads/{{product.image.[0]}}" alt="">
+              <div class="product__details__pic__item " onmouseover="show()" onmouseout="hide()">
+                <img src="/uploads/{{product.image.[0]}}" alt="" style="max-width: 100%;">
                 <div class="magnifier-lens"></div>
               </div>
             </div>
-
           </div>
-        </div>
-        <div class="col-lg-4 col-md-9">
-          <div class="magnified-img"></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-5 offset-lg-1">
+
+
+  <div class="col-md-9 offset-lg-1 col-lg-5" id="showIt">
+    <div class="magnified-img"></div>
+  </div>
+
+
+  <div class="col-lg-5 offset-lg-1" id="detailDiv">
     <div class="s_product_text">
       <h3>{{product.productName}}</h3>
       <h2>₹{{product.regularPrice}}</h2>
@@ -82,30 +132,33 @@
         </li>
       </ul>
       <p>
-
-
         A T-shirt (also spelled tee shirt), or tee for short, is a style of fabric shirt named after the T shape
         of its body and sleeves.
-
       </p>
 
       {{#if noStock}}
       {{else}}
-      <div class="product_count">
+      <div class="product_count_div">
         <label for="qty">Quantity:</label>
-        <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text qty"
-          readonly />
-        <button onclick="increaseQuantity()" class="increase items-count" type="button">
-          <i class="lnr lnr-chevron-up"></i>
-        </button>
-        <button onclick="decreaseQuantity()" class="reduced items-count" type="button">
-          <i class="lnr lnr-chevron-down"></i>
-        </button>
-      </div>
+        <div class="quantityDiv">
+          
+          <div onclick="decreaseQuantity()" class="reduced items-count" type="button">
+            <i class="lnr lnr-chevron-left"></i>
+          </div> &nbsp;
+
+          <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text qty"
+            readonly /> &nbsp;
+
+            <div onclick="increaseQuantity()" class="increase items-count" type="button">
+            <i class="lnr lnr-chevron-right"></i>
+          </div>
+
+        </div>
+      </div><hr>
       {{/if}}
 
-      <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock
-        Available. Cant Add More Quantity</p>
+      <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}}Stock
+        Available. Can't Add More Quantity</p>
 
       <div class="magnified-img"></div>
       {{#if noStock}}
@@ -134,8 +187,8 @@
     </div>
     <div class="col-lg-4 col-md-9"> </div>
     <div class="magnified-img"></div>
-
   </div>
+
 </div>
 
 </div>
@@ -160,51 +213,52 @@
 
               </div>
             </div>
-          <div class="review_list">
-  <h2>Product Reviews</h2>
-{{#if reviews.length}}
-  {{#each reviews}}
-    <div class="review_item">
-      <div class="media">
-        <div class="d-flex">
-          <!-- Add any user image/avatar if needed -->
-        </div>
-        <div class="media-body">
-          <p>User Name : {{this.name}}</p>
-        </div>
-      </div>
-      <p>User Review : {{this.message}}
-      </p>
-    </div>
-  {{/each}}
-{{else}}
-  <p>No reviews available for this product.</p>
-{{/if}}
+            <div class="review_list">
+              <h2>Product Reviews</h2>
+              {{#if reviews.length}}
+              {{#each reviews}}
+              <div class="review_item">
+                <div class="media">
+                  <div class="d-flex">
+                    <!-- Add any user image/avatar if needed -->
+                  </div>
+                  <div class="media-body">
+                    <p>User Name : {{this.name}}</p>
+                  </div>
+                </div>
+                <p>User Review : {{this.message}}
+                </p>
+              </div>
+              {{/each}}
+              {{else}}
+              <p>No reviews available for this product.</p>
+              {{/if}}
 
 
 
-</div>
+            </div>
 
           </div>
           {{#if productPurchased}}
-         {{#if userReviewed}}
-       {{else}}
+          {{#if userReviewed}}
+          {{else}}
           <div class="col-lg-6">
             <div class="review_box">
               <h4>Add a Review</h4>
 
- <p id="reviewmsg" style="display: block;color: red;font-size: medium;" class="md-3"></p>
-              <form class="row contact_form"  id="contactForm"
-                novalidate="novalidate">
+              <p id="reviewmsg" style="display: block;color: red;font-size: medium;" class="md-3"></p>
+              <form class="row contact_form" id="contactForm" novalidate="novalidate">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="revname" name="revname" placeholder="Your Full name" required />
+                    <input type="text" class="form-control" id="revname" name="revname" placeholder="Your Full name"
+                      required />
                   </div>
                 </div>
-               
+
                 <div class="col-md-12">
                   <div class="form-group">
-                    <textarea class="form-control" name="revmessage" id="revmessage" rows="1" placeholder="Review" required></textarea>
+                    <textarea class="form-control" name="revmessage" id="revmessage" rows="1" placeholder="Review"
+                      required></textarea>
                   </div>
                 </div>
                 <div class="col-md-12 text-right">
@@ -215,8 +269,8 @@
               </form>
             </div>
           </div>
-         {{/if}}
-       
+          {{/if}}
+
           {{/if}}
         </div>
       </div>
@@ -224,7 +278,15 @@
   </div>
 </section>
 
+
+
+
+
 <!--================End Single Product Area =================-->
+
+
+
+
 
 
 <!--================End Product Description Area =================-->
@@ -250,7 +312,7 @@
     let revmessage = document.getElementById('revmessage').value;
     let revname = document.getElementById('revname').value;
 
- if (revmessage == "" || revname == "" ) {
+    if (revmessage == "" || revname == "") {
       document.getElementById('reviewmsg').innerHTML = 'All Fields Are Required'
       return false;
     } else if (
@@ -258,13 +320,13 @@
       document.getElementById('addErr').innerHTML = "Enter a Valid Review Message"
 
       return false;
-      
+
     } else if (
       revname === "" || !/^[A-Za-z0-9]+$/.test(revname)) {
       document.getElementById('addErr').innerHTML = "Enter a Valid Name"
 
       return false;
-      }
+    }
     $.ajax({
       url: '/postreview',
       method: 'POST',
@@ -275,8 +337,8 @@
       },
       success: function (response) {
         if (response.status) {
-          
-         swal({
+
+          swal({
             title: "Review Has Been Added",
             text: "",
             icon: "success",
@@ -295,7 +357,7 @@
             }
           });
         } else {
-           
+
         }
       }
     });
@@ -428,4 +490,20 @@
 
   }
 
+</script>
+
+
+
+<script>
+  //var element = document.getElementById("yourElementId");
+  //element.addEventListener("mouseover", show);
+
+  function show() {
+    document.getElementById('showIt').style.display = 'flex';
+    document.getElementById('detailDiv').style.display = 'none';
+  }
+  function hide() {
+    document.getElementById('showIt').style.display = 'none';
+    document.getElementById('detailDiv').style.display = '';
+  }
 </script>
