@@ -3,7 +3,7 @@ const bannerHelper = require('../../helpers/admin-helpers/banner-helper');
 
 
 module.exports = {
-    addBanner: (req, res, next)=> {
+    addbanner: (req, res, next)=> {
         const bannerDetails = {
             name : req.body.name,
             subTitle : req.body.subTitle,
@@ -12,7 +12,7 @@ module.exports = {
         
         bannerImage = req.file;
 
-        bannerHelper.addBanner(bannerDetails, bannerImage).then((response)=> {
+        bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
             if(!response.error){
                 res.redirect('/admin/banner');
             } else {
@@ -35,9 +35,9 @@ module.exports = {
     },
 
 
-    removeBanner: (req, res, next)=> {
+    removebanner: (req, res, next)=> {
         const bannerId = req.body.bannerId;
-        bannerHelper.removeBanner(bannerId).then((response)=> {
+        bannerHelper.removebanner(bannerId).then((response)=> {
             res.status(200).json({status: response.status});
         }).catch((err)=> {
             console.log('error in controller removing banner', err);

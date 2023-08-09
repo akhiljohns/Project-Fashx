@@ -100,11 +100,11 @@ router.get('/removeCoupon',  access.logStatus,couponManagement.removeCoupon );
 //banner management
 router.get('/banner',access.logStatus, bannerManagement.getBanner);
 
-router.get('/addBanner',access.logStatus, (req, res)=> { res.render('admin/addBanner',{admin:true})})
+router.get('/addbanner',access.logStatus, (req, res)=> { res.render('admin/addbanner',{admin:true})})
 
-router.post('/addBanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addBanner);
+router.post('/addbanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addbanner);
 
-router.post('/removeBanner',access.logStatus, bannerManagement.removeBanner);
+router.post('/removebanner',access.logStatus, bannerManagement.removebanner);
 
 //SALES
 router.post('/getSales', access.logStatus, salesManageController.getSales )

@@ -33,18 +33,18 @@
                 <th scope="row" class="index"></th>
                 <td class="imgRow"><img src="/uploads/{{this.images}}" alt=""></td>
                 <td class="toolEll"><h6>{{this.title}}</h6></td>
-                <td><button onclick="removeBanner('{{this._id}}')" class="btn btn-danger">Remove</button></td>
+                <td><button onclick="removebanner('{{this._id}}')" class="btn btn-danger">Remove</button></td>
             </tr>
             {{/each}}
             
         </tbody>
     </table> 
-    <a class="btn btn-primary" id="addBtn" href="/admin/addBanner">Add Banner</a>
+    <a class="btn btn-primary" id="addBtn" href="/admin/addbanner">Add Banner</a>
     {{else}} 
     <div style="text-align: center;" class="m-5">
 
     <h5>No Banner To Show</h5>
-     <a id="addBtn" href="/admin/addBanner">Add Banner</a>
+     <a id="addBtn" href="/admin/addbanner">Add Banner</a>
     </div>
     {{/if}}
 
@@ -55,9 +55,9 @@
 
 
 <script>
-    function removeBanner(bannerId){
+    function removebanner(bannerId){
         $.ajax({
-            url: '/admin/removeBanner',
+            url: '/admin/removebanner',
             method: 'POST',
             data: {
                 bannerId: bannerId

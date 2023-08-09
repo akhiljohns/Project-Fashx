@@ -2,7 +2,7 @@
 const banner = require('../../models/banner-model');
 
 module.exports = {
-    addBanner: (bannerDetails, image) => {
+    addbanner: (bannerDetails, image) => {
         try {
             return new Promise((resolve, reject)=> {
                 banner.create({
@@ -34,7 +34,7 @@ module.exports = {
         })
     },
 
-    removeBanner: (bannerId) => {
+    removebanner: (bannerId) => {
         return new Promise ((resolve, reject) => {
             banner.deleteOne({_id: bannerId}).then((response)=> {
                 if(response){
