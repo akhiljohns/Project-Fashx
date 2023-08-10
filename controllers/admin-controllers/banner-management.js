@@ -7,7 +7,7 @@ module.exports = {
     getAddBanner: (req, res) => { 
 
         try{
-        res.render('admin/addbanner', {admin: true});
+        res.render('admin/addBanner', {admin: true});
         } catch(e){
             console.log('error is ', e);
         }
