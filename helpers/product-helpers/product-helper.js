@@ -62,6 +62,7 @@ addProduct: async (productDetails, images) => {
     return;
   } catch (err) {
     console.log(err);
+  
   }
 },
 
