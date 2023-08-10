@@ -19,6 +19,7 @@ const couponManagement = require('../controllers/admin-controllers/coupon-manage
 const bannerManagement = require('../controllers/admin-controllers/banner-management');
 const salesManageController = require('../controllers/admin-controllers/sales-management');
 
+router.get("/", access.logStatus,  pageController.getDashboard)
 
 router.get("/signin", access.check, loginController.getSignin )
 router.post("/signin", loginController.postSignin);
