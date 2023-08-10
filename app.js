@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('express-handlebars');
 const db = require('./config/connection');
+const multer = require('multer');
 db.connect();
 const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
@@ -34,6 +35,27 @@ handlebars.registerHelper('less', function (a, b) {
 handlebars.registerHelper('break', function (options) {
   // Do nothing and return an empty string
   return '';
+});
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'image');
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const timestamp = Date.now();
+    const newFilename = `${timestamp}_${path.basename(file.originalname, ext)}.jpg`;
+    cb(null, newFilename);
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+      cb(new Error('Only jpeg and png files are allowed'));
+      return;
+    } else {
+      cb(null, true);
+      return;
+    }
+  }
 });
 
 const app = express();
@@ -68,6 +90,12 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminRouter);
 app.use('/', userRouter);
+
+app.use(multer({
+  dest: 'image',
+  storage: fileStorage,
+  limits: { fileSize: 1024 * 1024 } // 1MB
+}).array('image',3));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

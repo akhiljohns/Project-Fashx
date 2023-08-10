@@ -23,17 +23,16 @@ module.exports = {
         };
         
 
-        // bannerImage = req.file;
+        bannerImage = req.file;
 
-        res.send(bannerDetails);
 
-        // bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
-        //     if(!response.error){
-        //         res.redirect('/admin/banner');
-        //     } else {
-        //         res.redirect('/admin')
-        //     }
-        // })
+        bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
+            if(!response.error){
+                res.redirect('/admin/banner');
+            } else {
+                res.redirect('/admin')
+            }
+        })
     },
 
     getBanner: (req, res, next)=> {
