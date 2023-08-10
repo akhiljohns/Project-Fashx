@@ -103,7 +103,7 @@ router.get('/banner',access.logStatus, bannerManagement.getBanner);
 
 router.get('/addbanner',access.logStatus, bannerManagement.getAddBanner);
 
-router.post('/addbanner',access.logStatus, bannerManagement.addbanner);
+router.post('/addbanner',access.logStatus, upload.single('bannerImage'), bannerManagement.addbanner);
 // , upload.single('bannerImage')
 router.post('/removebanner',access.logStatus, bannerManagement.removebanner);
 
