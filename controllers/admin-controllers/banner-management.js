@@ -8,7 +8,8 @@ module.exports = {
 
         try{
         // res.render('admin/addbanner',{admin:true})
-        res.send('success');
+        // res.send('success');
+        res.render('admin/addbanner');
         } catch(e){
             console.log('error is ', e);
         }
