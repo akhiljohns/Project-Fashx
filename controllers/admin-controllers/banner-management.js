@@ -4,7 +4,9 @@ const bannerHelper = require('../../helpers/admin-helpers/banner-helper');
 
 module.exports = {
 
-    getAddBanner:(req, res) => { res.render('admin/addbanner',{admin:true})},
+    getAddBanner:(req, res) => { 
+        res.render('admin/addbanner',{admin:true})
+    },
 
     addbanner: (req, res, next)=> {
         const bannerDetails = {
