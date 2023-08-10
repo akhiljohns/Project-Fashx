@@ -6,7 +6,7 @@ module.exports = {
 
   getUsers: async (req, res) => {
     await userHelper.allCustomers().then((customers) => {
-      res.render('admin/users', {admin:true, customers});
+      res.render('admin/users', {admin:true, customers,usp:true});
     })
 }
 }

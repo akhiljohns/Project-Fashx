@@ -39,7 +39,7 @@ module.exports = {
 
   allCategories: async (req, res) => {
     await categoryHelper.allCategory().then((category) => {
-      res.render("admin/categories", { category, admin: true });
+      res.render("admin/categories", { category, admin: true ,ctp:true});
     });
   },
 

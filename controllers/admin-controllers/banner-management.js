@@ -38,7 +38,7 @@ module.exports = {
     getBanner: (req, res, next)=> {
         bannerHelper.getBanner().then((banner)=> {
             if(!banner.error) {
-                res.render('admin/banner', {admin: true, banner});
+                res.render('admin/banner', {admin: true, banner,banp:true});
             } else {
                 res.redirect('/admin');
             }

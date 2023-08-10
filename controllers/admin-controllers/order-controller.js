@@ -24,9 +24,9 @@ module.exports = {
             let day = String(today.getDate()).padStart(2, "0");
             orders[i].order.date = `${day}-${month}-${year}`;
           }
-          res.render("admin/orders", { orders, admin: true });
+          res.render("admin/orders", { orders, admin: true ,ordp:true});
         } else {
-          res.render("admin/orders", { orders, admin: true });
+          res.render("admin/orders", { orders, admin: true,ordp:true });
         }
       });
     } catch (err) {

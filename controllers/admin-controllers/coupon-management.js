@@ -15,7 +15,7 @@ module.exports = {
         await couponCollection.find({}).lean()
         .then((coupon) => {
              
-            res.render('admin/coupon', { coupon, admin: true});
+            res.render('admin/coupon', { coupon, admin: true,coup:true});
         })
         .catch((err) => {
             console.error(err);

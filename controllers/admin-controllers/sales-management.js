@@ -24,17 +24,20 @@ module.exports = {
     getPaymentMethod: (req, res, next) => {
         const time = req.body.time;
         salesHelper.getSales(time).then((sales)=>{
-            let razorpay = 0, cod = 0, others = 0;
+            let Razorpay = 0, COD = 0, Wallet = 0, others = 0;
             for(let i=0; i<sales.length; i++){
-                if(sales[i].order.paymentMethod == 'razorpay'){
-                    razorpay ++;
-                } else if(sales[i].order.paymentMethod == 'cod'){
-                    cod ++;
-                } else {
-                    others ++;
+                if(sales[i].order.paymentMethod == 'Razorpay'){
+                    Razorpay ++;
+                } else if(sales[i].order.paymentMethod == 'COD'){
+                    COD ++;
+                } else if(sales[i].order.paymentMethod == 'Wallet') {
+                    Wallet ++;
+                }else{
+                    others++;
                 }
             }
-            res.status(200).json({razorpay, cod, others});
+            console.log(Razorpay, COD, Wallet,others,"-=-==-paymnet")
+            res.status(200).json({Razorpay, COD, Wallet,others});
         })
     },
 

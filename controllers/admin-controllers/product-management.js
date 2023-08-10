@@ -9,7 +9,7 @@ module.exports = {
   
   showProducts: (req, res, next) => {
     productHelper.showProducts().then((products) => {
-      res.render("admin/products", { products, admin: true });
+      res.render("admin/products", { products, admin: true,prdp:true });
     });
   },
 

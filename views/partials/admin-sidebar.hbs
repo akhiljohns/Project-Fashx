@@ -1,36 +1,11 @@
-<style>
-    @media (max-width: 768px) {
-            .navbar-aside {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: -280px;
-                width: 280px;
-                height: 100%;
-                background-color: #fff;
-                z-index: 1000;
-            }
 
-            .navbar-aside.active {
-                left: 0;
-            }
 
-            .menu-toggle {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                z-index: 1001;
-                cursor: pointer;
-            }
-        }
-</style>
-<head>
-   
+<head> 
+
     <title>FashX Admin Dashboard</title>
- 
-    
-    <link rel="icon" href="assets/imgs/theme/admin.png" type="image/png"/>
+
+
+    <link rel="icon" href="assets/imgs/theme/admin.png" type="image/png" />
 
     <!-- Template CSS -->
     <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
@@ -39,7 +14,7 @@
 
 <body>
     <div class="screen-overlay"></div>
-     <button class="menu-toggle btn btn-icon btn-mobile me-auto" id="menuToggle">
+    <button class="menu-toggle btn btn-icon btn-mobile me-auto" id="menuToggle">
         <i class="material-icons md-apps"></i>
     </button>
     <aside class="navbar-aside" id="offcanvas_aside">
@@ -47,55 +22,55 @@
             <a href="/admin/dashboard" class="brand-wrap">
                 <Span>FashX Dashboard</Span>
             </a>
-            
+
         </div>
 
         <nav>
             <ul class="menu-aside">
-                <li class="menu-item active">
+                <li class="menu-item {{#if dap}}active{{/if}}">
                     <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if adp}}active{{/if}}">
                     <a class="menu-link" href="/admin/add-product"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Add Products</span>
                     </a>
 
                 </li>
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if usp}}active{{/if}}">
                     <a class="menu-link" href="/admin/users"> <i class="icon material-icons md-person"></i>
                         <span class="text">Users</span>
                     </a>
 
                 </li>
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if ctp}}active{{/if}}">
                     <a class="menu-link" href="/admin/categories"> <i class="icon material-icons md-shop"></i>
                         <span class="text">Category</span>
                     </a>
 
                 </li>
 
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if prdp}}active{{/if}}">
                     <a class="menu-link" href="/admin/products"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Products</span>
                     </a>
 
                 </li>
 
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if ordp}}active{{/if}}">
                     <a class="menu-link" href="/admin/orders"> <i class="icon material-icons md-shop"></i>
                         <span class="text">Orders</span>
                     </a>
 
                 </li>
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if coup}}active{{/if}}">
                     <a class="menu-link" href="/admin/coupon"> <i class="icon material-icons md-label"></i>
                         <span class="text">Coupons</span>
                     </a>
 
                 </li>
-                <li class="menu-item has-submenu">
+                <li class="menu-item {{#if banp}}active{{/if}}">
                     <a class="menu-link" href="/admin/banner"> <i class="icon material-icons md-star"></i>
                         <span class="text">Banner</span>
                     </a>
@@ -104,39 +79,31 @@
 
             </ul>
             <hr>
-           
+
             <br>
             <br>
         </nav>
     </aside>
 
     <main class="main-wrap">
-<header class="main-header navbar">
+        <header class="main-header navbar">
             <div class="col-search">
-                
+
             </div>
             <div class="col-nav">
-             
+
                 <ul class="nav">
-                   
+
                     <li class="dropdown nav-item">
                         <a href="/admin/logout">LOGOUT</a>
-                     
+
                     </li>
                 </ul>
             </div>
         </header>
 
     </main>
-     <script>
-        // JavaScript to handle the menu toggle
-        const menuToggle = document.getElementById("menuToggle");
-        const navbarAside = document.getElementById("offcanvas_aside");
-
-        menuToggle.addEventListener("click", () => {
-            navbarAside.classList.toggle("active");
-        });
-    </script>
+   
 </body>
 
 
