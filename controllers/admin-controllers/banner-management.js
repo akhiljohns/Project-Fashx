@@ -5,11 +5,14 @@ const bannerHelper = require('../../helpers/admin-helpers/banner-helper');
 module.exports = {
 
     getAddBanner: (req, res) => { 
+
         try{
-        res.render('admin/addbanner',{admin:true})
+        // res.render('admin/addbanner',{admin:true})
+        res.send('success');
         } catch(e){
-            console.log('eroor is ', e);
+            console.log('error is ', e);
         }
+        
     },
 
     addbanner: (req, res, next)=> {
