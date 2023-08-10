@@ -23,7 +23,7 @@ module.exports = {
         };
         
 
-        bannerImage = req.file;
+        // bannerImage = req.file;
 
         res.send(bannerDetails);
 
