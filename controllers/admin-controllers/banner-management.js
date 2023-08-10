@@ -1,4 +1,5 @@
 // importing helpers
+const { response } = require('../../app');
 const bannerHelper = require('../../helpers/admin-helpers/banner-helper');
 
 
@@ -21,15 +22,18 @@ module.exports = {
             button : req.body.button,
         };
         
+
         bannerImage = req.file;
 
-        bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
-            if(!response.error){
-                res.redirect('/admin/banner');
-            } else {
-                res.redirect('/admin')
-            }
-        })
+        res.send(bannerDetails, bannerImage.filename);
+
+        // bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
+        //     if(!response.error){
+        //         res.redirect('/admin/banner');
+        //     } else {
+        //         res.redirect('/admin')
+        //     }
+        // })
     },
 
     getBanner: (req, res, next)=> {
