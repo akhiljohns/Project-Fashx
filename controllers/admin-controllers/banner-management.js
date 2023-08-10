@@ -25,7 +25,7 @@ module.exports = {
 
         bannerImage = req.file;
 
-        res.send(bannerDetails, bannerImage.filename);
+        res.send(bannerDetails);
 
         // bannerHelper.addbanner(bannerDetails, bannerImage).then((response)=> {
         //     if(!response.error){
