@@ -52,7 +52,8 @@ module.exports = {
     removebanner: (req, res, next)=> {
         const bannerId = req.body.bannerId;
         bannerHelper.removebanner(bannerId).then((response)=> {
-            res.status(200).json({status: response.status});
+            console.log(response,"raspn stat")
+            res.status(200).json(response);
         }).catch((err)=> {
             console.log('error in controller removing banner', err);
             res.status(200).json({status:false});

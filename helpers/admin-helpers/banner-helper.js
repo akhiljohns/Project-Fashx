@@ -27,7 +27,8 @@ module.exports = {
         return new Promise((resolve, reject)=> {
             banner.find({}).lean().then((response)=> {
                 resolve(response);
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 console.log('Error in getting banners(helper)');
                 resolve({error: true});
             })
@@ -36,15 +37,23 @@ module.exports = {
 
     removebanner: (bannerId) => {
         return new Promise ((resolve, reject) => {
-            banner.deleteOne({_id: bannerId}).then((response)=> {
-                if(response){
-                    resolve({status: true});
-                } else {
-                    resolve({status: false});
+          banner.find({}).lean().then((response)=> {
+                // console.log(response.length,"banner removed");
+                if(response.length > 1){
+                    banner.deleteOne({_id: bannerId}).then((response)=> {
+                        if(response){
+                            resolve({status: true});
+                        } else {
+                            resolve({status: false});
+                        }
+                    }).catch((err)=> {
+                        console.log('Error removing banner (helper)', err);
+                        resolve({status: false})
+                    })
+                }else{
+                    resolve({length:false})
+
                 }
-            }).catch((err)=> {
-                console.log('Error removing banner (helper)', err);
-                resolve({status: false})
             })
         })
     }

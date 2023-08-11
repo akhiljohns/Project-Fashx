@@ -1,10 +1,8 @@
-<head>
-    <title>FashX Admin Dashboard</title>
-</head>
+
 <style>
     .imgRow img {
-        width: 7vw;
-        height: 8vh;
+        width: 10vw;
+        height: 10vh;
     }
 
     .toolEll {
@@ -13,20 +11,24 @@
         white-space: nowrap;
         max-width: 150px;
     }
+    table.dataTable tbody th, table.dataTable tbody td {
+    padding: 29px 15px;
+}
 </style>
 
 <main class="main-wrap" id="main">
 
 
-    
+      <span id="banmsg" style="color: red;"></span>
 
 {{#if banner}}
-    <table class="table table-striped" style="color: #012970; text-align: center;" id="bannerTable">
+    <table class="table table-striped" style="color: #005cfa; text-align: center;" id="bannerTable">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Index</th>
                 <th scope="col">Banner</th>
                 <th scope="col">Banner Title</th>
+                <th scope="col">Banner SubTitle</th>
                 <th scope="col">Options</th>
             </tr>
         </thead>
@@ -36,12 +38,14 @@
                 <th scope="row" class="index"></th>
                 <td class="imgRow"><img src="/uploads/{{this.images}}" alt=""></td>
                 <td class="toolEll"><h6>{{this.title}}</h6></td>
+                <td class="toolEll"><h6>{{this.subTitle}}</h6></td>
                 <td><button onclick="removebanner('{{this._id}}')" class="btn btn-danger">Remove</button></td>
             </tr>
             {{/each}}
             
         </tbody>
     </table> 
+     
     <a class="btn btn-primary" id="addBtn" href="/admin/addbanner">Add Banner</a>
     {{else}} 
     <div style="text-align: center;" class="m-5">
@@ -66,8 +70,14 @@
                 bannerId: bannerId
             },
             success: function(response){
-                if(response.status){
+                if( response.length == false){
+                    document.getElementById("banmsg").innerHTML = 'Cannot Remove Banner. There Should Be Atleast One Active Banner';
+                }else if(response.status){
                     document.getElementById(bannerId).style.display = 'none';
+
+                }else{
+                  window.location.reload();
+
                 }
             }
         })
