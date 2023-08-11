@@ -1,6 +1,8 @@
 //importing helpers
 const salesHelper = require('../../helpers/admin-helpers/sales-helper');
-
+const orderHelper = require("../../helpers/admin-helpers/order-helpers");
+const userCollection = require("../../models/user-model")
+const prodColl = require("../../models/product-model")
 module.exports = {
     getDashboard: (req, res, next) => {
         salesHelper.showSales().then((todaySales)=> {
@@ -54,8 +56,68 @@ module.exports = {
 
             res.status(200).json({salesDate: salesDate, revenue: revenue, totalSales: totalSales});
         })
-    }
+    },
 
+    getSalesReport: (req, res) => {
+        try {
+          orderHelper.getOrdersadmin().then((orders) => {
+          
+            if (orders) {
+              for (let i = 0; i < orders.length; i++) {
+                let today = orders[i].order.date;
+                let year = today.getFullYear();
+                let month = String(today.getMonth() + 1).padStart(2, "0");
+                let day = String(today.getDate()).padStart(2, "0");
+                orders[i].order.date = `${day}-${month}-${year}`;
+              }
+              res.render("admin/sales", { orders, admin: true ,salesp:true});
+            } else {
+              res.render("admin/sales", { orders, admin: true,salesp:true });
+            }
+          });
+        } catch (err) {
+          console.log("Error getting showing orders", err);
+        }
+      },
+      getAllUsers:(req, res)=>{
+        return new Promise((resolve,reject)=>{
+            userCollection.find().then((allUsers)=>{
+                res.status(200).json(allUsers);
+            }).catch((err)=>{
+                console.log(err);
+                reject(err)
+            })
+            
+        })
+        },
+      getAllProducts:(req, res)=>{
+        return new Promise((resolve,reject)=>{
+            prodColl.find().then((allProds)=>{
+                console.log(allProds.length,"rpod-=-==")
+                res.status(200).json(allProds);
+            }).catch((err)=>{
+                console.log(err);
+                reject(err)
+            })
+            
+        })
+      },
+    //   getAllOrders:(req, res)=>{
+    //     return new Promise((resolve,reject)=>{
+    //         ordersCollection.find().lean().exec().then((orders)=>{
+    //             let orderLength = 0
+    //             orders.map((arr)=>{
+    //                 orderLength += arr.order.length  
+    //             })
+    //             console.log(orderLength,"-=-=-==-=-orders")
+    //             res.status(200).json(orderLength);
+    //         }).catch((err)=>{
+    //             console.log(err);
+    //             reject(err)
+    //         })
+            
+    //     })
+    //   },
 
 
 

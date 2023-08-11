@@ -1,3 +1,6 @@
+<head>
+    <title>FashX Admin Dashboard</title>
+</head>
 <style>
     .imgRow img {
         width: 7vw;
@@ -18,7 +21,7 @@
     
 
 {{#if banner}}
-    <table class="table table-striped" style="color: #012970; text-align: center;">
+    <table class="table table-striped" style="color: #012970; text-align: center;" id="bannerTable">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -78,4 +81,10 @@
     for (let i = 0; i < index.length; i++) {
         index[i].innerHTML = i + 1;
     }
+</script>
+<script>
+
+$(document).ready( function () {
+    $('#bannerTable').DataTable();
+} );
 </script>

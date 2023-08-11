@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+
 <html lang="en">
 
 <head>
@@ -127,9 +127,9 @@
                 <div class="row mb-5">
                     <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
                         <div class="confirmation-card">
-                            <h3 class="billing-title">Order Info</h3>
-                            <table class="order-rable">
                                 <div id="orderDate" hidden>{{order.date}}</div>
+                            <h3 class="billing-title">Order Info</h3>
+                            <table class="order-rable" >
                                 <tr>
                                     <td>Order Id:</td>
                                     <td>{{order.orderNo}}</td>
@@ -406,3 +406,13 @@
 </body>
 
 </html>
+ <script>
+        $(document).ready(function() {
+      $('#salestable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      });
+    });
+      </script>

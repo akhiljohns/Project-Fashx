@@ -1,22 +1,4 @@
-<!DOCTYPE HTML>
-<html lang="en">
-
-
-<head>
-    <meta charset="utf-8">
-    <title>FashX Dashboard</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <!-- Favicon -->
-    
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-</head> 
+ 
 
 <body>
     <div class="screen-overlay"></div>
@@ -30,7 +12,7 @@
                     <div class="card-body ml-5">
                         <h5 class="card-title">PRODUCTS</h5>
 
-                        <table class="table datatable">
+                        <table class="table" id="products">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -192,6 +174,18 @@ function deleteProd(productId) {
 }
 
 </script>
-</body>
+<script>
 
-</html>
+$(document).ready( function () {
+    $('#products').DataTable();
+} );
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+
+</body>

@@ -1,12 +1,18 @@
 <head>
-    <title>FashX Admin Dashboard</title>
+    <title>Sales Report</title>
 </head>
+<style>
+    table.dataTable tbody td {
+    padding: 20px -7px;
+   
+}
+</style>
 <main class="main-wrap">
 
     <section class="content-main">
         <div class="content-header">
             <div>
-                <h2 class="content-title card-title">Order List</h2>
+                <h2 class="content-title card-title">Sales Report</h2>
 
             </div>
 
@@ -20,20 +26,23 @@
                             <tr>
 
                                 <th scope="col">Date</th>
+                                <th scope="col">Delivery Address</th>
                                 <th scope="col">Order No</th>
-                                <th scope="col">Customer</th>
                                 <th scope="col">Payment</th>
                                 <th scope="col">Status</th>
-                                <th scope="col" class="text-end"> Action </th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Discount</th>
+                                
                             </tr>
                         </thead>
                         <tbody>{{#each orders}}
                         <tr>
                             <td id="date">{{this.order.date}}</td>
+                            <td id="ddate">{{this.order.address.fname}} {{this.order.address.lname}}, {{this.order.address.houseName}}, {{this.order.address.landmark}}, {{this.order.address.city}}, {{this.order.address.district}}, {{this.order.address.state}}, {{this.order.address.pincode}}, {{this.order.address.country}}</td>
                             <td><a style="color: black;">{{this.order.orderNo}}</a></td>
                             
                         
-                            <td><b>{{this.order.address.fname}} {{this.order.address.lname}}</b></td>
+                         
                         
                             <td>{{this.order.paymentMethod}}</td>
                          
@@ -51,11 +60,10 @@
                             <td style="color:green">{{this.order.status}}</td>
                             {{/if}}
                  
+                          <td>₹{{this.order.totalAmount}}</td>
+                          <td>₹{{this.order.discount}}</td>
                         
-                        
-                            <td class="text-end">
-                                <a  onclick="hi('{{this.order._id}}')"
-                                    href="/admin/orders/details?orderId={{this.order._id}}&userId={{this.order.user}}" class="btn btn-outline-success">Details</a>
+                   
                         
                             </td>
                         </tr>
@@ -69,11 +77,13 @@
     </section> <!-- content-main end// -->
 
 </main>
-
-
-<script>
-
-$(document).ready( function () {
-    $('#salestable').DataTable();
-} );
-</script>
+ <script>
+        $(document).ready(function() {
+      $('#salestable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+      });
+    });
+      </script>

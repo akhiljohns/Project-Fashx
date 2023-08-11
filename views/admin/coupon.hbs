@@ -1,4 +1,6 @@
-
+<head>
+    <title>FashX Admin Dashboard</title>
+</head>
 <main class="main-wrap" id="main">
     
     <section class="section container-fluid">
@@ -49,7 +51,7 @@
                     <div class="card-body">
                         <h5 class="card-title">COUPONS</h5>
 
-                        <table class="table datatable">
+                        <table class="table datatable" id="couponTable">
                             <thead>
                                 <tr>
                                     <th scope="col">Code</th>
@@ -115,4 +117,10 @@
         const formattedDate = new Date(timestamp).toLocaleDateString(undefined, options);
         element.innerText = formattedDate;
     });
+</script>
+<script>
+
+$(document).ready( function () {
+    $('#couponTable').DataTable();
+} );
 </script>

@@ -107,7 +107,11 @@ router.post('/addbanner',access.logStatus, upload.single('bannerImage'), bannerM
 // , upload.single('bannerImage')
 router.post('/removebanner',access.logStatus, bannerManagement.removebanner);
 
-//SALES
+//DASHBOARD & SALES REPORT
+
+router.get('/getUsers', access.logStatus,salesManageController.getAllUsers)
+router.get('/getProducts', access.logStatus,salesManageController.getAllProducts)
+router.get('/sales', access.logStatus,salesManageController.getSalesReport)
 router.post('/getSales', access.logStatus, salesManageController.getSales )
 
 router.post('/getPaymentMethod', access.logStatus, salesManageController.getPaymentMethod);

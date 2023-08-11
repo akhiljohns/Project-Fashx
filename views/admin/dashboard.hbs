@@ -1,3 +1,6 @@
+<head>
+    <title>FashX Admin Dashboard</title>
+</head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <style>
   :root {
@@ -1313,6 +1316,53 @@
             </div>
           </div>
 
+          {{!-- ALL USERS CARD --}}
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+
+             
+
+              <div class="card-body">
+                <h5 class="card-title">Total Customers</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><span id="customers"></span></h6>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          {{!-- ALL PRODUCTS CARD --}}
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+             
+
+              <div class="card-body">
+                <h5 class="card-title">Total Products</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-box-fill"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><span id="products"></span></h6>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
           <!-- Reports -->
           <div class="col-12">
             <div class="card">
@@ -1419,6 +1469,40 @@
     } else {
       document.getElementById('salesDay').innerHTML = 'This Year'
     }
+  }
+
+
+{{!-- GET ALL USERS  --}}
+  function getUsers() {
+    $.ajax({
+      url: '/admin/getUsers',
+      method: 'get',
+    
+      success: function (response) {
+        updateUsersCard(response);
+       
+      }
+    })
+  }; getUsers()
+  function updateUsersCard(users) {
+    document.getElementById('customers').innerHTML = users.length;
+  
+  }
+{{!-- GET ALL Products  --}}
+  function getProducts() {
+    $.ajax({
+      url: '/admin/getProducts',
+      method: 'get',
+    
+      success: function (response) {
+        updateProductsCard(response);
+       
+      }
+    })
+  }; getProducts()
+  function updateProductsCard(products) {
+    document.getElementById('products').innerHTML = products.length;
+  
   }
 
 
