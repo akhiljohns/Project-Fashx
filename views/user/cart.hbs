@@ -262,7 +262,7 @@
                 method: 'POST',
                 data: { productId: productId },
                 success: function (response) {
-                    stock = response.stock;
+                    stock = response.stock;         
                 }
             }).then(() => {
                 resolve(stock)
