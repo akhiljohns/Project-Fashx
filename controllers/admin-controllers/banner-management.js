@@ -44,7 +44,7 @@ module.exports = {
             }
         }).catch((err)=> {
             console.log('Error in getting banners(cotroller)', err);
-            res.redirect('/admin');
+            res.redirect('/admin'); 
         })
     },
 
