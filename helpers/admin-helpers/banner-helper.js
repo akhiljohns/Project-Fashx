@@ -27,6 +27,8 @@ module.exports = {
     getBanner: ()=> {
         return new Promise((resolve, reject)=> {
             banner.find({}).lean().then((response)=> {
+                console.log(response)
+
                 resolve(response);
             })
             .catch((error) => {
