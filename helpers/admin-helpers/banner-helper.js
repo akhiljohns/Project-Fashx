@@ -11,6 +11,7 @@ module.exports = {
                     button: bannerDetails.button,
                     images: image.filename
                 }).then((response) => {
+                    console.log(response)
                     resolve(response);
                 }).catch((error) => {
                     console.log('Error in creating banner (Helper)', error);
