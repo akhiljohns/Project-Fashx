@@ -30,6 +30,7 @@ module.exports = {
             ])
               .exec()
               .then((response) => {
+                console.log(response)
                 resolve(response);
               })
               .catch((error) => {
