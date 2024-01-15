@@ -149,6 +149,7 @@ incrementStock: async (productId,quantity)=>{
           
                 orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Delivered" , "order.$.deliveryDate": date } }
                 ).then((response)=>{
+                  console.log(response)
                     resolve(response);
                 })
             })
