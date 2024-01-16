@@ -77,6 +77,7 @@ module.exports = {
                 ])                  
                 .exec()
                 .then((response)=> {
+                    console.log(response)
                     resolve(response)
                 }).catch((error)=> {
                     console.log(error, 'mdg');
