@@ -27,6 +27,7 @@ const cartHelper = {
                             totalAmount += (response.items[i].product.regularPrice * response.items[i].quantity);
                         }
                         cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((cart)=>{
+                           console.log(cart)
                             resolve(cart);
                         })
                             
