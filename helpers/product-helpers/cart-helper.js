@@ -59,7 +59,7 @@ const cartHelper = {
             return new Promise((resolve, reject) => {
                 const userId = user._id;
                 cart.findOne({userId: userId}).populate('items.product').lean().exec().then((response)=> {
-                   
+                   console.log(response)
                     resolve(response);
                 })
             })
