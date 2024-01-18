@@ -123,6 +123,8 @@ checkProduct: (userId, productDetails) => {
                     await cart.updateOne({userId: userId}, {$set: {totalAmount: totalAmount}});
 
                     cart.findOne({userId: userId}).lean().then((shoppingCart)=>{
+                   console.log(shoppingCart)
+
                         resolve(shoppingCart);
                     })
                 })
