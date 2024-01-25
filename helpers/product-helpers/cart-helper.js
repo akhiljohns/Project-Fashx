@@ -171,6 +171,7 @@ checkProduct: (userId, productDetails) => {
                         cart.findOne({userId: userId}).populate('items.product').then((result) => {
                             for(let i = 0; i < result.items.length; i++){
                                 totalAmount += (result.items[i].product.regularPrice * result.items[i].quantity);
+                                console.log(totalAmount)
                             }
                             cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((userCart)=>{
                                 cart.findOne({userId: userId}).populate('items.product').then((productCart)=>{
