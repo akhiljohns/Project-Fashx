@@ -9,6 +9,7 @@ module.exports = {
         try{
             return new Promise(async (resolve, reject) => {
                 let categories = new category(categoryData);
+                console.log(categories)
                 await categories.save().then((result) => {
                     resolve(result);
                 })
