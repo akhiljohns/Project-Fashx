@@ -32,6 +32,8 @@ module.exports = {
         try{
             return new Promise(async (resolve, reject) => {
                 let categories = await category.find().lean().exec();
+                console.log(categories)
+
                 resolve (categories);
             })
         } catch(err){
