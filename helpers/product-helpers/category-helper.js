@@ -46,6 +46,7 @@ module.exports = {
         try{
             return new Promise((resolve, reject) => {
                 category.deleteOne(_id = new ObjectId(id)).then((response) => {
+                    console.log(response)
                     resolve (response);
                 })
             })
