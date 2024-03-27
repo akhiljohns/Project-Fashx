@@ -30,6 +30,7 @@ module.exports = {
             ])
               .exec()
               .then((response) => {
+                console.log(response)
                 resolve(response);
               })
               .catch((error) => {
@@ -131,6 +132,8 @@ incrementStock: async (productId,quantity)=>{
                 const orders = await orderCollection.findOne({userId: userId}).populate('order.items.product');
                 orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Cancelled" } }
                 ).then((response)=>{
+                console.log(response)
+
                     resolve(response);
                 })
             })
@@ -146,6 +149,7 @@ incrementStock: async (productId,quantity)=>{
           
                 orderCollection.updateOne({ userId: userId, "order._id": orderId },{ $set: { "order.$.status": "Delivered" , "order.$.deliveryDate": date } }
                 ).then((response)=>{
+                  console.log(response)
                     resolve(response);
                 })
             })
@@ -178,6 +182,8 @@ incrementStock: async (productId,quantity)=>{
 
             orderCollection.updateOne({ userId: userId, "order._id": orderId }, { $set: { "order.$.status": "Returned" } })
                 .then((response) => {
+                  console.log(response)
+
                     resolve(response);
                 });
         });

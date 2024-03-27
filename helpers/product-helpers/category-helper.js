@@ -9,6 +9,7 @@ module.exports = {
         try{
             return new Promise(async (resolve, reject) => {
                 let categories = new category(categoryData);
+                console.log(categories)
                 await categories.save().then((result) => {
                     resolve(result);
                 })
@@ -31,6 +32,8 @@ module.exports = {
         try{
             return new Promise(async (resolve, reject) => {
                 let categories = await category.find().lean().exec();
+                console.log(categories)
+
                 resolve (categories);
             })
         } catch(err){
@@ -43,6 +46,7 @@ module.exports = {
         try{
             return new Promise((resolve, reject) => {
                 category.deleteOne(_id = new ObjectId(id)).then((response) => {
+                    console.log(response)
                     resolve (response);
                 })
             })

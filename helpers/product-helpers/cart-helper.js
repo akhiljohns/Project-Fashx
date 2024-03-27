@@ -27,6 +27,7 @@ const cartHelper = {
                             totalAmount += (response.items[i].product.regularPrice * response.items[i].quantity);
                         }
                         cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((cart)=>{
+                           console.log(cart)
                             resolve(cart);
                         })
                             
@@ -41,6 +42,7 @@ const cartHelper = {
                                 totalAmount += (response.items[i].product.regularPrice * response.items[i].quantity);
                             }
                             cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((cart)=>{
+                                console.log(cart)
                                 resolve(cart);
                             })
                         })
@@ -57,7 +59,7 @@ const cartHelper = {
             return new Promise((resolve, reject) => {
                 const userId = user._id;
                 cart.findOne({userId: userId}).populate('items.product').lean().exec().then((response)=> {
-                   
+                   console.log(response)
                     resolve(response);
                 })
             })
@@ -121,6 +123,8 @@ checkProduct: (userId, productDetails) => {
                     await cart.updateOne({userId: userId}, {$set: {totalAmount: totalAmount}});
 
                     cart.findOne({userId: userId}).lean().then((shoppingCart)=>{
+                   console.log(shoppingCart)
+
                         resolve(shoppingCart);
                     })
                 })
@@ -167,6 +171,7 @@ checkProduct: (userId, productDetails) => {
                         cart.findOne({userId: userId}).populate('items.product').then((result) => {
                             for(let i = 0; i < result.items.length; i++){
                                 totalAmount += (result.items[i].product.regularPrice * result.items[i].quantity);
+                                console.log(totalAmount)
                             }
                             cart.updateOne({userId: userId},{$set: {totalAmount: totalAmount}}).populate('items.product').then((userCart)=>{
                                 cart.findOne({userId: userId}).populate('items.product').then((productCart)=>{

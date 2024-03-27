@@ -11,6 +11,7 @@ module.exports = {
                     button: bannerDetails.button,
                     images: image.filename
                 }).then((response) => {
+                    console.log(response)
                     resolve(response);
                 }).catch((error) => {
                     console.log('Error in creating banner (Helper)', error);
@@ -26,6 +27,8 @@ module.exports = {
     getBanner: ()=> {
         return new Promise((resolve, reject)=> {
             banner.find({}).lean().then((response)=> {
+                console.log(response)
+
                 resolve(response);
             })
             .catch((error) => {

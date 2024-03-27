@@ -13,6 +13,7 @@ module.exports = {
       try{
           return new Promise(async (resolve, reject) => {
               await user.find().lean().exec().then((result) => {
+                console.log(result)
                   resolve(result);
               })
           })
