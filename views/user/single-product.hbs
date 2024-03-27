@@ -62,17 +62,16 @@
     transition: 200ms;
   }
 
-  .quantityDiv div{
+  .quantityDiv div {
     width: 3rem;
     border: 0.5px solid #000;
     border-radius: 1%;
   }
 
-  .quantityDiv div:hover{
+  .quantityDiv div:hover {
     transition: 300ms;
     transform: scale(1.13);
   }
-
 </style>
 
 <!--================Single Product Area =================-->
@@ -141,25 +140,27 @@
       <div class="product_count_div">
         <label for="qty">Quantity:</label>
         <div class="quantityDiv">
-          
+
           <div onclick="decreaseQuantity()" class="reduced items-count" type="button">
             <i class="lnr lnr-chevron-left"></i>
           </div> &nbsp;
 
-          <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text qty"
-           /> &nbsp;
+          <input type="text" name="qty" id="quantity" maxlength="12" value="1" title="Quantity:"
+            class="input-text qty" /> &nbsp;
 
-            <div onclick="increaseQuantity()" class="increase items-count" type="button">
+          <div onclick="increaseQuantity()" class="increase items-count" type="button">
             <i class="lnr lnr-chevron-right"></i>
           </div>
 
         </div>
-      </div><hr>
+      </div>
+      <hr>
       {{/if}}
 
       <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock
         Available. Can't Add More Quantity</p>
-      <p id="quantitymsg2" style="display: none;color: red;font-size: medium;" class="md-3">Quantity Should Be Greater Than 0</p>
+      <p id="quantitymsg2" style="display: none;color: red;font-size: medium;" class="md-3">Quantity Should Be Greater
+        Than 0</p>
 
       <div class="magnified-img"></div>
       {{#if noStock}}
@@ -368,18 +369,18 @@
   function addtocart(productId) {
     let quantity = document.getElementById('quantity').value;
 
-if(quantity <= 0){
-    document.getElementById('quantitymsg2').style.display = "block";
-    return false;
+    if (quantity <= 0) {
+      document.getElementById('quantitymsg2').style.display = "block";
+      return false;
 
-}
+    }
     const maxQuantity = parseInt("{{product.stock}}");
 
-if(quantity > maxQuantity){
-    document.getElementById('quantitymsg').style.display = "block";
-    return false;
+    if (quantity > maxQuantity) {
+      document.getElementById('quantitymsg').style.display = "block";
+      return false;
 
-}
+    }
     $.ajax({
       url: '/addtocart',
       method: 'POST',
