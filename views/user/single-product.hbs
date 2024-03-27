@@ -157,7 +157,7 @@
       </div><hr>
       {{/if}}
 
-      <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}}Stock
+      <p id="quantitymsg" style="display: none;color: red;font-size: medium;" class="md-3">Only {{product.stock}} Stock
         Available. Can't Add More Quantity</p>
       <p id="quantitymsg2" style="display: none;color: red;font-size: medium;" class="md-3">Quantity Should Be Greater Than 0</p>
 
@@ -370,6 +370,13 @@
 
 if(quantity <= 0){
     document.getElementById('quantitymsg2').style.display = "block";
+    return false;
+
+}
+    const maxQuantity = parseInt("{{product.stock}}");
+
+if(quantity > maxQuantity){
+    document.getElementById('quantitymsg').style.display = "block";
     return false;
 
 }
